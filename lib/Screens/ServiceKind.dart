@@ -19,7 +19,7 @@ class _ServiceKindState extends State<ServiceKind> {
                   Center(
                     child: Container(
                       child: Text(
-                        'Services provided \n by us',
+                        'What kind of service \n do you provide?',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color(0xFF263238),
