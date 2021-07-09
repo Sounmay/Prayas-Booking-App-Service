@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
+import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
 import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(),
           '/wrapper': (context) => Wrapper(),
           '/login': (context) => Login(),
+          '/servicekind': (context) => ServiceKind()
         },
       ),
     );
