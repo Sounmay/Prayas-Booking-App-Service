@@ -13,7 +13,7 @@ class DetailsSecond extends StatefulWidget {
 class _DetailsSecondState extends State<DetailsSecond> {
   String _gender = 'Gents Only';
   String _numOfEmployees = '1';
-  String _extranumOfEmployees = '';
+  String _finalNumofEmployees = '';
 
   UploadTask task;
   File file;
@@ -23,7 +23,17 @@ class _DetailsSecondState extends State<DetailsSecond> {
   int _employeeDetailsNum = 1;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _textController.text = _numOfEmployees;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final title =
+        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    final _pagetitle = title["title"];
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -52,8 +62,8 @@ class _DetailsSecondState extends State<DetailsSecond> {
                     Container(
                       margin: EdgeInsets.only(left: 10),
                       color: Color(0xff5D5FEF),
-                      padding: EdgeInsets.only(left: 5, right: 10),
-                      child: Text('SALON',
+                      padding: EdgeInsets.only(left: 5, right: 40),
+                      child: Text(_pagetitle,
                           style: TextStyle(fontSize: 22, color: Colors.white)),
                     )
                   ],
@@ -63,7 +73,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
             SizedBox(
               height: 50,
             ),
-            _title("Salon Type"),
+            _title("$_pagetitle Type"),
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,10 +95,10 @@ class _DetailsSecondState extends State<DetailsSecond> {
                 radioButton('3', _numOfEmployees, false),
                 radioButton('4', _numOfEmployees, false),
                 radioButton('5', _numOfEmployees, false),
-                radioButton('More', _numOfEmployees, false),
+                radioButton('6', _numOfEmployees, false),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Row(
               children: [
                 Padding(
@@ -106,7 +116,6 @@ class _DetailsSecondState extends State<DetailsSecond> {
                   height: 30,
                   child: TextFormField(
                       controller: _textController,
-                      enabled: _numOfEmployees == "More" ? true : false,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(0),
@@ -119,7 +128,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue[100]))),
                       onChanged: (val) {
-                        setState(() => _extranumOfEmployees = val);
+                        setState(() => _finalNumofEmployees = val);
                       }),
                 ),
               ],
@@ -141,16 +150,20 @@ class _DetailsSecondState extends State<DetailsSecond> {
                 ),
               ]),
             ),
+            SizedBox(height: 70),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
               width: MediaQuery.of(context).size.width * 0.5,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/uploadImage');
+                },
                 child: Text('Save & Proceed',
                     style: TextStyle(color: Colors.white)),
                 style: TextButton.styleFrom(backgroundColor: Color(0xFF263238)),
               ),
-            )
+            ),
+            SizedBox(height: 10)
           ]),
         ),
       ),
@@ -226,6 +239,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
                     _gender = value;
                   } else {
                     _numOfEmployees = value;
+                    _textController.text = value;
                   }
                 });
               }),

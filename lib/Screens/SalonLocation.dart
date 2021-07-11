@@ -8,6 +8,8 @@ class SalonLocation extends StatefulWidget {
 class _SalonLocationState extends State<SalonLocation> {
   final _formKey = GlobalKey<FormState>();
 
+  String title = "Salon";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class _SalonLocationState extends State<SalonLocation> {
                                 Container(
                                   color: Color(0xff5D5FEF),
                                   padding: EdgeInsets.all(3),
-                                  child: Text('SALON',
+                                  child: Text(title,
                                       style: TextStyle(
                                           fontSize: 22, color: Colors.white)),
                                 )
@@ -158,10 +160,12 @@ class _SalonLocationState extends State<SalonLocation> {
                     SizedBox(height: 60),
                     FlatButton(
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Processing Data')));
-                          }
+                          // if (_formKey.currentState.validate()) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       SnackBar(content: Text('Processing Data')));
+                          // }
+                          Navigator.pushNamed(context, '/details2',
+                              arguments: {"title": title});
                         },
                         child: Container(
                             height: MediaQuery.of(context).size.height * 0.07,

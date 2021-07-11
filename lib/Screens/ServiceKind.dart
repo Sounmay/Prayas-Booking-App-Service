@@ -216,14 +216,6 @@ class _ServiceKindState extends State<ServiceKind> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/details2');
-              },
-              style: TextButton.styleFrom(backgroundColor: Colors.black),
-              child: Text('To my page(Naiyar)',
-                  style: TextStyle(color: Colors.white)),
-            ),
             FlatButton(
                 onPressed: () {
                   if (choice == 1)

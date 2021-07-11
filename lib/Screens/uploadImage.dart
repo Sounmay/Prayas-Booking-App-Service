@@ -31,15 +31,15 @@ class _UploadImageState extends State<UploadImage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(15),
                     child: Container(
-                      decoration: BoxDecoration(color: Colors.grey[100]),
+                      decoration: BoxDecoration(color: Colors.grey[400]),
                       height: 220,
                       width: 220,
                       child: file != null
                           ? Image.file(
                               File(file.path),
-                        fit: BoxFit.cover,
+                              fit: BoxFit.cover,
                               width: double.infinity,
                             )
                           : null,
@@ -53,7 +53,7 @@ class _UploadImageState extends State<UploadImage> {
                           child: Text('Select Image',
                               style: TextStyle(color: Colors.white)),
                           style: TextButton.styleFrom(
-                              backgroundColor: Colors.blue)),
+                              backgroundColor: Color(0xff5D5FEF))),
                       SizedBox(
                         width: 20,
                       ),
@@ -61,8 +61,8 @@ class _UploadImageState extends State<UploadImage> {
                         onPressed: uploadFile,
                         child: Text('Upload Image',
                             style: TextStyle(color: Colors.white)),
-                        style:
-                            TextButton.styleFrom(backgroundColor: Colors.blue),
+                        style: TextButton.styleFrom(
+                            backgroundColor: Color(0xff5D5FEF)),
                       ),
                     ],
                   ),
