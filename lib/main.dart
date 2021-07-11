@@ -5,6 +5,7 @@ import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
 import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
+import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(),
           '/wrapper': (context) => Wrapper(),
           '/login': (context) => Login(),
-          '/servicekind': (context) => ServiceKind()
+          '/servicekind': (context) => ServiceKind(),
+          '/uploadImage': (context) => UploadImage(),
         },
       ),
     );

@@ -78,7 +78,9 @@ class _ServiceKindState extends State<ServiceKind> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/uploadImage');
+                    },
                     child: Column(
                       children: <Widget>[
                         CircleAvatar(

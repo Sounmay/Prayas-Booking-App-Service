@@ -53,11 +53,17 @@ class _RegisterState extends State<Register> {
                           SizedBox(
                             height: deviceHeight * 0.025,
                           ),
-                          Text("Create an account",
+                          Flexible(
+                            child: Text(
+                              "Create an service account",
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 28)),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 28,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                           Form(
                             key: _formKey,
                             child: Column(children: <Widget>[
@@ -75,6 +81,8 @@ class _RegisterState extends State<Register> {
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Name',
                                     fillColor: Colors.white,
+                                    prefixIcon: Icon(Icons.person_outline,
+                                        color: Colors.blue),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -101,6 +109,8 @@ class _RegisterState extends State<Register> {
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Phone Number',
+                                    prefixIcon: Icon(Icons.call_outlined,
+                                        color: Colors.blue),
                                     fillColor: Colors.white,
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
