@@ -43,7 +43,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 Container(
                                   color: Color(0xff5D5FEF),
                                   padding: EdgeInsets.all(3),
-                                  child: Text('PARLOR',
+                                  child: Text('CLINIC',
                                       style: TextStyle(
                                           fontSize: 22, color: Colors.white)),
                                 )

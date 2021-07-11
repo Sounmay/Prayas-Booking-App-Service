@@ -41,7 +41,7 @@ class _SalonLocationState extends State<SalonLocation> {
                                 Container(
                                   color: Color(0xff5D5FEF),
                                   padding: EdgeInsets.all(3),
-                                  child: Text('PARLOR',
+                                  child: Text('SALON',
                                       style: TextStyle(
                                           fontSize: 22, color: Colors.white)),
                                 )
