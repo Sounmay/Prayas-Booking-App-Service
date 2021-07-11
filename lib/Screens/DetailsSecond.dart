@@ -20,131 +20,195 @@ class _DetailsSecondState extends State<DetailsSecond> {
 
   TextEditingController _textController = new TextEditingController();
 
+  int _employeeDetailsNum = 1;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(children: [
-          SizedBox(
-            height: 50,
-          ),
-          _title("Salon Type"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              radioButton('Gents Only', _gender, true),
-              radioButton('Ladies Only', _gender, true),
-              radioButton('Kids', _gender, true),
-              radioButton('Unisex', _gender, true),
-            ],
-          ),
-          _title("Number of employees"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              radioButton('1', _numOfEmployees, false),
-              radioButton('2', _numOfEmployees, false),
-              radioButton('3', _numOfEmployees, false),
-              radioButton('4', _numOfEmployees, false),
-              radioButton('5', _numOfEmployees, false),
-              radioButton('More', _numOfEmployees, false),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Enter the number of employees:',
-                style: TextStyle(color: Colors.blueGrey),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SizedBox(
-                width: 60,
-                height: 30,
-                child: TextFormField(
-                    controller: _textController,
-                    enabled: _numOfEmployees == "More" ? true : false,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0),
-                        fillColor: Colors.white,
-                        filled: true,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue)),
-                        disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue[100]))),
-                    onChanged: (val) {
-                      setState(() => _extranumOfEmployees = val);
-                    }),
-              ),
-            ],
-          ),
-          _title("Details about your employees"),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    image:
-                        DecorationImage(image: AssetImage('assets/user.png'))),
-                height: 80,
-                width: 80,
-                child: file != null
-                    ? Image.file(
-                        File(file.path),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      )
-                    : null,
-              ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(
+              height: 50,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Row(
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  height: 30,
-                  child: TextFormField(
-                    style: TextStyle(fontSize: 14),
-                    decoration: InputDecoration(hintText: 'Name'),
+                Container(
+                    height: 60,
+                    width: 10,
+                    decoration: BoxDecoration(
+                        color: Color(0xff5D5FEF),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10)))),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text('Add more about your ',
+                          style: TextStyle(fontSize: 22, color: Colors.black)),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      color: Color(0xff5D5FEF),
+                      padding: EdgeInsets.only(left: 5, right: 10),
+                      child: Text('SALON',
+                          style: TextStyle(fontSize: 22, color: Colors.white)),
+                    )
+                  ],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            _title("Salon Type"),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                radioButton('Gents Only', _gender, true),
+                radioButton('Ladies Only', _gender, true),
+                radioButton('Kids', _gender, true),
+                radioButton('Unisex', _gender, true),
+              ],
+            ),
+            SizedBox(height: 25),
+            _title("Number of employees"),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                radioButton('1', _numOfEmployees, false),
+                radioButton('2', _numOfEmployees, false),
+                radioButton('3', _numOfEmployees, false),
+                radioButton('4', _numOfEmployees, false),
+                radioButton('5', _numOfEmployees, false),
+                radioButton('More', _numOfEmployees, false),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    'Enter the number of employees:',
+                    style: TextStyle(color: Colors.blueGrey),
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: 20,
+                ),
+                SizedBox(
+                  width: 60,
                   height: 30,
                   child: TextFormField(
-                    style: TextStyle(fontSize: 14),
-                    decoration: InputDecoration(hintText: 'Phone Number'),
-                  ),
+                      controller: _textController,
+                      enabled: _numOfEmployees == "More" ? true : false,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(0),
+                          fillColor: Colors.white,
+                          filled: true,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue)),
+                          disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue[100]))),
+                      onChanged: (val) {
+                        setState(() => _extranumOfEmployees = val);
+                      }),
                 ),
               ],
             ),
-            TextButton(
-              onPressed: () {},
+            SizedBox(height: 40),
+            _title("Details about your employees"),
+            ...List.generate(_employeeDetailsNum, (index) => employeeDetails()),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
               child: Row(children: [
-                Text('Add Photo', style: TextStyle(color: Colors.white)),
-                Icon(Icons.photo_outlined, color: Colors.white)
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _employeeDetailsNum = _employeeDetailsNum + 1;
+                    });
+                  },
+                  child: Text('+Add new employee',
+                      style: TextStyle(color: Color(0xff5D5FEF))),
+                ),
               ]),
-              style: TextButton.styleFrom(backgroundColor: Colors.blue),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: TextButton(
+                onPressed: () {},
+                child: Text('Save & Proceed',
+                    style: TextStyle(color: Colors.white)),
+                style: TextButton.styleFrom(backgroundColor: Color(0xFF263238)),
+              ),
             )
           ]),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.07,
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: TextButton(
-              onPressed: () {},
-              child:
-                  Text('Save & Proceed', style: TextStyle(color: Colors.white)),
-              style: TextButton.styleFrom(backgroundColor: Color(0xFF263238)),
-            ),
-          )
-        ]),
+        ),
       ),
     );
+  }
+
+  Widget employeeDetails() {
+    return Column(children: [
+      SizedBox(height: 10),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey[400],
+                image: DecorationImage(image: AssetImage('assets/user.png'))),
+            height: 80,
+            width: 80,
+            child: file != null
+                ? Image.file(
+                    File(file.path),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  )
+                : null,
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: 30,
+              child: TextFormField(
+                style: TextStyle(fontSize: 14),
+                decoration: InputDecoration(hintText: 'Name'),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: 30,
+              child: TextFormField(
+                style: TextStyle(fontSize: 14),
+                decoration: InputDecoration(hintText: 'Phone Number'),
+              ),
+            ),
+          ],
+        ),
+        TextButton(
+          onPressed: () {},
+          child: Row(children: [
+            Text('Add Photo', style: TextStyle(color: Colors.white)),
+            Icon(Icons.photo_outlined, color: Colors.white)
+          ]),
+          style: TextButton.styleFrom(backgroundColor: Color(0xff5D5FEF)),
+        )
+      ]),
+    ]);
   }
 
   Widget radioButton(String label, String groupValue, bool isFirst) {
@@ -177,7 +241,9 @@ class _DetailsSecondState extends State<DetailsSecond> {
       child: Row(children: [
         Text(text,
             style: TextStyle(
-                color: Colors.blue, fontSize: 20, fontWeight: FontWeight.bold)),
+                color: Color(0xff5D5FEF),
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
       ]),
     );
   }
