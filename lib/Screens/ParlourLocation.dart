@@ -180,7 +180,8 @@ class _ParlourLocationState extends State<ParlourLocation> {
                   ],
                 ),
               ),
-            )),
+            )
+        ),
       ),
     );
   }
