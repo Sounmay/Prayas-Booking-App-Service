@@ -8,6 +8,7 @@ class ServiceKind extends StatefulWidget {
 
 class _ServiceKindState extends State<ServiceKind> {
   @override
+  int choice = 0;
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
@@ -16,7 +17,27 @@ class _ServiceKindState extends State<ServiceKind> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.32,
+              height: 10.0,
+            ),
+            FlatButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF263238),
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Sign Out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ))),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.20,
             ),
             Center(
               child: Container(
@@ -43,113 +64,188 @@ class _ServiceKindState extends State<ServiceKind> {
                 children: <Widget>[
                   FlatButton(
                     onPressed: () {
-                      FirebaseAuth.instance.signOut();
+                      setState(() {
+                        choice = 1;
+                      });
                     },
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                            radius: 32,
-                            backgroundImage: AssetImage('assets/doctor 3.png')),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        FlatButton(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Doctors',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: choice == 1 ? Color(0xffE5E5FF) : Colors.transparent,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                              radius: 32,
+                              backgroundImage:
+                                  AssetImage('assets/doctor 3.png')),
+                          SizedBox(
+                            height: 10.0,
                           ),
-                          color: Color(0xFF5D5FEF),
-                          height: 25.0,
-                          minWidth: 45.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                              side: BorderSide(
-                                  color: Color(0xFF5D5FEF),
-                                  width: 1,
-                                  style: BorderStyle.solid)),
-                          onPressed: () {},
-                        ),
-                      ],
+                          FlatButton(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Doctors',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            color: Color(0xFF5D5FEF),
+                            height: 25.0,
+                            minWidth: 45.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                                side: BorderSide(
+                                    color: Color(0xFF5D5FEF),
+                                    width: 1,
+                                    style: BorderStyle.solid)),
+                            onPressed: () {
+                              setState(() {
+                                choice = 1;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/uploadImage');
+                      // Navigator.pushNamed(context, '/uploadImage');
+                      setState(() {
+                        choice = 2;
+                      });
                     },
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                            radius: 32,
-                            backgroundImage: AssetImage('assets/Group 30.png')),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        FlatButton(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Parlour',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: choice == 2 ? Color(0xffE5E5FF) : Colors.transparent,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                              radius: 32,
+                              backgroundImage:
+                                  AssetImage('assets/Group 30.png')),
+                          SizedBox(
+                            height: 10.0,
                           ),
-                          color: Color(0xFF5D5FEF),
-                          height: 25.0,
-                          minWidth: 45.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                              side: BorderSide(
-                                  color: Color(0xFF5D5FEF),
-                                  width: 1,
-                                  style: BorderStyle.solid)),
-                          onPressed: () {},
-                        ),
-                      ],
+                          FlatButton(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Parlour',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            color: Color(0xFF5D5FEF),
+                            height: 25.0,
+                            minWidth: 45.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                                side: BorderSide(
+                                    color: Color(0xFF5D5FEF),
+                                    width: 1,
+                                    style: BorderStyle.solid)),
+                            onPressed: () {
+                              setState(() {
+                                choice = 2;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                            radius: 32,
-                            backgroundImage: AssetImage('assets/Group 32.png')),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        FlatButton(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Salon',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                    onPressed: () {
+                      setState(() {
+                        choice = 3;
+                      });
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: choice == 3 ? Color(0xffE5E5FF) : Colors.transparent,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                              radius: 32,
+                              backgroundImage:
+                                  AssetImage('assets/Group 32.png')),
+                          SizedBox(
+                            height: 10.0,
                           ),
-                          color: Color(0xFF5D5FEF),
-                          height: 25.0,
-                          minWidth: 45.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                              side: BorderSide(
-                                  color: Color(0xFF5D5FEF),
-                                  width: 1,
-                                  style: BorderStyle.solid)),
-                          onPressed: () {},
-                        ),
-                      ],
+                          FlatButton(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Salon',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            color: Color(0xFF5D5FEF),
+                            height: 25.0,
+                            minWidth: 45.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                                side: BorderSide(
+                                    color: Color(0xFF5D5FEF),
+                                    width: 1,
+                                    style: BorderStyle.solid)),
+                            onPressed: () {
+                              setState(() {
+                                choice = 3;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/details2');
+              },
+              style: TextButton.styleFrom(backgroundColor: Colors.black),
+              child: Text('To my page(Naiyar)',
+                  style: TextStyle(color: Colors.white)),
+            ),
+            FlatButton(
+                onPressed: () {
+                  if (choice == 1)
+                    Navigator.pushNamed(context, '/doctorlocation');
+                  else if (choice == 2)
+                    Navigator.pushNamed(context, '/parlourlocation');
+                  else if (choice == 3)
+                    Navigator.pushNamed(context, '/salonlocation');
+                },
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF263238),
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Save & Proceed",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )))
           ],
         ),
       )),

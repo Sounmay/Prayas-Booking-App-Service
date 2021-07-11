@@ -39,7 +39,7 @@ class _UploadImageState extends State<UploadImage> {
                       child: file != null
                           ? Image.file(
                               File(file.path),
-                              fit: BoxFit.cover,
+                        fit: BoxFit.cover,
                               width: double.infinity,
                             )
                           : null,
@@ -65,7 +65,8 @@ class _UploadImageState extends State<UploadImage> {
                             TextButton.styleFrom(backgroundColor: Colors.blue),
                       ),
                     ],
-                  )
+                  ),
+                  task != null ? buildUploadStatus(task) : Container(),
                 ],
               ),
             ),
@@ -75,6 +76,22 @@ class _UploadImageState extends State<UploadImage> {
     );
   }
 
+  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
+        stream: task.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data;
+            final progress = snap.bytesTransferred / snap.totalBytes;
+            final percentage = (progress * 100).toStringAsFixed(2);
+            return Text(
+              '$percentage %',
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            );
+          } else {
+            return Container();
+          }
+        },
+      );
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
