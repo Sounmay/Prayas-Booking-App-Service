@@ -7,6 +7,9 @@ import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
 import 'package:provider/provider.dart';
+import 'package:freelance_booking_app_service/Screens/DoctorLocation.dart';
+import 'package:freelance_booking_app_service/Screens/ParlourLocation.dart';
+import 'package:freelance_booking_app_service/Screens/SalonLocation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +31,10 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(),
           '/wrapper': (context) => Wrapper(),
           '/login': (context) => Login(),
-          '/servicekind': (context) => ServiceKind()
+          '/servicekind': (context) => ServiceKind(),
+          '/doctorlocation': (context) => DoctorLocation(),
+          '/parlourlocation': (context) => ParlourLocation(),
+          '/salonlocation': (context) => SalonLocation(),
         },
       ),
     );

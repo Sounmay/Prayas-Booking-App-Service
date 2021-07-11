@@ -8,6 +8,7 @@ class ServiceKind extends StatefulWidget {
 
 class _ServiceKindState extends State<ServiceKind> {
   @override
+  int choice=0;
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
@@ -15,8 +16,23 @@ class _ServiceKindState extends State<ServiceKind> {
           child: Container(
         child: Column(
           children: [
+            SizedBox(height: 10.0,),
+            FlatButton(
+                onPressed: (){
+                  FirebaseAuth.instance.signOut();
+                },
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF263238),
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                    child: Center(child: Text("Sign Out", style: TextStyle(color: Colors.white),),)
+                )
+            ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.32,
+              height: MediaQuery.of(context).size.height * 0.20,
             ),
             Center(
               child: Container(
@@ -42,8 +58,10 @@ class _ServiceKindState extends State<ServiceKind> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
+                    splashColor: Colors.blue,
+                    highlightColor: Colors.blue,
                     onPressed: () {
-                      FirebaseAuth.instance.signOut();
+                      choice=1;
                     },
                     child: Column(
                       children: <Widget>[
@@ -72,13 +90,17 @@ class _ServiceKindState extends State<ServiceKind> {
                                   color: Color(0xFF5D5FEF),
                                   width: 1,
                                   style: BorderStyle.solid)),
-                          onPressed: () {},
+                          onPressed: () {
+                            choice=1;
+                          },
                         ),
                       ],
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      choice=2;
+                    },
                     child: Column(
                       children: <Widget>[
                         CircleAvatar(
@@ -106,13 +128,17 @@ class _ServiceKindState extends State<ServiceKind> {
                                   color: Color(0xFF5D5FEF),
                                   width: 1,
                                   style: BorderStyle.solid)),
-                          onPressed: () {},
+                          onPressed: () {
+                            choice=2;
+                          },
                         ),
                       ],
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      choice=3;
+                    },
                     child: Column(
                       children: <Widget>[
                         CircleAvatar(
@@ -140,7 +166,9 @@ class _ServiceKindState extends State<ServiceKind> {
                                   color: Color(0xFF5D5FEF),
                                   width: 1,
                                   style: BorderStyle.solid)),
-                          onPressed: () {},
+                          onPressed: () {
+                            choice=3;
+                          },
                         ),
                       ],
                     ),
@@ -148,6 +176,28 @@ class _ServiceKindState extends State<ServiceKind> {
                 ],
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+            ),
+            FlatButton(
+                onPressed: (){
+                  if(choice==1)
+                    Navigator.pushNamed(context, '/doctorlocation');
+                  else if(choice==2)
+                    Navigator.pushNamed(context, '/parlourlocation');
+                  else if(choice==3)
+                    Navigator.pushNamed(context, '/salonlocation');
+                },
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF263238),
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                    child: Center(child: Text("Save & Proceed", style: TextStyle(color: Colors.white),),)
+                )
+            )
           ],
         ),
       )),
