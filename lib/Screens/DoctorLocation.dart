@@ -43,7 +43,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 Container(
                                   color: Color(0xff5D5FEF),
                                   padding: EdgeInsets.all(3),
-                                  child: Text('PARLOR',
+                                  child: Text('CLINIC',
                                       style: TextStyle(
                                           fontSize: 22, color: Colors.white)),
                                 )
@@ -73,7 +73,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Palour name',
+                                hintText: 'Clinic name',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -95,7 +95,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             },
                           ),
                           SizedBox(height: 40),
-                          Text('Parlour location details',
+                          Text('Clinic location details',
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xff5D5FEF))),
                           TextFormField(
