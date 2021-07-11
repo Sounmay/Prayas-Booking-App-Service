@@ -6,13 +6,14 @@ class ParlourLocation extends StatefulWidget {
 }
 
 class _ParlourLocationState extends State<ParlourLocation> {
+  final _formKey = GlobalKey<FormState>();
 
- final _formKey = GlobalKey<FormState>();
+  String title = 'Parlour';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         body: SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Container(
             color: Colors.white,
             child: Padding(
@@ -159,10 +160,12 @@ class _ParlourLocationState extends State<ParlourLocation> {
                     SizedBox(height: 60),
                     FlatButton(
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Processing Data')));
-                          }
+                          // if (_formKey.currentState.validate()) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       SnackBar(content: Text('Processing Data')));
+                          // }
+                          Navigator.pushNamed(context, '/details2',
+                              arguments: {"title": title});
                         },
                         child: Container(
                             height: MediaQuery.of(context).size.height * 0.07,
