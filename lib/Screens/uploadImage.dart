@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetails.dart';
 import 'package:freelance_booking_app_service/Providers/FirebaseApi.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:path/path.dart';
@@ -20,7 +21,14 @@ class _UploadImageState extends State<UploadImage> {
 
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file.path) : 'No File Selected';
+    // final fileName = file != null ? basename(file.path) : 'No File Selected';
+    final _arguments =
+        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    Location _location = _arguments["location"];
+    Details _details = _arguments["details"];
+    ParlourDetails parlourDetails =
+        ParlourDetails(location: _location, details: _details);
+    print(parlourDetails);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
