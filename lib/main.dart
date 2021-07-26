@@ -13,6 +13,7 @@ import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
 import 'package:provider/provider.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourLocation.dart';
+import 'package:freelance_booking_app_service/Screens/Schedule.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           '/salonlocation': (context) => SalonLocation(),
           '/finalParlourPage': (context) => FinalEditPage(),
           '/details2': (context) => DetailsSecond(),
+          '/schedule': (context) => Schedule(),
         },
       ),
     );
