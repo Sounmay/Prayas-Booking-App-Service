@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocation.dart';
+import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsSecond.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/FinalEditPage.dart';
+import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourLocation.dart';
 import 'package:freelance_booking_app_service/Screens/SalonScreens/SalonLocation.dart';
+import 'package:freelance_booking_app_service/Screens/Schedule.dart';
 import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
 import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
 import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
 import 'package:provider/provider.dart';
-import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourLocation.dart';
-import 'package:freelance_booking_app_service/Screens/Schedule.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
           '/finalParlourPage': (context) => FinalEditPage(),
           '/details2': (context) => DetailsSecond(),
           '/schedule': (context) => Schedule(),
+          '/otpscreen': (context) => OTPScreen()
+
         },
       ),
     );
