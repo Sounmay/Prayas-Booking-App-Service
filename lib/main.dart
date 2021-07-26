@@ -12,7 +12,11 @@ import 'package:provider/provider.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorLocation.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourLocation.dart';
 import 'package:freelance_booking_app_service/Screens/SalonLocation.dart';
+<<<<<<< HEAD
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
+=======
+import 'package:freelance_booking_app_service/Screens/Schedule.dart';
+>>>>>>> 68057a3c994500694e7d7436a7b9cbdd25459f1a
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +46,7 @@ class MyApp extends StatelessWidget {
           '/details2': (context) => DetailsSecond(),
           '/schedule': (context) => Schedule(),
           '/otpscreen': (context) => OTPScreen()
+
         },
       ),
     );
