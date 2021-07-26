@@ -63,7 +63,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
               ),
             ]),
             Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.6,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -295,7 +295,9 @@ class _FinalEditPageState extends State<FinalEditPage> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/otpscreen');
                       },
-                      child: Text('Save & Proceed'))
+                      style: TextButton.styleFrom(
+                          backgroundColor: Color(0xff5D5FEF)),
+                      child: Text('Save & Proceed', style: TextStyle(color: Colors.white),))
                 ],
               ),
             )
