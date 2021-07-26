@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
           '/details2': (context) => DetailsSecond(),
           '/schedule': (context) => Schedule(),
           '/otpscreen': (context) => OTPScreen()
-
         },
       ),
     );
