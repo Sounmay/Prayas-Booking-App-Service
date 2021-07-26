@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +58,11 @@ class _ScheduleState extends State<Schedule> {
           ),
           SizedBox(height: 20),
           TableCalendar(
+            headerStyle: HeaderStyle(
+                titleCentered: true,
+                titleTextStyle: TextStyle(color: Colors.blue[700])),
+            weekendDays: [DateTime.sunday],
+            availableCalendarFormats: {_calendarFormat: 'Month'},
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
             focusedDay: _focusedDay,
@@ -78,16 +85,18 @@ class _ScheduleState extends State<Schedule> {
               });
             },
             calendarStyle: CalendarStyle(
+                weekendTextStyle: TextStyle(color: Colors.blue[700]),
+                defaultTextStyle: TextStyle(color: Colors.blue[700]),
                 todayDecoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Color(0xff5D5FEF)),
-                    borderRadius: BorderRadius.circular(6.0)),
+                  shape: BoxShape.circle,
+                  color: Colors.blue[100],
+                ),
                 todayTextStyle: TextStyle(color: Colors.black),
                 selectedTextStyle: TextStyle(color: Colors.black),
                 selectedDecoration: BoxDecoration(
-                    color: Colors.blue[100],
-                    border: Border.all(color: Colors.blue[100]),
-                    borderRadius: BorderRadius.circular(6.0)),
+                  shape: BoxShape.circle,
+                  color: Colors.pink[50],
+                ),
                 withinRangeDecoration: BoxDecoration(color: Colors.white)),
           ),
         ],
