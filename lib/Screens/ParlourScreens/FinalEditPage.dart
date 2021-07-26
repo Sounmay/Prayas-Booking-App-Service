@@ -291,6 +291,11 @@ class _FinalEditPageState extends State<FinalEditPage> {
                   ...List.generate(
                       int.parse(parlourDetails.details.numOfEmployees),
                       (index) => Container(child: Text('hello'))),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/otpscreen');
+                      },
+                      child: Text('Save & Proceed'))
                 ],
               ),
             )
