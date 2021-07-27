@@ -11,4 +11,6 @@ class DatabaseService {
         .doc(FirebaseAuth.instance.currentUser.uid)
         .update({"image": imgUrl});
   }
+
+  
 }
