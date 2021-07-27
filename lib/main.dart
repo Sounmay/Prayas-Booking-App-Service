@@ -16,6 +16,7 @@ import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
 import 'package:provider/provider.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
