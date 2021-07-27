@@ -15,7 +15,7 @@ class _ScheduleState extends State<Schedule> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   String date;
   bool a1 = true, a2 = true, a3 = true;
-  int evnt = 1;
+  int evnt = 0;
   int sb = 1, eb = 0;
 
   @override
