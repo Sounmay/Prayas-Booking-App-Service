@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:freelance_booking_app_service/Widgets/NavigationWidget.dart';
 
 class OTPScreen extends StatefulWidget {
   @override
