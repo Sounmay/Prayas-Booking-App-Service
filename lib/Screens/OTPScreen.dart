@@ -81,7 +81,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       FlatButton(
                         onPressed: (){
                           setState(() {
-                            _isPressed = !_isPressed;
+                            (res==true)?Navigator.pushNamed(context, '/startservice'):Navigator.pushNamed(context, '/schedule');
                           });
                           if(res==true){
                             print('valid pin');
