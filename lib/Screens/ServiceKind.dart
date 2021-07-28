@@ -35,7 +35,9 @@ class _ServiceKindState extends State<ServiceKind> {
                         "Sign Out",
                         style: TextStyle(color: Colors.white),
                       ),
-                    ))),
+                    )
+                )
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
             ),
