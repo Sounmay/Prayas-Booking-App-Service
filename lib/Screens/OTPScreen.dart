@@ -93,13 +93,13 @@ class _OTPScreenState extends State<OTPScreen> {
                             height: MediaQuery.of(context).size.height * 0.05,
                             width: MediaQuery.of(context).size.width * 0.3,
                             decoration: BoxDecoration(
-                                color: (_isPressed==true)?Color(0xff3AD48A):Colors.white,
+                                color: (res==true)?Color(0xff3AD48A):Colors.white,
                                 borderRadius: BorderRadius.circular(5.0)
                             ),
                             child: Center(
                               child: Text(
-                                  (_isPressed==true)?"Proceed  V":"Proceed",
-                                  style: TextStyle(color: (_isPressed==true)?Colors.white:Color(0xff0F2735), fontSize: 15)
+                                  (res==true)?"Proceed  V":"Proceed",
+                                  style: TextStyle(color: (res==true)?Colors.white:Color(0xff0F2735), fontSize: 15)
                               ),
                             )
                         ),
@@ -109,7 +109,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
                 SizedBox(height: 30.0,),
                 Opacity(
-                    opacity: res==true?1.0:0.5,
+                    opacity: res==true?1.0:0.3,
                     child: Container(
                       margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 10.0),
                       decoration: BoxDecoration(
