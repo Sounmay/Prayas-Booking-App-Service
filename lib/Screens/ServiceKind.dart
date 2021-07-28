@@ -227,7 +227,7 @@ class _ServiceKindState extends State<ServiceKind> {
                             if (choice == 1)
                               Navigator.pushNamed(context, '/doctorlocation');
                             else if (choice == 2)
-                              Navigator.pushNamed(context, '/parlourlocation');
+                              Navigator.pushNamed(context, '/otpscreen');
                             else if (choice == 3)
                               Navigator.pushNamed(context, '/salonlocation');
                           },

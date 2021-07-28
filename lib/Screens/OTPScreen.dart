@@ -88,7 +88,6 @@ class _OTPScreenState extends State<OTPScreen> {
                   ],
                 ),
               ),
-              BottomNavBar(),
             ],
           ),
         ),
