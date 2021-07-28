@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Widgets/NavigationWidget.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.popAndPushNamed(context, '/wrapper');
+      Navigator.popAndPushNamed(context, '/otpscreen');
       // Navigator.popAndPushNamed(context, '/servicekind');
     });
     return Scaffold(

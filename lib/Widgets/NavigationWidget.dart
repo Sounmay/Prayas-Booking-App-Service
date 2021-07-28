@@ -18,7 +18,7 @@ class BottomNavBar extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
               label: 'calendar',
-              backgroundColor: Colors.blue
+              backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.ac_unit),
@@ -26,6 +26,11 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Colors.blue
           )
         ],
+        onTap: (index){
+          setState(){
+            _currentIndex=index;
+          }
+        },
       ),
     );
   }
