@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetails.dart';
@@ -418,8 +419,10 @@ class _ParlourLocationState extends State<ParlourLocation> {
                           //   ScaffoldMessenger.of(context).showSnackBar(
                           //       SnackBar(content: Text('Processing Data')));
                           // }
+                          final uid = FirebaseAuth.instance.currentUser.uid;
                           if (_formKey.currentState.validate()) {
                             Location location = Location(
+                              serviceUid: uid.toString(),
                                 name: parlourName,
                                 shopNo: shopNo,
                                 address: '$address, $area, $landmark',

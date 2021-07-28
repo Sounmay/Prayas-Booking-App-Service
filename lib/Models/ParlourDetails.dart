@@ -25,10 +25,10 @@ class ParlourDetails {
 }
 
 class Location {
+  String serviceUid;
   String name;
   String shopNo;
   String address;
-  String parlourImage;
   String ownerImage;
   String ownerName;
   String ownerNumber;
@@ -36,9 +36,9 @@ class Location {
 
   Location(
       {this.name,
+      this.serviceUid,
       this.shopNo,
       this.address,
-      this.parlourImage,
       this.ownerImage,
       this.ownerName,
       this.ownerNumber,
@@ -48,7 +48,7 @@ class Location {
     name = json['name'];
     shopNo = json['shopNo'];
     address = json['address'];
-    parlourImage = json['parlourImage'];
+    serviceUid = json['serviceUid'];
     ownerImage = json['ownerImage'];
     ownerName = json['ownerName'];
     ownerNumber = json['ownerNumber'];
@@ -60,11 +60,11 @@ class Location {
     data['name'] = this.name;
     data['shopNo'] = this.shopNo;
     data['address'] = this.address;
-    data['parlourImage'] = this.parlourImage;
     data['ownerImage'] = this.ownerImage;
     data['ownerName'] = this.ownerName;
     data['ownerNumber'] = this.ownerNumber;
     data['aboutOwner'] = this.aboutOwner;
+    data['serviceUid'] = this.serviceUid;
     return data;
   }
 }
@@ -73,17 +73,20 @@ class Details {
   String parlourType;
   String aboutParlour;
   String numOfEmployees;
+  String parlourImage;
   List<EmployeeDetailList> employeeDetailList;
 
   Details(
       {this.parlourType,
       this.aboutParlour,
+      this.parlourImage,
       this.numOfEmployees,
       this.employeeDetailList});
 
   Details.fromJson(Map<String, dynamic> json) {
     parlourType = json['parlourType'];
     aboutParlour = json['aboutParlour'];
+    parlourImage = json['parlourImage'];
     numOfEmployees = json['numOfEmployees'];
     if (json['employeeDetailList'] != null) {
       employeeDetailList = new List<EmployeeDetailList>();
@@ -97,6 +100,7 @@ class Details {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['parlourType'] = this.parlourType;
     data['aboutParlour'] = this.aboutParlour;
+    data['parlourImage'] = this.parlourImage;
     data['numOfEmployees'] = this.numOfEmployees;
     if (this.employeeDetailList != null) {
       data['employeeDetailList'] =
