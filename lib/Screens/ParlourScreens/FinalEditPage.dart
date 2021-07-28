@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:path/path.dart';
@@ -18,11 +19,12 @@ class FinalEditPage extends StatefulWidget {
 }
 
 class _FinalEditPageState extends State<FinalEditPage> {
-  String ownerImagepath = '';
+  String parlourImagepath = '';
   File file;
   bool isEditMode = false;
   bool isLoading = false;
   String parlourImageUrl = '';
+  String ownerImageUrl = '';
 
   List<String> imageUrls = [];
 
@@ -33,6 +35,9 @@ class _FinalEditPageState extends State<FinalEditPage> {
     );
   }
 
+  List<EmployeeDetailList> employeeList = [];
+  List<EmployeeDetailList> finalEmployeeList = [];
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -41,6 +46,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     Location _location = _arguments["location"];
     Details _details = _arguments["details"];
+    List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
     ParlourDetails parlourDetails =
         ParlourDetails(location: _location, details: _details);
     print(parlourDetails);
@@ -185,7 +191,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
 
                                                       setState(() {
                                                         file = File(image.path);
-                                                        ownerImagepath = file
+                                                        parlourImagepath = file
                                                             .path
                                                             .toString();
                                                       });
@@ -375,8 +381,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
                           width: MediaQuery.of(context).size.width * 0.75,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: parlourDetails
-                                .details.employeeDetailList.length,
+                            itemCount: _employeeList.length,
                             itemBuilder: (BuildContext ctx, index) {
                               return Container(
                                 margin: EdgeInsets.symmetric(horizontal: 1),
@@ -393,18 +398,13 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                             image: new DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: FileImage(File(
-                                                    parlourDetails
-                                                        .details
-                                                        .employeeDetailList[
-                                                            index]
+                                                    _employeeList[index]
                                                         .imagefile))))),
                                     new Text(
-                                      parlourDetails.details
-                                          .employeeDetailList[index].name,
+                                      _employeeList[index].name,
                                     ),
                                     new Text(
-                                      parlourDetails.details
-                                          .employeeDetailList[index].number,
+                                      _employeeList[index].number,
                                       style: TextStyle(
                                           color: Color(0xff5D5FEF),
                                           fontSize: 12),
@@ -424,59 +424,42 @@ class _FinalEditPageState extends State<FinalEditPage> {
                           onPressed: () {
                             setState(() {
                               isLoading = true;
+                              employeeList = _employeeList;
                             });
-                            List<EmployeeDetailList> finalEmployeeList = [];
 
-                            List<File> imageFiles = [];
-                            final result = uploadFile(file);
-                            final resultm = uploadMultipleFile(imageFiles);
-                            if (result != null &&
-                                resultm != null &&
-                                task != null) {
-                              for (int i = 0;
-                                  i <
-                                      parlourDetails
-                                          .details.employeeDetailList.length;
-                                  i++) {
-                                imageFiles.add(File(parlourDetails
-                                    .details.employeeDetailList[i].imagefile));
-                              }
+                            uploadEmployeeImages();
+                            uploadImage(
+                                parlourDetails.location.ownerImage, true);
+                            uploadImage(parlourImagepath, false);
 
-                              for (int i = 0;
-                                  i <
-                                      parlourDetails
-                                          .details.employeeDetailList.length;
-                                  i++) {
-                                finalEmployeeList.add(EmployeeDetailList(
-                                    name: parlourDetails
-                                        .details.employeeDetailList[i].name,
-                                    number: parlourDetails
-                                        .details.employeeDetailList[i].number,
-                                    imagefile: imageUrls[i]));
-                                Details finalDetails;
-                                finalDetails = Details(
-                                    aboutParlour:
-                                        parlourDetails.details.aboutParlour,
-                                    parlourType:
-                                        parlourDetails.details.parlourType,
-                                    numOfEmployees:
-                                        parlourDetails.details.numOfEmployees,
-                                    parlourImage: parlourImageUrl,
-                                    employeeDetailList: finalEmployeeList);
+                            Location finalParlourLocation = Location(
+                                aboutOwner: parlourDetails.location.aboutOwner,
+                                ownerImage: ownerImageUrl,
+                                ownerName: parlourDetails.location.ownerName,
+                                ownerNumber:
+                                    parlourDetails.location.ownerNumber,
+                                name: parlourDetails.location.name,
+                                address: parlourDetails.location.address,
+                                shopNo: parlourDetails.location.shopNo,
+                                serviceUid: parlourDetails.location.serviceUid);
 
-                                ParlourDetails finalParlourDetails =
-                                    ParlourDetails(
-                                        location: _location,
-                                        details: finalDetails);
-                                DatabaseService().uploadParlourServiceData(
-                                    finalParlourDetails);
-                              }
-                              setState(() {
-                                isLoading = false;
-                              });
+                            Details finalParlourDetails = Details(
+                                aboutParlour:
+                                    parlourDetails.details.aboutParlour,
+                                parlourImage: parlourImageUrl,
+                                parlourType: parlourDetails.details.parlourType,
+                                numOfEmployees:
+                                    parlourDetails.details.numOfEmployees);
 
+                            DatabaseService().uploadParlourServiceData(
+                                finalParlourLocation,
+                                finalParlourDetails,
+                                finalEmployeeList);
+
+                            setState(() {
+                              isLoading = false;
                               Navigator.pushNamed(context, '/schedule');
-                            }
+                            });
                           },
                           child: SizedBox(
                             width: width * 0.4,
@@ -527,51 +510,92 @@ class _FinalEditPageState extends State<FinalEditPage> {
 
   UploadTask task;
 
-  Future uploadFile(File _file) async {
-    if (_file == null) return '';
-    final fileName = basename(_file.path);
+  Future uploadEmployeeImages() async {
     final uid = FirebaseAuth.instance.currentUser.uid;
-    final destination = 'serviceImage/$uid/$fileName';
 
-    task = FirebaseApi.uploadFile(destination, _file);
-
-    if (task == null) return null;
-
-    final snapshot = await task.whenComplete(() {});
-    final urlDownload = await snapshot.ref.getDownloadURL();
-
-    // DatabaseService().uploadImage(urlDownload);
-
-    setState(() {
-      parlourImageUrl = urlDownload;
-    });
-    return urlDownload;
-  }
-
-  Future uploadMultipleFile(List<File> _file) async {
-    if (_file == null || _file.isEmpty) return [];
-    List<String> imgUrl = [];
-
-    for (int i = 0; i < _file.length; i++) {
-      final fileName = basename(_file[i].path);
-      final uid = FirebaseAuth.instance.currentUser.uid;
-      final destination = 'serviceImage/$uid/$fileName';
-
-      task = FirebaseApi.uploadFile(destination, _file[i]);
-
-      if (task == null) return null;
-
-      final snapshot = await task.whenComplete(() {});
-      String urlDownload = await snapshot.ref.getDownloadURL();
-      imgUrl.add(urlDownload);
-      // DatabaseService().uploadImage(urlDownload);
+    for (var img in employeeList) {
+      File file = File(img.imagefile);
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('serviceImage/$uid/${basename(file.path)}');
+      await ref.putFile(file).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          setState(() {
+            finalEmployeeList.add(EmployeeDetailList(
+                name: img.name,
+                number: img.number,
+                imagefile: value.toString()));
+          });
+        });
+      });
     }
-
-    setState(() {
-      imageUrls = imgUrl;
-    });
-    return imgUrl;
   }
+
+  Future uploadImage(String imgString, bool isOwner) async {
+    final uid = FirebaseAuth.instance.currentUser.uid;
+
+    File file = File(imgString);
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('serviceImage/$uid/${basename(file.path)}');
+    await ref.putFile(file).whenComplete(() async {
+      await ref.getDownloadURL().then((value) {
+        setState(() {
+          if (isOwner) {
+            ownerImageUrl = value;
+          } else {
+            parlourImageUrl = value;
+          }
+        });
+      });
+    });
+  }
+
+  // Future uploadFile(File _file) async {
+  //   if (_file == null) return '';
+  //   final fileName = basename(_file.path);
+  //   final uid = FirebaseAuth.instance.currentUser.uid;
+  //   final destination = 'serviceImage/$uid/$fileName';
+
+  //   task = FirebaseApi.uploadFile(destination, _file);
+
+  //   if (task == null) return null;
+
+  //   final snapshot = await task.whenComplete(() {});
+  //   final urlDownload = await snapshot.ref.getDownloadURL();
+
+  //   // DatabaseService().uploadImage(urlDownload);
+
+  //   setState(() {
+  //     parlourImageUrl = urlDownload;
+  //   });
+  //   return urlDownload;
+  // }
+
+  // Future uploadMultipleFile(List<File> _file) async {
+  //   if (_file == null || _file.isEmpty) return [];
+  //   List<String> imgUrl = [];
+
+  //   for (int i = 0; i < _file.length; i++) {
+  //     final fileName = basename(_file[i].path);
+  //     final uid = FirebaseAuth.instance.currentUser.uid;
+  //     final destination = 'serviceImage/$uid/$fileName';
+
+  //     task = FirebaseApi.uploadFile(destination, _file[i]);
+
+  //     if (task == null) return null;
+
+  //     final snapshot = await task.whenComplete(() {});
+  //     String urlDownload = await snapshot.ref.getDownloadURL();
+  //     imgUrl.add(urlDownload);
+  //     // DatabaseService().uploadImage(urlDownload);
+  //   }
+
+  //   setState(() {
+  //     imageUrls = imgUrl;
+  //   });
+  //   return imgUrl;
+  // }
 }
 
 class MyClip extends CustomClipper<Rect> {

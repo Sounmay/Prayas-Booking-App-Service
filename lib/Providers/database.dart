@@ -14,16 +14,19 @@ class DatabaseService {
         .update({"image": imgUrl});
   }
 
-  uploadParlourServiceData(ParlourDetails parlourDetail) async {
+  uploadParlourServiceData(Location location, Details details, List<EmployeeDetailList> finalEmployeeList) async {
     try {
       await _db
           .collection('ParlourServices')
           .doc(uid)
-          .set({"parlourServiceDetails": parlourDetail.toJson()});
+          .set({"location": location.toJson(), "details": details.toJson(), "employeeDetails": finalEmployeeList.map((e) => e.toJson()).toList()});
     } catch (e) {
       print(e.toString());
     }
     // await getUserdata(user);
     // notifyListeners();
   }
+
+
+  
 }

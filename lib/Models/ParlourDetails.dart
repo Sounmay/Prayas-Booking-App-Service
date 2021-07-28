@@ -74,26 +74,19 @@ class Details {
   String aboutParlour;
   String numOfEmployees;
   String parlourImage;
-  List<EmployeeDetailList> employeeDetailList;
 
   Details(
       {this.parlourType,
       this.aboutParlour,
       this.parlourImage,
-      this.numOfEmployees,
-      this.employeeDetailList});
+      this.numOfEmployees});
 
   Details.fromJson(Map<String, dynamic> json) {
     parlourType = json['parlourType'];
     aboutParlour = json['aboutParlour'];
     parlourImage = json['parlourImage'];
     numOfEmployees = json['numOfEmployees'];
-    if (json['employeeDetailList'] != null) {
-      employeeDetailList = new List<EmployeeDetailList>();
-      json['employeeDetailList'].forEach((v) {
-        employeeDetailList.add(new EmployeeDetailList.fromJson(v));
-      });
-    }
+  
   }
 
   Map<String, dynamic> toJson() {
@@ -102,10 +95,7 @@ class Details {
     data['aboutParlour'] = this.aboutParlour;
     data['parlourImage'] = this.parlourImage;
     data['numOfEmployees'] = this.numOfEmployees;
-    if (this.employeeDetailList != null) {
-      data['employeeDetailList'] =
-          this.employeeDetailList.map((v) => v.toJson()).toList();
-    }
+    
     return data;
   }
 }

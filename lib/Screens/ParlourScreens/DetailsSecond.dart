@@ -179,7 +179,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue[100]))),
                       onChanged: (val) {
-                      setState(() => _finalNumofEmployees = val);
+                        setState(() => _finalNumofEmployees = val);
 
                         if ((_finalNumofEmployees != "--" &&
                                 _finalNumofEmployees != "") &&
@@ -226,10 +226,13 @@ class _DetailsSecondState extends State<DetailsSecond> {
                     Details details = Details(
                         parlourType: _gender,
                         aboutParlour: about,
-                        numOfEmployees: _finalNumofEmployees,
-                        employeeDetailList: employeeList);
+                        numOfEmployees: _finalNumofEmployees);
                     Navigator.pushNamed(context, '/finalParlourPage',
-                        arguments: {"details": details, "location": _location});
+                        arguments: {
+                          "details": details,
+                          "location": _location,
+                          "employeeList": employeeList
+                        });
                   }
                 },
                 child: Text('Save & Proceed',
