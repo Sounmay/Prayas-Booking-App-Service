@@ -208,7 +208,7 @@ class _StartServiceState extends State<StartService> {
                         });
                         if(started==false){
                           Navigator.popAndPushNamed(context, '/otpscreen');
-                        }
+                        } //switch
                       },
                       child: Text((started==false)?'Start Service':'Service Completed :-)',
                           style: TextStyle(color: Color(0xff5D5FEF))),
