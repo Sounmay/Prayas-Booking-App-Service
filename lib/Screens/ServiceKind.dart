@@ -238,6 +238,7 @@ class _ServiceKindState extends State<ServiceKind> {
                         color: Color(0xFF263238),
                         borderRadius: BorderRadius.circular(2.0),
                       ),
+<<<<<<< HEAD
                       child: Center(
                         child: Text(
                           "Save & Proceed",
@@ -245,6 +246,33 @@ class _ServiceKindState extends State<ServiceKind> {
                         ),
                       )))
             ],
+=======
+                      FlatButton(
+                          onPressed: () {
+                            if (choice == 1)
+                              Navigator.pushNamed(context, '/doctorlocation');
+                            else if (choice == 2)
+                              Navigator.pushNamed(context, '/parlourlocation');
+                            else if (choice == 3)
+                              Navigator.pushNamed(context, '/salonlocation');
+                          },
+                          child: Container(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF263238),
+                                borderRadius: BorderRadius.circular(2.0),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Save & Proceed",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )))
+                    ],
+                  ),
+                )),
+>>>>>>> 69d621b3cabde071774f617e1e4744b75859f44c
           ),
         )),
       ),
