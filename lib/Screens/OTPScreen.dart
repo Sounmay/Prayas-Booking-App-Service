@@ -225,7 +225,6 @@ class _OTPScreenState extends State<OTPScreen> {
                                           children: [
                                             SizedBox(height: 40.0,),
                                             Text("For 3 services (incl tax)"),
-
                                           ],
                                         )
                                       ],
