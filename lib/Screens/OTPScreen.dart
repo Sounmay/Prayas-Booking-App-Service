@@ -210,6 +210,27 @@ class _OTPScreenState extends State<OTPScreen> {
                                   ],
                                 ),
                                 SizedBox(height: 10.0,),
+                                SizedBox(height: 10.0,),
+                                Container(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("Net Amount : ", style: TextStyle(fontSize: 20),),
+                                            Text("Rs 400", style: TextStyle(fontSize: 20, color: Color(0xff5D5FEF)),),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(height: 40.0,),
+                                            Text("For 3 services (incl tax)"),
+
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                ),
                               ],
                             ),
                           )
