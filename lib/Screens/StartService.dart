@@ -6,6 +6,7 @@ class StartService extends StatefulWidget {
 }
 
 class _StartServiceState extends State<StartService> {
+  bool started=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +108,7 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
+                          SizedBox(width: 20.0,),
                           Text("Haircut")
                         ],
                       ),
@@ -121,6 +123,7 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
+                          SizedBox(width: 20.0,),
                           Text("Haircut")
                         ],
                       ),
@@ -135,6 +138,7 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
+                          SizedBox(width: 20.0,),
                           Text("Haircut")
                         ],
                       ),
@@ -149,6 +153,7 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
+                          SizedBox(width: 20.0,),
                           Text("Haircut")
                         ],
                       ),
@@ -158,6 +163,58 @@ class _StartServiceState extends State<StartService> {
                     ],
                   ),
                   SizedBox(height: 10.0,),
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Net Amount : ", style: TextStyle(fontSize: 20),),
+                            Text("Rs 400", style: TextStyle(fontSize: 20, color: Color(0xff5D5FEF)),),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(height: 40.0,),
+                            Text("For 3 services (incl tax)"),
+
+                          ],
+                        )
+                      ],
+                    )
+                  ),
+                  SizedBox(height: 40.0,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text('Add service +',
+                          style: TextStyle(color: Colors.white)),
+                      style: TextButton.styleFrom(backgroundColor: Color(0xFF263238)),
+                    ),
+                  ),
+                  SizedBox(height: 10.0,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xff5D5FEF))
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          started=!started;
+                        });
+                        if(started==false){
+                          Navigator.popAndPushNamed(context, '/otpscreen');
+                        }
+                      },
+                      child: Text((started==false)?'Start Service':'Service Completed :-)',
+                          style: TextStyle(color: Color(0xff5D5FEF))),
+                      style: TextButton.styleFrom(),
+                    ),
+                  )
                 ],
               ),
             )
