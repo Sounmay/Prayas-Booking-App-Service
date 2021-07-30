@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetails.dart';
+import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ParlourLocation extends StatefulWidget {
   @override
@@ -14,13 +17,18 @@ class ParlourLocation extends StatefulWidget {
 class _ParlourLocationState extends State<ParlourLocation> {
   final _formKey = GlobalKey<FormState>();
 
-  var geoLocator=Geolocator();
-
-  void locatePosition() async{
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    String lati = position.latitude.toString();
-    String longi = position. longitude.toString();
-    print(position == null ? 'Unknown' : 'Latitude : ' + lati + ', ' +'Longitude : '+ longi);
+  var geoLocator = Geolocator();
+  String lati, longi;
+  void locatePosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      lati = position.latitude.toString();
+      longi = position.longitude.toString();
+    });
+    print(position == null
+        ? 'Unknown'
+        : 'Latitude : ' + lati + ', ' + 'Longitude : ' + longi);
   }
 
   String title = 'Parlour';
@@ -35,7 +43,40 @@ class _ParlourLocationState extends State<ParlourLocation> {
       area = '',
       landmark = '',
       ownerName = '',
-      ownerNumber = '';
+      ownerNumber = '',
+      add = '';
+
+  String locationpreference = '';
+  List<String> _addresspreference = [];
+
+  _loadData(String _location) async {
+    if (_location == '' || _location == null) return;
+
+    if (_addresspreference.isNotEmpty) {
+      address = _addresspreference[0];
+      area = _addresspreference[1];
+      landmark = _addresspreference[2];
+    }
+
+    Map<String, dynamic> mappedData = json.decode(_location);
+
+    setState(() {
+      parlourName = mappedData['name'];
+      shopNo = mappedData['shopNo'];
+      address = mappedData['address'];
+      ownerName = mappedData['ownerName'];
+      ownerNumber = mappedData['ownerNumber'];
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    locationpreference = SharedPreferencesForm.getDetails() ?? '';
+    _addresspreference = SharedPreferencesForm.getAddressforFrom() ?? [];
+    _loadData(locationpreference);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +143,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                         children: [
                           _title("Enter shop details", false),
                           TextFormField(
+                            initialValue: parlourName,
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Parlour name',
@@ -119,6 +161,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                             },
                           ),
                           TextFormField(
+                            initialValue: shopNo,
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Registered Shop no.',
@@ -138,6 +181,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
                           SizedBox(height: 40),
                           _title("Parlour location details", false),
                           TextFormField(
+                            initialValue: _addresspreference.isEmpty
+                                ? ''
+                                : _addresspreference[0],
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Address/Floor',
@@ -155,6 +201,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
                             },
                           ),
                           TextFormField(
+                            initialValue: _addresspreference.isEmpty
+                                ? ''
+                                : _addresspreference[1],
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Area/Street Name/Plot no/Sector.',
@@ -172,6 +221,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
                             },
                           ),
                           TextFormField(
+                            initialValue: _addresspreference.isEmpty
+                                ? ''
+                                : _addresspreference[2],
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Landmark',
@@ -247,6 +299,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.4,
                                   child: TextFormField(
+                                    initialValue: ownerName,
                                     style: TextStyle(fontSize: 14),
                                     decoration: InputDecoration(
                                         isDense: true,
@@ -268,6 +321,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.4,
                                   child: TextFormField(
+                                    initialValue: ownerNumber,
                                     keyboardType: TextInputType.number,
                                     style: TextStyle(fontSize: 14),
                                     validator: (val) => val.length < 10
@@ -418,14 +472,13 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 borderSide:
                                     BorderSide(color: Color(0xff5D5FEF))),
                           ),
-                          
                           onChanged: (val) {
                             setState(() => about = val);
                           }),
                     ),
                     SizedBox(height: 30),
                     FlatButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // if (_formKey.currentState.validate()) {
                           //   ScaffoldMessenger.of(context).showSnackBar(
                           //       SnackBar(content: Text('Processing Data')));
@@ -433,14 +486,24 @@ class _ParlourLocationState extends State<ParlourLocation> {
                           final uid = FirebaseAuth.instance.currentUser.uid;
                           if (_formKey.currentState.validate()) {
                             Location location = Location(
-                              serviceUid: uid.toString(),
+                                serviceUid: uid.toString(),
                                 name: parlourName,
                                 shopNo: shopNo,
                                 address: '$address, $area, $landmark',
                                 ownerImage: ownerImagepath,
                                 ownerName: ownerName,
                                 ownerNumber: ownerNumber,
+                                latitude: lati,
+                                longitude: longi,
                                 aboutOwner: about);
+                            try {
+                              await SharedPreferencesForm.setLocation(
+                                  jsonEncode(location.toJson()));
+                              await SharedPreferencesForm.setAddressFormDetails(
+                                  [address, area, landmark]);
+                            } catch (e) {
+                              print('heere' + e.toString());
+                            }
                             Navigator.pushNamed(context, '/details2',
                                 arguments: {
                                   "title": title,

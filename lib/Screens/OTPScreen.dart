@@ -17,27 +17,6 @@ class _OTPScreenState extends State<OTPScreen> {
   bool res = false;
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        backgroundColor: Color(0xff5D5FEF),
-        items: [
-          BottomNavigationBarItem(
-            icon: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/schedule');
-                },
-                icon: Icon(Icons.calendar_today, color: Colors.white)),
-            label: 'calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.ac_unit, color: Colors.white)),
-            label: 'calendar',
-          )
-        ],
-      ),
       body: SafeArea(
           child: new SingleChildScrollView(
         child: Column(
@@ -88,9 +67,8 @@ class _OTPScreenState extends State<OTPScreen> {
                   FlatButton(
                     onPressed: () {
                       setState(() {
-                        (res == true)
-                            ? Navigator.pushNamed(context, '/startservice')
-                            : Navigator.pushNamed(context, '/schedule');
+                        if (res == true)
+                          Navigator.pushNamed(context, '/startservice');
                       });
                       if (res == true) {
                         print('valid pin');

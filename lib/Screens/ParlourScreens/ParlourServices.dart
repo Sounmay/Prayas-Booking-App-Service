@@ -19,7 +19,7 @@ class _ParlourServicesState extends State<ParlourServices> {
   var min = List.filled(20, '', growable: true);
   var m = List.filled(20, 0, growable: true);
   var price = List.filled(20, '', growable: true);
-  int _ServicesNum = 0;
+  int _servicesNum = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                         ],
                       ),
                       ...List.generate(
-                          _ServicesNum, (index) => serviceDeets(index)),
+                          _servicesNum, (index) => serviceDeets(index)),
                       Column(children: [
                         SizedBox(height: 10),
                         Row(
@@ -120,7 +120,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     validator: (val) => val.isEmpty ? '' : null,
                                     onChanged: (value) {
                                       setState(() {
-                                        name[_ServicesNum] = value;
+                                        name[_servicesNum] = value;
                                       });
                                     },
                                   ),
@@ -151,8 +151,8 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             contentPadding: EdgeInsets.all(4)),
                                         onChanged: (value) {
                                           setState(() {
-                                            hr[_ServicesNum] = value;
-                                            h[_ServicesNum] = int.parse(value);
+                                            hr[_servicesNum] = value;
+                                            h[_servicesNum] = int.parse(value);
                                           });
                                         },
                                       ),
@@ -191,8 +191,8 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             contentPadding: EdgeInsets.all(4)),
                                         onChanged: (value) {
                                           setState(() {
-                                            min[_ServicesNum] = value;
-                                            m[_ServicesNum] = int.parse(value);
+                                            min[_servicesNum] = value;
+                                            m[_servicesNum] = int.parse(value);
                                           });
                                         },
                                       ),
@@ -230,7 +230,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                 validator: (val) => val.isEmpty ? '' : null,
                                 onChanged: (value) {
                                   setState(() {
-                                    price[_ServicesNum] = value;
+                                    price[_servicesNum] = value;
                                   });
                                 },
                               ),
@@ -245,7 +245,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               setState(() {
-                                _ServicesNum = _ServicesNum + 1;
+                                _servicesNum = _servicesNum + 1;
                               });
                             }
                           },
@@ -266,12 +266,20 @@ class _ParlourServicesState extends State<ParlourServices> {
                     ],
                   ),
                 ),
-                _ServicesNum > 1
+                _servicesNum > 1
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height * 0.07,
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: TextButton(
                           onPressed: () {
+
+                    //           List<ParlourServiceDetails> parlourServices = [];
+                    // for (int i = 0; i < _employeeDetailsNum; i++) {
+                    //   employeeList.add(EmployeeDetailList(
+                    //       name: name[i],
+                    //       number: phoneNumber[i],
+                    //       imagefile: employeeImage[i]));
+                    // }
                             Navigator.pushNamed(context, '/finalParlourPage',
                                 arguments: {
                                   "details": _details,

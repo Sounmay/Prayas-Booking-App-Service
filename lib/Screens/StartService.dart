@@ -6,58 +6,70 @@ class StartService extends StatefulWidget {
 }
 
 class _StartServiceState extends State<StartService> {
-  bool started=false;
+  bool started = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black,),
-            onPressed: () {
-              Navigator.pushNamed(context, '/otpscreen');
-            },
-          );
-        }),
+        // leading: Builder(builder: (BuildContext context) {
+        //   return IconButton(
+        //     icon: const Icon(Icons.arrow_back, color: Colors.black,),
+        //     onPressed: () {
+        //       Navigator.pop(context);
+        //     },
+        //   );
+        // }),
+        iconTheme: IconThemeData(color: Colors.black),
         title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Service Details', style: TextStyle(color: Colors.black,),), //repeat for menu and booking
-            ]
-        ),
+              Text(
+                'Service Details',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ), //repeat for menu and booking
+            ]),
       ),
       body: new SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 10.0,),
-            Container(
-              width: MediaQuery.of(context).size.width * 1,
-              child: Center(
-                child: Column(
-                  children: [
-                    Text("Service Code"),
-                    SizedBox(height: 5.0),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.04,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Color(0xffCBFFF0),
-                          border: Border.all(width: 1, color: Color(0xff02CF96))
-                      ),
-                      child: Center(
-                        child:  Text("zp2260", style: TextStyle(color: Colors.black, fontSize: 20.0),),
-                      )
-                    )
-                  ],
-                ),
-              )
+            SizedBox(
+              height: 10.0,
             ),
             Container(
+                width: MediaQuery.of(context).size.width * 1,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text("Service Code"),
+                      SizedBox(height: 5.0),
+                      Container(
+                          height: MediaQuery.of(context).size.height * 0.04,
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Color(0xffCBFFF0),
+                              border: Border.all(
+                                  width: 1, color: Color(0xff02CF96))),
+                          child: Center(
+                            child: Text(
+                              "zp2260",
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 20.0),
+                            ),
+                          ))
+                    ],
+                  ),
+                )),
+            Container(
               margin: EdgeInsets.all(20.0),
-              child: Text("Customer Details", style: TextStyle(color: Color(0xff5D5FEF)),),
+              child: Text(
+                "Customer Details",
+                style: TextStyle(color: Color(0xff5D5FEF)),
+              ),
             ),
             Container(
               width: MediaQuery.of(context).size.width * 1,
@@ -65,8 +77,8 @@ class _StartServiceState extends State<StartService> {
               margin: EdgeInsets.fromLTRB(20.0, 0, 10.0, 0),
               padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Color(0xffCBFFF0),
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xffCBFFF0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +90,10 @@ class _StartServiceState extends State<StartService> {
                   Container(
                     child: Column(
                       children: [
-                        Text("Jay Prakash", textAlign: TextAlign.right,),
+                        Text(
+                          "Jay Prakash",
+                          textAlign: TextAlign.right,
+                        ),
                         Text("+918249375008")
                       ],
                     ),
@@ -86,8 +101,14 @@ class _StartServiceState extends State<StartService> {
                   Container(
                     child: Column(
                       children: [
-                        Text("29/08/2021", style: TextStyle(color: Color(0xff5D5FEF)),),
-                        Text("08:00AM - 10:00AM", style: TextStyle(color: Color(0xff5D5FEF)),)
+                        Text(
+                          "29/08/2021",
+                          style: TextStyle(color: Color(0xff5D5FEF)),
+                        ),
+                        Text(
+                          "08:00AM - 10:00AM",
+                          style: TextStyle(color: Color(0xff5D5FEF)),
+                        )
                       ],
                     ),
                   )
@@ -96,7 +117,10 @@ class _StartServiceState extends State<StartService> {
             ),
             Container(
               margin: EdgeInsets.all(20.0),
-              child: Text("Services Availed", style: TextStyle(color: Color(0xff5D5FEF)),),
+              child: Text(
+                "Services Availed",
+                style: TextStyle(color: Color(0xff5D5FEF)),
+              ),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(20.0, 0, 10.0, 0),
@@ -108,13 +132,13 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           Text("Haircut")
                         ],
                       ),
-                      Text(
-                          "Rs. 100"
-                      )
+                      Text("Rs. 100")
                     ],
                   ),
                   Row(
@@ -123,13 +147,13 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           Text("Haircut")
                         ],
                       ),
-                      Text(
-                          "Rs. 100"
-                      )
+                      Text("Rs. 100")
                     ],
                   ),
                   Row(
@@ -138,13 +162,13 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           Text("Haircut")
                         ],
                       ),
-                      Text(
-                          "Rs. 100"
-                      )
+                      Text("Rs. 100")
                     ],
                   ),
                   Row(
@@ -153,37 +177,48 @@ class _StartServiceState extends State<StartService> {
                       Row(
                         children: [
                           Icon(Icons.radio_button_checked),
-                          SizedBox(width: 20.0,),
+                          SizedBox(
+                            width: 20.0,
+                          ),
                           Text("Haircut")
                         ],
                       ),
-                      Text(
-                          "Rs. 100"
-                      )
+                      Text("Rs. 100")
                     ],
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Net Amount : ", style: TextStyle(fontSize: 20),),
-                            Text("Rs 400", style: TextStyle(fontSize: 20, color: Color(0xff5D5FEF)),),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(height: 40.0,),
-                            Text("For 3 services (incl tax)"),
-
-                          ],
-                        )
-                      ],
-                    )
+                      child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Net Amount : ",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            "Rs 400",
+                            style: TextStyle(
+                                fontSize: 20, color: Color(0xff5D5FEF)),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 40.0,
+                          ),
+                          Text("For 3 services (incl tax)"),
+                        ],
+                      )
+                    ],
+                  )),
+                  SizedBox(
+                    height: 40.0,
                   ),
-                  SizedBox(height: 40.0,),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: MediaQuery.of(context).size.height * 0.06,
@@ -191,26 +226,31 @@ class _StartServiceState extends State<StartService> {
                       onPressed: () {},
                       child: Text('Add service +',
                           style: TextStyle(color: Colors.white)),
-                      style: TextButton.styleFrom(backgroundColor: Color(0xFF263238)),
+                      style: TextButton.styleFrom(
+                          backgroundColor: Color(0xFF263238)),
                     ),
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: MediaQuery.of(context).size.height * 0.06,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xff5D5FEF))
-                    ),
+                        border: Border.all(color: Color(0xff5D5FEF))),
                     child: TextButton(
                       onPressed: () {
                         setState(() {
-                          started=!started;
+                          started = !started;
                         });
-                        if(started==false){
+                        if (started == false) {
                           Navigator.popAndPushNamed(context, '/otpscreen');
                         }
                       },
-                      child: Text((started==false)?'Start Service':'Service Completed :-)',
+                      child: Text(
+                          (started == false)
+                              ? 'Start Service'
+                              : 'Service Completed :-)',
                           style: TextStyle(color: Color(0xff5D5FEF))),
                       style: TextButton.styleFrom(),
                     ),
