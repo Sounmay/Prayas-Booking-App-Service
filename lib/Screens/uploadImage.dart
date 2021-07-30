@@ -26,9 +26,9 @@ class _UploadImageState extends State<UploadImage> {
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     Location _location = _arguments["location"];
     Details _details = _arguments["details"];
-    ParlourDetails parlourDetails =
-        ParlourDetails(location: _location, details: _details);
-    print(parlourDetails);
+    // ParlourDetails parlourDetails =
+    //     ParlourDetails(location: _location, details: _details);
+    // print(parlourDetails);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

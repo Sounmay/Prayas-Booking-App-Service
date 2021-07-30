@@ -1,28 +1,28 @@
-class ParlourDetails {
-  Location location;
-  Details details;
+// class ParlourDetails {
+//   Location location;
+//   Details details;
 
-  ParlourDetails({this.location, this.details});
+//   ParlourDetails({this.location, this.details});
 
-  ParlourDetails.fromJson(Map<String, dynamic> json) {
-    location = json['location'] != null
-        ? new Location.fromJson(json['location'])
-        : null;
-    details =
-        json['details'] != null ? new Details.fromJson(json['details']) : null;
-  }
+//   ParlourDetails.fromJson(Map<String, dynamic> json) {
+//     location = json['location'] != null
+//         ? new Location.fromJson(json['location'])
+//         : null;
+//     details =
+//         json['details'] != null ? new Details.fromJson(json['details']) : null;
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.location != null) {
-      data['location'] = this.location.toJson();
-    }
-    if (this.details != null) {
-      data['details'] = this.details.toJson();
-    }
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     if (this.location != null) {
+//       data['location'] = this.location.toJson();
+//     }
+//     if (this.details != null) {
+//       data['details'] = this.details.toJson();
+//     }
+//     return data;
+//   }
+// }
 
 class Location {
   String serviceUid;
@@ -33,10 +33,14 @@ class Location {
   String ownerName;
   String ownerNumber;
   String aboutOwner;
+  String latitude;
+  String longitude;
 
   Location(
       {this.name,
       this.serviceUid,
+      this.latitude,
+      this.longitude,
       this.shopNo,
       this.address,
       this.ownerImage,
@@ -48,6 +52,8 @@ class Location {
     name = json['name'];
     shopNo = json['shopNo'];
     address = json['address'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
     serviceUid = json['serviceUid'];
     ownerImage = json['ownerImage'];
     ownerName = json['ownerName'];
@@ -61,6 +67,8 @@ class Location {
     data['shopNo'] = this.shopNo;
     data['address'] = this.address;
     data['ownerImage'] = this.ownerImage;
+    data['longitude'] = this.longitude;
+    data['latitude'] = this.latitude;
     data['ownerName'] = this.ownerName;
     data['ownerNumber'] = this.ownerNumber;
     data['aboutOwner'] = this.aboutOwner;
@@ -86,7 +94,6 @@ class Details {
     aboutParlour = json['aboutParlour'];
     parlourImage = json['parlourImage'];
     numOfEmployees = json['numOfEmployees'];
-  
   }
 
   Map<String, dynamic> toJson() {
@@ -95,7 +102,7 @@ class Details {
     data['aboutParlour'] = this.aboutParlour;
     data['parlourImage'] = this.parlourImage;
     data['numOfEmployees'] = this.numOfEmployees;
-    
+
     return data;
   }
 }

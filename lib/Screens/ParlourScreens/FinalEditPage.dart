@@ -47,9 +47,6 @@ class _FinalEditPageState extends State<FinalEditPage> {
     Location _location = _arguments["location"];
     Details _details = _arguments["details"];
     List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
-    ParlourDetails parlourDetails =
-        ParlourDetails(location: _location, details: _details);
-    print(parlourDetails);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -71,21 +68,16 @@ class _FinalEditPageState extends State<FinalEditPage> {
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 bottomRight: Radius.circular(10)))),
-                    Flexible(
-                      child: Container(
-                        width: width * 0.7,
-                        margin: EdgeInsets.only(left: 10),
-                        child: Row(children: [
-                          Flexible(
-                            child: Text(
-                                'Thanks for filling in your details. Please check before you proceed to the next steps.',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.black,
-                                )),
-                          ),
-                        ]),
-                      ),
+                    Container(
+                      width: width * 0.7,
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text(
+                          'Thanks for filling in your details. Please check before you proceed to the next steps.',
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                          )),
                     ),
                   ]),
                   SizedBox(
@@ -281,7 +273,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                       MediaQuery.of(context).size.width * 0.35,
                                   height: height * 0.06,
                                   child: Marquee(
-                                      text: parlourDetails.location.address,
+                                      text: _location.address,
                                       scrollAxis: Axis.horizontal,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -306,7 +298,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
                             SizedBox(
                               width: 10,
                             ),
-                            Text(parlourDetails.location.name,
+                            Text(_location.name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 24)),
                           ],
@@ -335,8 +327,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                 : MainAxisAlignment.center,
                             children: [
                               if (isEditMode) Container(),
-                              Text(
-                                  '${parlourDetails.details.parlourType} Parlour',
+                              Text('${_details.parlourType} Parlour',
                                   style: TextStyle(
                                       color: Color(0xff5D5FEF),
                                       fontWeight: FontWeight.bold)),
@@ -351,18 +342,12 @@ class _FinalEditPageState extends State<FinalEditPage> {
                         SizedBox(
                           height: height * 0.5 * 0.06,
                         ),
-                        ConstrainedBox(
-                          constraints: new BoxConstraints(
-                            minWidth: width * 0.8,
-                            minHeight: height * 0.5 * 0.2,
-                            maxHeight: height * 0.5 * 0.4,
-                          ),
-                          child: Flexible(
-                              child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(parlourDetails.details.aboutParlour,
-                                style: TextStyle(color: Color(0xff606572))),
-                          )),
+                        Container(
+                          width: width * 0.8,
+                          child: Text(_details.aboutParlour,
+                              softWrap: true,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(color: Color(0xff606572))),
                         ),
                         SizedBox(
                           height: height * 0.5 * 0.06,
@@ -428,28 +413,24 @@ class _FinalEditPageState extends State<FinalEditPage> {
                             });
 
                             uploadEmployeeImages();
-                            uploadImage(
-                                parlourDetails.location.ownerImage, true);
+                            uploadImage(_location.ownerImage, true);
                             uploadImage(parlourImagepath, false);
 
                             Location finalParlourLocation = Location(
-                                aboutOwner: parlourDetails.location.aboutOwner,
+                                aboutOwner: _location.aboutOwner,
                                 ownerImage: ownerImageUrl,
-                                ownerName: parlourDetails.location.ownerName,
-                                ownerNumber:
-                                    parlourDetails.location.ownerNumber,
-                                name: parlourDetails.location.name,
-                                address: parlourDetails.location.address,
-                                shopNo: parlourDetails.location.shopNo,
-                                serviceUid: parlourDetails.location.serviceUid);
+                                ownerName: _location.ownerName,
+                                ownerNumber: _location.ownerNumber,
+                                name: _location.name,
+                                address: _location.address,
+                                shopNo: _location.shopNo,
+                                serviceUid: _location.serviceUid);
 
                             Details finalParlourDetails = Details(
-                                aboutParlour:
-                                    parlourDetails.details.aboutParlour,
+                                aboutParlour: _details.aboutParlour,
                                 parlourImage: parlourImageUrl,
-                                parlourType: parlourDetails.details.parlourType,
-                                numOfEmployees:
-                                    parlourDetails.details.numOfEmployees);
+                                parlourType: _details.parlourType,
+                                numOfEmployees: _details.numOfEmployees);
 
                             DatabaseService().uploadParlourServiceData(
                                 finalParlourLocation,

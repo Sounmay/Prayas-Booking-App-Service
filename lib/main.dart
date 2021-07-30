@@ -13,13 +13,14 @@ import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
 import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
 import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
+import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
 import 'package:provider/provider.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await SharedPreferencesForm.init();
   runApp(MyApp());
 }
 
