@@ -24,7 +24,7 @@ class _ParlourServicesState extends State<ParlourServices> {
   @override
   Widget build(BuildContext context) {
     final _arguments =
-    ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     Location _location = _arguments["location"];
     Details _details = _arguments["details"];
     List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
@@ -84,6 +84,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
@@ -102,6 +103,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   width:
@@ -115,6 +117,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             FloatingLabelBehavior.auto,
                                         contentPadding:
                                             EdgeInsets.only(bottom: 4)),
+                                    validator: (val) => val.isEmpty ? '' : null,
                                     onChanged: (value) {
                                       setState(() {
                                         name[_ServicesNum] = value;
@@ -224,6 +227,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     floatingLabelBehavior:
                                         FloatingLabelBehavior.auto,
                                     contentPadding: EdgeInsets.all(4)),
+                                validator: (val) => val.isEmpty ? '' : null,
                                 onChanged: (value) {
                                   setState(() {
                                     price[_ServicesNum] = value;
@@ -235,29 +239,29 @@ class _ParlourServicesState extends State<ParlourServices> {
                         ),
                         SizedBox(height: 10),
                       ]),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Row(children: [
-                          TextButton(
-                            onPressed: () {
+                      Row(children: [
+                        FlatButton(
+                          padding: EdgeInsets.all(0),
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
                               setState(() {
                                 _ServicesNum = _ServicesNum + 1;
                               });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              color: Color(0xff5D5FEF),
-                              child: Row(
-                                children: [
-                                  Text(' Add Service   ',
-                                      style: TextStyle(color: Colors.white)),
-                                  Icon(Icons.add, color: Colors.white, size: 16)
-                                ],
-                              ),
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            color: Color(0xff5D5FEF),
+                            child: Row(
+                              children: [
+                                Text(' Add Service   ',
+                                    style: TextStyle(color: Colors.white)),
+                                Icon(Icons.add, color: Colors.white, size: 16)
+                              ],
                             ),
                           ),
-                        ]),
-                      ),
+                        ),
+                      ]),
                       SizedBox(height: 70),
                     ],
                   ),
