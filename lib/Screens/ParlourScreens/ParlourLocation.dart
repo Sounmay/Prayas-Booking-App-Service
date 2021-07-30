@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,20 @@ class ParlourLocation extends StatefulWidget {
 
 class _ParlourLocationState extends State<ParlourLocation> {
   final _formKey = GlobalKey<FormState>();
+
+  var geoLocator = Geolocator();
+  String lati, longi;
+  void locatePosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      lati = position.latitude.toString();
+      longi = position.longitude.toString();
+    });
+    print(position == null
+        ? 'Unknown'
+        : 'Latitude : ' + lati + ', ' + 'Longitude : ' + longi);
+  }
 
   String title = 'Parlour';
 
@@ -234,7 +248,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              locatePosition();
+                            },
                             child: Row(
                               children: [
                                 Text('Set location using the GPS tracker ',
@@ -477,8 +493,8 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 ownerImage: ownerImagepath,
                                 ownerName: ownerName,
                                 ownerNumber: ownerNumber,
-                                latitude: '',
-                                longitude: '',
+                                latitude: lati,
+                                longitude: longi,
                                 aboutOwner: about);
                             try {
                               await SharedPreferencesForm.setLocation(

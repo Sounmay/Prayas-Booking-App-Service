@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Widgets/NavigationWidget.dart';
 
 class SplashScreen extends StatelessWidget {
   @override

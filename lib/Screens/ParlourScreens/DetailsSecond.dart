@@ -227,12 +227,11 @@ class _DetailsSecondState extends State<DetailsSecond> {
                         parlourType: _gender,
                         aboutParlour: about,
                         numOfEmployees: _finalNumofEmployees);
-                    Navigator.pushNamed(context, '/finalParlourPage',
-                        arguments: {
-                          "details": details,
-                          "location": _location,
-                          "employeeList": employeeList
-                        });
+                    Navigator.pushNamed(context, '/ps', arguments: {
+                      "details": details,
+                      "location": _location,
+                      "employeeList": employeeList
+                    });
                   }
                 },
                 child: Text('Save & Proceed',

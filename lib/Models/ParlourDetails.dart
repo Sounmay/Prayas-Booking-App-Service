@@ -128,3 +128,25 @@ class EmployeeDetailList {
     return data;
   }
 }
+
+class ParlourServiceDetails {
+  String name, price, hour, minute;
+
+  ParlourServiceDetails({name, price, hour, minute});
+
+  ParlourServiceDetails.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    price = json['price'];
+    hour = json['hour'];
+    minute = json['minute'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = name;
+    data['price'] = price;
+    data['hour'] = hour;
+    data['minute'] = minute;
+    return data;
+  }
+}

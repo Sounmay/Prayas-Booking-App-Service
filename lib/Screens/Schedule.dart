@@ -97,8 +97,6 @@ class _ScheduleState extends State<Schedule> {
         }
       });
 
-    
-
       kEvents = LinkedHashMap<DateTime, List<Event>>(
         equals: isSameDay,
         hashCode: getHashCode,
@@ -244,7 +242,7 @@ class _ScheduleState extends State<Schedule> {
                           ),
                           child: ListTile(
                             onTap: () => print('${value[index]}'),
-                            title: Text('${value[index].name}'),
+                            title: Text('${value[index].service}'),
                           ),
                         );
                       },

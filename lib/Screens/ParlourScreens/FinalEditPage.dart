@@ -424,6 +424,8 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                 name: _location.name,
                                 address: _location.address,
                                 shopNo: _location.shopNo,
+                                longitude: _location.longitude,
+                                latitude: _location.latitude,
                                 serviceUid: _location.serviceUid);
 
                             Details finalParlourDetails = Details(
