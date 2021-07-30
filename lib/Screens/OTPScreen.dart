@@ -24,15 +24,15 @@ class _OTPScreenState extends State<OTPScreen> {
         items: [
           BottomNavigationBarItem(
             icon: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/schedule');
+                },
                 icon: Icon(Icons.calendar_today, color: Colors.white)),
             label: 'calendar',
           ),
           BottomNavigationBarItem(
             icon: IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/schedule');
-                },
+                onPressed: () {},
                 icon: Icon(Icons.ac_unit, color: Colors.white)),
             label: 'calendar',
           )

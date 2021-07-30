@@ -33,11 +33,11 @@ class _ScheduleState extends State<Schedule> {
           backgroundColor: Color(0xff5D5FEF),
           items: [
             BottomNavigationBarItem(
-              icon: IconButton(onPressed: (){Navigator.pushNamed(context, '/otpscreen');}, icon: Icon(Icons.calendar_today, color: Colors.white)),
+              icon: IconButton(onPressed: (){}, icon: Icon(Icons.calendar_today, color: Colors.white)),
               label: 'calendar',
             ),
             BottomNavigationBarItem(
-              icon: IconButton(onPressed: (){}, icon: Icon(Icons.ac_unit, color: Colors.white)),
+              icon: IconButton(onPressed: (){Navigator.pushNamed(context, '/otpscreen');}, icon: Icon(Icons.ac_unit, color: Colors.white)),
               label: 'calendar',
             )
           ],
