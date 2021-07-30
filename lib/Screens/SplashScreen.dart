@@ -5,8 +5,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-
-      Navigator.popAndPushNamed(context, '/otpscreen');
+      Navigator.popAndPushNamed(context, '/servicekind');
       // Navigator.popAndPushNamed(context, '/servicekind');
     });
     return Scaffold(

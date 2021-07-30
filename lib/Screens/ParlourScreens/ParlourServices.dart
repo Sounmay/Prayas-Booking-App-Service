@@ -24,7 +24,7 @@ class _ParlourServicesState extends State<ParlourServices> {
   @override
   Widget build(BuildContext context) {
     final _arguments =
-        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     Location _location = _arguments["location"];
     Details _details = _arguments["details"];
     List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
