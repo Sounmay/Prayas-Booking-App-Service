@@ -86,6 +86,7 @@ class _ScheduleState extends State<Schedule> {
               Event(
                   name: element['name'],
                   service: element['service'],
+                  timeslot: element['timeslot'],
                   amount: element['amount']));
         } else {
           _kEventSource[DateTime.utc(_date.year, _date.month, _date.day)] = [

@@ -7,8 +7,9 @@ class Event {
   final String name;
   final String service;
   final String amount;
+  final String timeslot;
 
-  const Event({this.name, this.service, this.amount});
+  const Event({this.name, this.service, this.amount, this.timeslot});
 
   // @override
   // String toString() => title;

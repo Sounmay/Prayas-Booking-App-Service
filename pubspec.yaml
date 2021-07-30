@@ -44,6 +44,7 @@ dependencies:
   pin_code_fields: ^7.3.0
   date_format: ^2.0.2
   geolocator: ^7.4.0
+  weekday_selector: ^1.0.0
 
 
 dev_dependencies:

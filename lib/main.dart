@@ -7,6 +7,7 @@ import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocation.dart';
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
+import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsThird.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourServices.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsSecond.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/FinalEditPage.dart';
