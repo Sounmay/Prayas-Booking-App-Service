@@ -22,16 +22,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        backgroundColor: Color(0xff5D5FEF),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Icons.calendar_today, color: Colors.white,),
             label: 'calendar',
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit),
+              icon: Icon(Icons.ac_unit, color: Colors.white,),
               label: 'calendar',
-              backgroundColor: Colors.blue)
+              backgroundColor: Colors.white)
         ],
         onTap: (index) {
           setState(() {
