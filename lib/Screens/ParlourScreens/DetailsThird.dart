@@ -338,32 +338,30 @@ class _DetailsThirdState extends State<DetailsThird> {
             ),
             FlatButton(
                 onPressed: () async {
-                  final el = values.firstWhere((element) => element == true);
-                  print(el);
-                  // if (fromHr != '' &&
-                  //     fromMin != '' &&
-                  //     toHr != '' &&
-                  //     toMin != '') {
-                  //   List<ParlourSlotDetails> slotList = [];
+                  if (fromHr != '' &&
+                      fromMin != '' &&
+                      toHr != '' &&
+                      toMin != '') {
+                    List<ParlourSlotDetails> slotList = [];
 
-                  //   ParlourSlotDetails slots = ParlourSlotDetails(
-                  //     fromHr: fromHr,
-                  //     fromMin: fromMin,
-                  //     toHr: toHr,
-                  //     toMin: toMin,
-                  //     weekRange: '',
-                  //   );
+                    ParlourSlotDetails slots = ParlourSlotDetails(
+                      fromHr: fromHr,
+                      fromMin: fromMin,
+                      toHr: toHr,
+                      toMin: toMin,
+                      weekRange: '',
+                    );
 
-                  //   slotList.add(slots);
-                  //   print(slotList);
+                    slotList.add(slots);
+                    print(slotList);
 
-                  // parlourProvider.updateParlourLocation(location);
+                    parlourProvider.updateSlotListDetails(slotList);
 
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   '/details2',
-                  // );
-                  // }
+                    Navigator.pushNamed(
+                      context,
+                      '/finalParlourPage',
+                    );
+                  }
                 },
                 child: Container(
                     height: MediaQuery.of(context).size.height * 0.07,

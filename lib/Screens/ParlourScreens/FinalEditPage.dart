@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,6 +11,7 @@ import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/FirebaseApi.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:marquee/marquee.dart';
+import 'package:provider/provider.dart';
 
 class FinalEditPage extends StatefulWidget {
   const FinalEditPage({Key key}) : super(key: key);
@@ -42,10 +44,12 @@ class _FinalEditPageState extends State<FinalEditPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
+
     final _arguments =
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
-    Location _location = _arguments["location"];
-    Details _details = _arguments["details"];
+    Location _location = parlourProvider.parlourLocationDetails;
+    Details _details = parlourProvider.parlourDetails;
     List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
     return Scaffold(
       appBar: AppBar(
