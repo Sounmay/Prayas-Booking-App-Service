@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:freelance_booking_app_service/Models/ParlourDetails.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
+import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class DetailsSecond extends StatefulWidget {
   const DetailsSecond({Key key}) : super(key: key);
@@ -14,8 +16,8 @@ class DetailsSecond extends StatefulWidget {
 }
 
 class _DetailsSecondState extends State<DetailsSecond> {
-  String _gender = 'Gents Only';
-  String _numOfEmployees = '1';
+  String _gender = '';
+  String _numOfEmployees = '';
   String _finalNumofEmployees = '';
 
   UploadTask task;
@@ -50,11 +52,20 @@ class _DetailsSecondState extends State<DetailsSecond> {
 
   @override
   Widget build(BuildContext context) {
+    final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
+    if (_gender == '') {
+      _gender = parlourProvider.parlourDetails?.parlourType ?? 'Gents Only';
+      about = parlourProvider.parlourDetails?.aboutParlour ?? '';
+      _finalNumofEmployees =
+          parlourProvider.parlourDetails?.numOfEmployees ?? '1';
+      _textController.text = _finalNumofEmployees;
+      _numOfEmployees =
+          int.parse(_finalNumofEmployees) < 6 ? _finalNumofEmployees : '--';
+      _employeeDetailsNum = int.parse(_finalNumofEmployees);
+    }
     final title =
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     final _pagetitle = title["title"];
-    Location _location = title["location"];
-    // file = File(_location.ownerImage);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -117,7 +128,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
             SizedBox(height: 15),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.94,
-              child: TextField(
+              child: TextFormField(
                   keyboardType: TextInputType.multiline,
                   maxLines: 6,
                   decoration: InputDecoration(
@@ -131,7 +142,9 @@ class _DetailsSecondState extends State<DetailsSecond> {
                         borderSide: BorderSide(color: Color(0xff5D5FEF))),
                   ),
                   onChanged: (val) {
-                    setState(() => about = val);
+                    setState(() {
+                      about = val;
+                    });
                   }),
             ),
             SizedBox(height: 15),
@@ -227,10 +240,11 @@ class _DetailsSecondState extends State<DetailsSecond> {
                         parlourType: _gender,
                         aboutParlour: about,
                         numOfEmployees: _finalNumofEmployees);
+
+                    parlourProvider.updatePralourDetails(details);
+                    parlourProvider.updatePralourEmployeeDetails(employeeList);
                     Navigator.pushNamed(context, '/ps', arguments: {
                       "details": details,
-                      "location": _location,
-                      "employeeList": employeeList
                     });
                   }
                 },
@@ -247,6 +261,8 @@ class _DetailsSecondState extends State<DetailsSecond> {
   }
 
   Widget employeeDetails(int index) {
+    final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
+
     return Column(children: [
       SizedBox(height: 10),
       Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -273,6 +289,9 @@ class _DetailsSecondState extends State<DetailsSecond> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: TextFormField(
+                initialValue: parlourProvider.parlourEmployeeDetails != null
+                    ? parlourProvider.parlourEmployeeDetails[index]?.name ?? ''
+                    : '',
                 style: TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                     isDense: true,
@@ -290,6 +309,10 @@ class _DetailsSecondState extends State<DetailsSecond> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: TextFormField(
+                initialValue: parlourProvider.parlourEmployeeDetails != null
+                    ? parlourProvider.parlourEmployeeDetails[index]?.number ??
+                        ''
+                    : '',
                 keyboardType: TextInputType.number,
                 style: TextStyle(fontSize: 14),
                 validator: (val) =>

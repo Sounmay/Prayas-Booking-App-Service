@@ -1,7 +1,10 @@
 import 'dart:ui';
-import 'package:freelance_booking_app_service/Models/ParlourDetails.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'dart:io';
+
+import 'package:provider/provider.dart';
 
 class ParlourServices extends StatefulWidget {
   ParlourServices({Key key}) : super(key: key);
@@ -23,11 +26,9 @@ class _ParlourServicesState extends State<ParlourServices> {
 
   @override
   Widget build(BuildContext context) {
-    final _arguments =
-    ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
-    Location _location = _arguments["location"];
-    Details _details = _arguments["details"];
-    List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
+    final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
+    print(name);
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -66,20 +67,21 @@ class _ParlourServicesState extends State<ParlourServices> {
                 SizedBox(
                   height: 40,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Enter your services - ',
-                        style: TextStyle(fontSize: 12)),
-                    Text('Name, Price ',
-                        style:
-                            TextStyle(color: Color(0xff5D5FEF), fontSize: 12)),
-                    Text('and ', style: TextStyle(fontSize: 12)),
-                    Text('Estimated time for each service',
-                        style:
-                            TextStyle(color: Color(0xff5D5FEF), fontSize: 12))
-                  ],
-                ),
+                RichText(
+                    text: TextSpan(
+                        text: 'Enter your services - ',
+                        style: TextStyle(fontSize: 12, color: Colors.black),
+                        children: [
+                      TextSpan(
+                          text: 'Name, Price ',
+                          style: TextStyle(
+                              color: Color(0xff5D5FEF), fontSize: 12)),
+                      TextSpan(text: 'and ', style: TextStyle(fontSize: 12)),
+                      TextSpan(
+                          text: 'Estimated time for each service',
+                          style:
+                              TextStyle(color: Color(0xff5D5FEF), fontSize: 12))
+                    ])),
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -129,6 +131,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                       height: 30,
                                       width: 30,
                                       child: TextFormField(
+                                        keyboardType: TextInputType.number,
                                         style: TextStyle(fontSize: 14),
                                         decoration: InputDecoration(
                                             border: new OutlineInputBorder(
@@ -169,6 +172,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                       height: 30,
                                       width: 30,
                                       child: TextFormField(
+                                        keyboardType: TextInputType.number,
                                         style: TextStyle(fontSize: 14),
                                         decoration: InputDecoration(
                                             border: new OutlineInputBorder(
@@ -207,6 +211,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                               height: MediaQuery.of(context).size.height * 0.07,
                               width: MediaQuery.of(context).size.width * 0.2,
                               child: TextFormField(
+                                keyboardType: TextInputType.number,
                                 style: TextStyle(fontSize: 14),
                                 decoration: InputDecoration(
                                     prefixText: '\u20B9  ',
@@ -240,8 +245,10 @@ class _ParlourServicesState extends State<ParlourServices> {
                         child: Row(children: [
                           TextButton(
                             onPressed: () {
+                              print('hdf');
                               setState(() {
                                 _servicesNum = _servicesNum + 1;
+                                print('here');
                               });
                             },
                             child: Container(
@@ -262,44 +269,37 @@ class _ParlourServicesState extends State<ParlourServices> {
                     ],
                   ),
                 ),
-                _servicesNum > 1
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: TextButton(
-                          onPressed: () {
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: TextButton(
+                    onPressed: () {
+                      if (_servicesNum > 0) {
+                        List<ParlourServiceDetails> parlourServices = [];
+                        for (int i = 0; i < _servicesNum; i++) {
+                          parlourServices.add(ParlourServiceDetails(
+                            name: name[i],
+                            price: price[i],
+                            hour: hr[i],
+                            minute: min[i],
+                          ));
+                          print(parlourServices);
+                        }
 
-                    //           List<ParlourServiceDetails> parlourServices = [];
-                    // for (int i = 0; i < _employeeDetailsNum; i++) {
-                    //   employeeList.add(EmployeeDetailList(
-                    //       name: name[i],
-                    //       number: phoneNumber[i],
-                    //       imagefile: employeeImage[i]));
-                    // }
-                            Navigator.pushNamed(context, '/finalParlourPage',
-                                arguments: {
-                                  "details": _details,
-                                  "location": _location,
-                                  "employeeList": _employeeList
-                                });
-                          },
-                          child: Text('Save & Proceed',
-                              style: TextStyle(color: Colors.white)),
-                          style: TextButton.styleFrom(
-                              backgroundColor: Color(0xFF263238)),
-                        ),
-                      )
-                    : SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text('Save & Proceed',
-                              style: TextStyle(color: Colors.white)),
-                          style: TextButton.styleFrom(
-                              backgroundColor: Color(0xffDFDFDF)),
-                        ),
-                      ),
+                        parlourProvider
+                            .updateServiceListDetails(parlourServices);
+                        Navigator.pushNamed(context, '/details3');
+                      }
+                      print("hello");
+                    },
+                    child: Text('Save & Proceed',
+                        style: TextStyle(color: Colors.white)),
+                    style: TextButton.styleFrom(
+                        backgroundColor: _servicesNum > 0
+                            ? Color(0xFF263238)
+                            : Color(0xffDFDFDF)),
+                  ),
+                )
               ]))),
     );
   }
@@ -364,7 +364,15 @@ class _ParlourServicesState extends State<ParlourServices> {
           IconButton(
             icon: Icon(Icons.cancel_presentation_outlined),
             color: Color(0xff5D5FEF),
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                name.removeAt(index);
+                hr.removeAt(index);
+                min.removeAt(index);
+                price.removeAt(index);
+                _servicesNum = _servicesNum - 1;
+              });
+            },
           )
         ],
       ),
