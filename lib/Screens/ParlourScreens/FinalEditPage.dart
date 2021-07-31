@@ -30,13 +30,6 @@ class _FinalEditPageState extends State<FinalEditPage> {
 
   List<String> imageUrls = [];
 
-  _loadingPage(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      child: Center(child: CircularProgressIndicator()),
-    );
-  }
-
   List<EmployeeDetailList> employeeList = [];
   List<EmployeeDetailList> finalEmployeeList = [];
 
@@ -46,8 +39,6 @@ class _FinalEditPageState extends State<FinalEditPage> {
     final width = MediaQuery.of(context).size.width;
     final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
 
-    final _arguments =
-        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     Location _location = parlourProvider.parlourLocationDetails;
     Details _details = parlourProvider.parlourDetails;
     List<EmployeeDetailList> _employeeList =
@@ -60,7 +51,12 @@ class _FinalEditPageState extends State<FinalEditPage> {
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: isLoading
-          ? _loadingPage(context)
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [CircularProgressIndicator()],
+              ),
+            )
           : SingleChildScrollView(
               child: Center(
                 child: Column(children: [
@@ -444,12 +440,13 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                 finalParlourDetails,
                                 finalEmployeeList,
                                 parlourProvider.parlourServiceListDetails,
-                                parlourProvider.parlourSlotListDetails
-                                );
+                                parlourProvider.parlourSlotListDetails);
 
                             setState(() {
                               isLoading = false;
-                              Navigator.pushNamed(context, '/schedule');
+                              DatabaseService().setRegistered().then((value) =>
+                                  Navigator.popUntil(context,
+                                      ModalRoute.withName('/wrapper')));
                             });
                           },
                           child: SizedBox(

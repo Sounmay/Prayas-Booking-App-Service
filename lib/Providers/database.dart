@@ -15,6 +15,10 @@ class DatabaseService {
         .update({"image": imgUrl});
   }
 
+  Future setRegistered() async {
+    _db.collection('Users').doc(uid).update({"isRegistered": true});
+  }
+
   Stream<AppUserDetails> streamUser() {
     var ref = _db.collection('Users').doc(uid).snapshots();
 

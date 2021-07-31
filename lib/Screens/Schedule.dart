@@ -129,7 +129,11 @@ class _ScheduleState extends State<Schedule> {
     final sl = MediaQuery.of(context).size.height;
     final sw = MediaQuery.of(context).size.width;
     return isLoad
-        ? CircularProgressIndicator()
+        ? Scaffold(
+            body: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [CircularProgressIndicator()])))
         : Scaffold(
             body: SingleChildScrollView(
             child: Container(

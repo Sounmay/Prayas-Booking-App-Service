@@ -32,7 +32,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return StreamProvider<AppUser>.value(
@@ -40,14 +39,7 @@ class MyApp extends StatelessWidget {
       value: AuthProvider().user,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider()),
-          if (FirebaseAuth.instance?.currentUser?.uid != null)
-            StreamProvider<AppUserDetails>.value(
-              initialData: AppUserDetails(
-                  uid: FirebaseAuth.instance?.currentUser?.uid ?? ''),
-              value: DatabaseService().streamUser(),
-              child: Wrapper(),
-            ),
+          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
