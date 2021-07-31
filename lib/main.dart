@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
+import 'package:freelance_booking_app_service/Screens/Approval.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocation.dart';
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsThird.dart';
@@ -38,13 +39,14 @@ class MyApp extends StatelessWidget {
       value: AuthProvider().user,
       child: MultiProvider(
         providers: [
-            StreamProvider<AppUserDetails>.value(
-            initialData: AppUserDetails(uid: FirebaseAuth.instance.currentUser.uid),
+          StreamProvider<AppUserDetails>.value(
+            initialData:
+                AppUserDetails(uid: FirebaseAuth.instance.currentUser.uid),
             value: DatabaseService().streamUser(),
             child: Wrapper(),
           ),
         ],
-              child: MaterialApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primaryColor: Color(0xff5D5FEF)),
           initialRoute: '/',
@@ -63,6 +65,7 @@ class MyApp extends StatelessWidget {
             '/otpscreen': (context) => OTPScreen(),
             '/ps': (context) => ParlourServices(),
             '/startservice': (context) => StartService(),
+            '/approval': (context) => Approval()
           },
         ),
       ),

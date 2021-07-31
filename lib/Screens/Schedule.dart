@@ -29,7 +29,7 @@ class _ScheduleState extends State<Schedule> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.utc(1989);
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  String date;
+  String date, timesl;
   bool a1 = true, a2 = true, a3 = true;
   int evnt = 0;
   int sb = 1, eb = 0;
@@ -472,17 +472,28 @@ class _ScheduleState extends State<Schedule> {
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.all(2),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                    color: Color(0xFF5D5FEF),
-                                                    width: 2)),
-                                            child: Icon(
-                                                Icons
-                                                    .arrow_forward_ios_outlined,
-                                                color: Color(0xff5D5FEF)),
+                                          FlatButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, '/approval',
+                                                  arguments: {
+                                                    "date": date,
+                                                    "timesl":
+                                                        "${value[index].timeslot}"
+                                                  });
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color: Color(0xFF5D5FEF),
+                                                      width: 2)),
+                                              child: Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_outlined,
+                                                  color: Color(0xff5D5FEF)),
+                                            ),
                                           )
                                         ])
                                         /*ListTile(
