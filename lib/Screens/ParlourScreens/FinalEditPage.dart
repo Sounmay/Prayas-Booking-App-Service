@@ -50,7 +50,8 @@ class _FinalEditPageState extends State<FinalEditPage> {
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     Location _location = parlourProvider.parlourLocationDetails;
     Details _details = parlourProvider.parlourDetails;
-    List<EmployeeDetailList> _employeeList = _arguments["employeeList"];
+    List<EmployeeDetailList> _employeeList =
+        parlourProvider.parlourEmployeeDetails;
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
