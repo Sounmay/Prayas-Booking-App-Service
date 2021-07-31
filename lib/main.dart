@@ -39,12 +39,13 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider()),
-          StreamProvider<AppUserDetails>.value(
-            initialData:
-                AppUserDetails(uid: FirebaseAuth.instance.currentUser.uid),
-            value: DatabaseService().streamUser(),
-            child: Wrapper(),
-          ),
+          if (FirebaseAuth.instance?.currentUser?.uid != null)
+            StreamProvider<AppUserDetails>.value(
+              initialData: AppUserDetails(
+                  uid: FirebaseAuth.instance?.currentUser?.uid ?? ''),
+              value: DatabaseService().streamUser(),
+              child: Wrapper(),
+            ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

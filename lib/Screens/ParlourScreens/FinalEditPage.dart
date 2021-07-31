@@ -442,7 +442,10 @@ class _FinalEditPageState extends State<FinalEditPage> {
                             DatabaseService().uploadParlourServiceData(
                                 finalParlourLocation,
                                 finalParlourDetails,
-                                finalEmployeeList);
+                                finalEmployeeList,
+                                parlourProvider.parlourServiceListDetails,
+                                parlourProvider.parlourSlotListDetails
+                                );
 
                             setState(() {
                               isLoading = false;

@@ -45,12 +45,15 @@ class _WrapperState extends State<Wrapper> {
     // TODO: implement initState
     super.initState();
 
-    _loadUserInfO();
+    // _loadUserInfO();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userDetails = Provider.of<AppUserDetails>(context);
+    var userDetails;
+    if (FirebaseAuth.instance?.currentUser?.uid != null) {
+      userDetails = Provider.of<AppUserDetails>(context);
+    }
 
     final user = Provider.of<AppUser>(context);
 
