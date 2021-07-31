@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
+import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocation.dart';
@@ -38,13 +38,15 @@ class MyApp extends StatelessWidget {
       value: AuthProvider().user,
       child: MultiProvider(
         providers: [
-            StreamProvider<AppUserDetails>.value(
-            initialData: AppUserDetails(uid: FirebaseAuth.instance.currentUser.uid),
+          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider()),
+          StreamProvider<AppUserDetails>.value(
+            initialData:
+                AppUserDetails(uid: FirebaseAuth.instance.currentUser.uid),
             value: DatabaseService().streamUser(),
             child: Wrapper(),
           ),
         ],
-              child: MaterialApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primaryColor: Color(0xff5D5FEF)),
           initialRoute: '/',
@@ -59,6 +61,7 @@ class MyApp extends StatelessWidget {
             '/salonlocation': (context) => SalonLocation(),
             '/finalParlourPage': (context) => FinalEditPage(),
             '/details2': (context) => DetailsSecond(),
+            '/details3': (context) => DetailsThird(),
             '/schedule': (context) => Schedule(),
             '/otpscreen': (context) => OTPScreen(),
             '/ps': (context) => ParlourServices(),

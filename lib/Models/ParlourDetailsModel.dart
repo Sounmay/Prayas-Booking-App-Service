@@ -132,7 +132,7 @@ class EmployeeDetailList {
 class ParlourServiceDetails {
   String name, price, hour, minute;
 
-  ParlourServiceDetails({name, price, hour, minute});
+  ParlourServiceDetails({this.name, this.price, this.hour, this.minute});
 
   ParlourServiceDetails.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -143,10 +143,35 @@ class ParlourServiceDetails {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = name;
-    data['price'] = price;
-    data['hour'] = hour;
-    data['minute'] = minute;
+    data['name'] = this.name;
+    data['price'] = this.price;
+    data['hour'] = this.hour;
+    data['minute'] = this.minute;
+    return data;
+  }
+}
+
+class ParlourSlotDetails {
+  String weekRange, fromHr, fromMin, toHr, toMin;
+
+  ParlourSlotDetails(
+      {this.weekRange, this.fromHr, this.fromMin, this.toHr, this.toMin});
+
+  ParlourSlotDetails.fromJson(Map<String, dynamic> json) {
+    weekRange = json['weekRange'];
+    fromHr = json['fromHr'];
+    fromMin = json['fromMin'];
+    toHr = json['toHr'];
+    toMin = json['toMin'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['weekRange'] = this.weekRange;
+    data['fromHr'] = this.fromHr;
+    data['fromMin'] = this.fromMin;
+    data['toHr'] = this.toHr;
+    data['toMin'] = this.toMin;
     return data;
   }
 }

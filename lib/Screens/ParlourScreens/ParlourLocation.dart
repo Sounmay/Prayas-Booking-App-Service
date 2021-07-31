@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:freelance_booking_app_service/Models/ParlourDetails.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class ParlourLocation extends StatefulWidget {
   @override
@@ -49,37 +50,41 @@ class _ParlourLocationState extends State<ParlourLocation> {
   String locationpreference = '';
   List<String> _addresspreference = [];
 
-  _loadData(String _location) async {
-    if (_location == '' || _location == null) return;
-
+  _loadData(List<String> _address) async {
     if (_addresspreference.isNotEmpty) {
-      address = _addresspreference[0];
-      area = _addresspreference[1];
-      landmark = _addresspreference[2];
+      address = _address[0];
+      area = _address[1];
+      landmark = _address[2];
     }
-
-    Map<String, dynamic> mappedData = json.decode(_location);
-
-    setState(() {
-      parlourName = mappedData['name'];
-      shopNo = mappedData['shopNo'];
-      address = mappedData['address'];
-      ownerName = mappedData['ownerName'];
-      ownerNumber = mappedData['ownerNumber'];
-    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    locationpreference = SharedPreferencesForm.getDetails() ?? '';
     _addresspreference = SharedPreferencesForm.getAddressforFrom() ?? [];
-    _loadData(locationpreference);
+    _loadData(_addresspreference);
   }
 
   @override
   Widget build(BuildContext context) {
+    final parlourLocation = Provider.of<ParlourDetailsProvider>(context);
+    if (longi == '') {
+      longi = parlourLocation?.parlourLocationDetails?.longitude ?? '';
+      lati = parlourLocation?.parlourLocationDetails?.latitude ?? '';
+      parlourName = parlourLocation?.parlourLocationDetails?.name ?? '';
+      shopNo = parlourLocation?.parlourLocationDetails?.shopNo ?? '';
+      address = parlourLocation?.parlourLocationDetails?.address ?? '';
+      ownerName = parlourLocation?.parlourLocationDetails?.ownerName ?? '';
+      ownerNumber = parlourLocation?.parlourLocationDetails?.ownerNumber ?? '';
+      about = parlourLocation?.parlourLocationDetails?.aboutOwner ?? '';
+    }
+    if (parlourLocation.parlourLocationDetails != null) {
+      if (parlourLocation.parlourLocationDetails.ownerImage != '') {
+        file = File(parlourLocation.parlourLocationDetails.ownerImage);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -143,7 +148,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
                         children: [
                           _title("Enter shop details", false),
                           TextFormField(
-                            initialValue: parlourName,
+                            initialValue:
+                                parlourLocation.parlourLocationDetails?.name ??
+                                    '',
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Parlour name',
@@ -161,7 +168,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
                             },
                           ),
                           TextFormField(
-                            initialValue: shopNo,
+                            initialValue: parlourLocation
+                                    .parlourLocationDetails?.shopNo ??
+                                '',
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Registered Shop no.',
@@ -299,7 +308,10 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.4,
                                   child: TextFormField(
-                                    initialValue: ownerName,
+                                    initialValue: parlourLocation
+                                            .parlourLocationDetails
+                                            ?.ownerName ??
+                                        '',
                                     style: TextStyle(fontSize: 14),
                                     decoration: InputDecoration(
                                         isDense: true,
@@ -321,7 +333,10 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.4,
                                   child: TextFormField(
-                                    initialValue: ownerNumber,
+                                    initialValue: parlourLocation
+                                            .parlourLocationDetails
+                                            ?.ownerNumber ??
+                                        '',
                                     keyboardType: TextInputType.number,
                                     style: TextStyle(fontSize: 14),
                                     validator: (val) => val.length < 10
@@ -458,31 +473,32 @@ class _ParlourLocationState extends State<ParlourLocation> {
                     SizedBox(height: 10),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.94,
-                      child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(left: 10),
-                            fillColor: Colors.white,
-                            filled: true,
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff5D5FEF))),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff5D5FEF))),
-                          ),
-                          onChanged: (val) {
-                            setState(() => about = val);
-                          }),
+                      child: TextFormField(
+                        onChanged: (text) {
+                          setState(() {
+                            about = text;
+                          });
+                        },
+                        initialValue: parlourLocation
+                                .parlourLocationDetails?.aboutOwner ??
+                            '',
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 10, top: 10, bottom: 10),
+                          fillColor: Colors.white,
+                          filled: true,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff5D5FEF))),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xff5D5FEF))),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 30),
                     FlatButton(
                         onPressed: () async {
-                          // if (_formKey.currentState.validate()) {
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //       SnackBar(content: Text('Processing Data')));
-                          // }
                           final uid = FirebaseAuth.instance.currentUser.uid;
                           if (_formKey.currentState.validate()) {
                             Location location = Location(
@@ -495,19 +511,19 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 ownerNumber: ownerNumber,
                                 latitude: lati,
                                 longitude: longi,
-                                aboutOwner: about);
+                                aboutOwner: about ?? '');
+
+                            parlourLocation.updateParlourLocation(location);
+
                             try {
-                              await SharedPreferencesForm.setLocation(
-                                  jsonEncode(location.toJson()));
                               await SharedPreferencesForm.setAddressFormDetails(
                                   [address, area, landmark]);
                             } catch (e) {
-                              print('heere' + e.toString());
+                              print(e.toString());
                             }
                             Navigator.pushNamed(context, '/details2',
                                 arguments: {
                                   "title": title,
-                                  "location": location
                                 });
                           }
                         },
