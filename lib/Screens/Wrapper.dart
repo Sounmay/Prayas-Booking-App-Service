@@ -13,32 +13,31 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  bool isLoading = true;
   bool isRegistered = false;
 
-  _loadUserInfO() async {
-    try {
-      final data = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(FirebaseAuth.instance.currentUser.uid)
-          .get();
-      if (data['serviceRegistered'] == true) {
-        setState(() {
-          isLoading = false;
-          isRegistered = true;
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      print(e.toString());
-    }
-  }
+  // _loadUserInfO() async {
+  //   try {
+  //     final data = await FirebaseFirestore.instance
+  //         .collection('Users')
+  //         .doc(FirebaseAuth.instance.currentUser.uid)
+  //         .get();
+  //     if (data['serviceRegistered'] == true) {
+  //       setState(() {
+  //         isLoading = false;
+  //         isRegistered = true;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     print(e.toString());
+  //   }
+  // }
 
   @override
   void initState() {
@@ -51,27 +50,16 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     var userDetails;
-    if (FirebaseAuth.instance?.currentUser?.uid != null) {
-      userDetails = Provider.of<AppUserDetails>(context);
-    }
 
     final user = Provider.of<AppUser>(context);
 
+    if (FirebaseAuth.instance?.currentUser?.uid != null) {
+      userDetails = Provider.of<AppUserDetails>(context);
+    }
     if (user == null) {
       return Authenticate();
     } else {
-      return isLoading == true
-          ? Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [CircularProgressIndicator()],
-                ),
-              ),
-            )
-          : userDetails.isRegistered == false
-              ? ServiceKind()
-              : BottomNavBar();
+      return userDetails.isRegistered == false ? ServiceKind() : BottomNavBar();
     }
   }
 }

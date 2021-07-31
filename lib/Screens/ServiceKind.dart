@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Models/User.dart';
+import 'package:provider/provider.dart';
 
 class ServiceKind extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class _ServiceKindState extends State<ServiceKind> {
   @override
   int choice = 0;
   Widget build(BuildContext context) {
+    final user = Provider.of<AppUser>(context);
     final width = MediaQuery.of(context).size.width;
     final buttonwidth = width * 0.05;
     return Scaffold(
