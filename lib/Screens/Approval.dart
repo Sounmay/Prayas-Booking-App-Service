@@ -23,13 +23,10 @@ class _ApprovalState extends State<Approval> {
     final sw = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/schedule');
-            },
-            padding: EdgeInsets.all(0),
-            icon: Icon(Icons.arrow_back_outlined, color: Colors.black)),
+        foregroundColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Padding(
