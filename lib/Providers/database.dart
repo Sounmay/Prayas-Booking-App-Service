@@ -26,14 +26,10 @@ class DatabaseService {
     return ref.map((event) => AppUserDetails.fromFirestore(event));
   }
 
-  Stream<List<ParlourBooking>> streamBookings() {
+  Stream<ParlourBookingList> streamBookings() {
     var ref = _db.collection('events').doc('thisevent').snapshots();
-    print(ref);
-    ref.map((event) {
-      print(event.data()['event']);
-      return null;
-    });
-    return null;
+
+    return ref.map((event) => ParlourBookingList.fromFirestore(event));
 
     // return asfd;
   }
