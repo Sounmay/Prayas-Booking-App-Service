@@ -24,12 +24,7 @@ class _ApprovalState extends State<Approval> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/schedule');
-            },
-            padding: EdgeInsets.all(0),
-            icon: Icon(Icons.arrow_back_outlined, color: Colors.black)),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Padding(

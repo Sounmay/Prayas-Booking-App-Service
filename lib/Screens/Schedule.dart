@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
+import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Utils/Events.dart';
 import 'package:provider/provider.dart';
@@ -130,6 +131,8 @@ class _ScheduleState extends State<Schedule> {
 
   Widget build(BuildContext context) {
     final userDetails = Provider.of<AppUserDetails>(context);
+    // final bookingList = Provider.of<List<ParlourBooking>>(context);
+    // print(bookingList);
     name = userDetails.name;
 
     final sl = MediaQuery.of(context).size.height;
@@ -211,9 +214,14 @@ class _ScheduleState extends State<Schedule> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    'Schedule',
-                    style: TextStyle(color: Color(0xFF0F2735)),
+                  InkWell(
+                    onTap: () {
+                      // print(bookingList);
+                    },
+                    child: Text(
+                      'Schedule',
+                      style: TextStyle(color: Color(0xFF0F2735)),
+                    ),
                   ),
                   SizedBox(height: 20),
 

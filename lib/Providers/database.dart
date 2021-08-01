@@ -25,11 +25,18 @@ class DatabaseService {
 
     return ref.map((event) => AppUserDetails.fromFirestore(event));
   }
-  // Stream<List<ParlourBooking>> streamBookings() {
-  //   var ref = _db.collection('events').doc('thisevent').snapshots();
 
-  //   return ref.map((event) => List<ParlourBooking>.from((event) => ParlourBooking(name: event.data()['name'], amount: event.data()['amount'], service: event.data()['service'], date: event.data()['date'])).toList());
-  // }
+  Stream<List<ParlourBooking>> streamBookings() {
+    var ref = _db.collection('events').doc('thisevent').snapshots();
+    print(ref);
+    ref.map((event) {
+      print(event.data()['event']);
+      return null;
+    });
+    return null;
+
+    // return asfd;
+  }
 
   uploadParlourServiceData(
       Location location,
