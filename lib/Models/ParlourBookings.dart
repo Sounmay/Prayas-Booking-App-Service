@@ -7,10 +7,7 @@ class ParlourBooking {
   final String service;
 
   ParlourBooking(
-      {this.amount = "",
-      this.name="",
-      this.date,
-      this.service = ""});
+      {this.amount = "", this.name = "", this.date, this.service = ""});
 
   factory ParlourBooking.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data();
@@ -22,6 +19,3 @@ class ParlourBooking {
         date: data['date']);
   }
 }
-
-
-

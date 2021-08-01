@@ -23,10 +23,8 @@ class _ApprovalState extends State<Approval> {
     final sw = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Padding(

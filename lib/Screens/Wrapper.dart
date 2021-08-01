@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:freelance_booking_app_service/Screens/Authenticate.dart';
+import 'package:freelance_booking_app_service/Screens/Schedule.dart';
 import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
 import 'package:freelance_booking_app_service/Widgets/NavigationWidget.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +28,6 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-   
     final user = Provider.of<AppUser>(context);
 
     if (user == null) {
@@ -38,6 +39,11 @@ class _WrapperState extends State<Wrapper> {
               uid: FirebaseAuth.instance?.currentUser?.uid ?? ''),
           value: DatabaseService().streamUser(),
           child: SelectePage(),
+        ),
+        StreamProvider<List<ParlourBooking>>.value(
+          initialData: [],
+          value: DatabaseService().streamBookings(),
+          child: Schedule(),
         ),
       ], child: SelectePage());
     }
