@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
@@ -16,14 +17,19 @@ class DatabaseService {
   }
 
   Future setRegistered() async {
-    _db.collection('Users').doc(uid).update({"isRegistered": true});
+    _db.collection('ServiceProviders').doc(uid).update({"isRegistered": true});
   }
 
   Stream<AppUserDetails> streamUser() {
-    var ref = _db.collection('Users').doc(uid).snapshots();
+    var ref = _db.collection('ServiceProviders').doc(uid).snapshots();
 
     return ref.map((event) => AppUserDetails.fromFirestore(event));
   }
+  // Stream<List<ParlourBooking>> streamBookings() {
+  //   var ref = _db.collection('events').doc('thisevent').snapshots();
+
+  //   return ref.map((event) => List<ParlourBooking>.from((event) => ParlourBooking(name: event.data()['name'], amount: event.data()['amount'], service: event.data()['service'], date: event.data()['date'])).toList());
+  // }
 
   uploadParlourServiceData(
       Location location,
@@ -39,6 +45,10 @@ class DatabaseService {
         "servicesList": parlourServiceList.map((e) => e.toJson()).toList(),
         "slotList": parlourSlotList.map((e) => e.toJson()).toList(),
       });
+      await _db
+          .collection('ServiceProviders')
+          .doc(uid)
+          .update({"image": location.ownerImage});
     } catch (e) {
       print(e.toString());
     }

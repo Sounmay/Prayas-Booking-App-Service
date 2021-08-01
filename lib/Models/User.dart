@@ -5,11 +5,8 @@ class AppUser {
   final String name;
   final String image;
 
-  AppUser({this.uid="", this.name="",this.image=""});
-  
+  AppUser({this.uid = "", this.name = "", this.image = ""});
 }
-
-
 
 class AppUserDetails {
   final String uid;
@@ -17,15 +14,18 @@ class AppUserDetails {
   final String image;
   final bool isRegistered;
 
-  AppUserDetails({this.uid = "", this.name = "", this.image = "", this.isRegistered=false});
+  AppUserDetails(
+      {this.uid = "",
+      this.name = "",
+      this.image = "",
+      this.isRegistered = false});
 
   factory AppUserDetails.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data();
 
     return AppUserDetails(
-      name: data['name'],
-      isRegistered: data['isRegistered']
-    );
+        name: data['name'],
+        isRegistered: data['isRegistered'],
+        image: data['image']);
   }
 }
-

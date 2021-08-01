@@ -27,6 +27,9 @@ class _FinalEditPageState extends State<FinalEditPage> {
   bool isLoading = false;
   String parlourImageUrl = '';
   String ownerImageUrl = '';
+  bool employeeImagesuploaded = false,
+      parlourImageuploaded = false,
+      ownerImageuploaded = false;
 
   List<String> imageUrls = [];
 
@@ -407,47 +410,55 @@ class _FinalEditPageState extends State<FinalEditPage> {
                   Column(
                     children: [
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             setState(() {
                               isLoading = true;
                               employeeList = _employeeList;
                             });
+                            try {
+                              // deleteFolder();
+                              await uploadEmployeeImages();
+                              await uploadImage(_location.ownerImage, true);
+                              await uploadImage(parlourImagepath, false);
 
-                            uploadEmployeeImages();
-                            uploadImage(_location.ownerImage, true);
-                            uploadImage(parlourImagepath, false);
+                              if (parlourImageuploaded &&
+                                  ownerImageuploaded &&
+                                  employeeImagesuploaded) {
+                                Location finalParlourLocation = Location(
+                                    aboutOwner: _location.aboutOwner,
+                                    ownerImage: ownerImageUrl,
+                                    ownerName: _location.ownerName,
+                                    ownerNumber: _location.ownerNumber,
+                                    name: _location.name,
+                                    address: _location.address,
+                                    shopNo: _location.shopNo,
+                                    longitude: _location.longitude,
+                                    latitude: _location.latitude,
+                                    serviceUid: _location.serviceUid);
 
-                            Location finalParlourLocation = Location(
-                                aboutOwner: _location.aboutOwner,
-                                ownerImage: ownerImageUrl,
-                                ownerName: _location.ownerName,
-                                ownerNumber: _location.ownerNumber,
-                                name: _location.name,
-                                address: _location.address,
-                                shopNo: _location.shopNo,
-                                longitude: _location.longitude,
-                                latitude: _location.latitude,
-                                serviceUid: _location.serviceUid);
+                                Details finalParlourDetails = Details(
+                                    aboutParlour: _details.aboutParlour,
+                                    parlourImage: parlourImageUrl,
+                                    parlourType: _details.parlourType,
+                                    numOfEmployees: _details.numOfEmployees);
 
-                            Details finalParlourDetails = Details(
-                                aboutParlour: _details.aboutParlour,
-                                parlourImage: parlourImageUrl,
-                                parlourType: _details.parlourType,
-                                numOfEmployees: _details.numOfEmployees);
+                                DatabaseService().uploadParlourServiceData(
+                                    finalParlourLocation,
+                                    finalParlourDetails,
+                                    finalEmployeeList,
+                                    parlourProvider.parlourServiceListDetails,
+                                    parlourProvider.parlourSlotListDetails);
 
-                            DatabaseService().uploadParlourServiceData(
-                                finalParlourLocation,
-                                finalParlourDetails,
-                                finalEmployeeList,
-                                parlourProvider.parlourServiceListDetails,
-                                parlourProvider.parlourSlotListDetails);
-
-                            setState(() {
-                              isLoading = false;
-                              DatabaseService().setRegistered().then((value) =>
-                                  Navigator.popUntil(context,
-                                      ModalRoute.withName('/wrapper')));
-                            });
+                                setState(() {
+                                  isLoading = false;
+                                  DatabaseService().setRegistered().then(
+                                      (value) => Navigator.popUntil(context,
+                                          ModalRoute.withName('/wrapper')));
+                                });
+                              }
+                            } catch (e) {
+                              print(e.toString());
+                            }
                           },
                           child: SizedBox(
                             width: width * 0.4,
@@ -497,24 +508,50 @@ class _FinalEditPageState extends State<FinalEditPage> {
   }
 
   UploadTask task;
+  Future<bool> deleteFolder() async {
+    final uid = FirebaseAuth.instance.currentUser.uid;
+    try {
+      final awa = await FirebaseStorage.instance
+          .ref()
+          .child("serviceImage/$uid")
+          .listAll();
+      awa.items.forEach((element) {
+        element.delete();
+      });
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 
   Future uploadEmployeeImages() async {
     final uid = FirebaseAuth.instance.currentUser.uid;
 
-    for (var img in employeeList) {
-      File file = File(img.imagefile);
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('serviceImage/$uid/${basename(file.path)}');
-      await ref.putFile(file).whenComplete(() async {
-        await ref.getDownloadURL().then((value) {
-          setState(() {
-            finalEmployeeList.add(EmployeeDetailList(
-                name: img.name,
-                number: img.number,
-                imagefile: value.toString()));
+    try {
+      for (var img in employeeList) {
+        File file = File(img.imagefile);
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('serviceImage/$uid/${basename(file.path)}');
+        await ref.putFile(file).whenComplete(() async {
+          await ref.getDownloadURL().then((value) {
+            setState(() {
+              finalEmployeeList.add(EmployeeDetailList(
+                  name: img.name,
+                  number: img.number,
+                  imagefile: value.toString()));
+            });
           });
         });
+      }
+      setState(() {
+        employeeImagesuploaded = true;
+      });
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        employeeImagesuploaded = false;
       });
     }
   }
@@ -522,68 +559,34 @@ class _FinalEditPageState extends State<FinalEditPage> {
   Future uploadImage(String imgString, bool isOwner) async {
     final uid = FirebaseAuth.instance.currentUser.uid;
 
-    File file = File(imgString);
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('serviceImage/$uid/${basename(file.path)}');
-    await ref.putFile(file).whenComplete(() async {
-      await ref.getDownloadURL().then((value) {
-        setState(() {
-          if (isOwner) {
-            ownerImageUrl = value;
-          } else {
-            parlourImageUrl = value;
-          }
+    try {
+      File file = File(imgString);
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('serviceImage/$uid/${basename(file.path)}');
+      await ref.putFile(file).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          setState(() {
+            if (isOwner) {
+              ownerImageUrl = value;
+            } else {
+              parlourImageUrl = value;
+            }
+          });
         });
       });
-    });
+      setState(() {
+        ownerImageuploaded = true;
+        parlourImageuploaded = true;
+      });
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        ownerImageuploaded = false;
+        parlourImageuploaded = false;
+      });
+    }
   }
-
-  // Future uploadFile(File _file) async {
-  //   if (_file == null) return '';
-  //   final fileName = basename(_file.path);
-  //   final uid = FirebaseAuth.instance.currentUser.uid;
-  //   final destination = 'serviceImage/$uid/$fileName';
-
-  //   task = FirebaseApi.uploadFile(destination, _file);
-
-  //   if (task == null) return null;
-
-  //   final snapshot = await task.whenComplete(() {});
-  //   final urlDownload = await snapshot.ref.getDownloadURL();
-
-  //   // DatabaseService().uploadImage(urlDownload);
-
-  //   setState(() {
-  //     parlourImageUrl = urlDownload;
-  //   });
-  //   return urlDownload;
-  // }
-
-  // Future uploadMultipleFile(List<File> _file) async {
-  //   if (_file == null || _file.isEmpty) return [];
-  //   List<String> imgUrl = [];
-
-  //   for (int i = 0; i < _file.length; i++) {
-  //     final fileName = basename(_file[i].path);
-  //     final uid = FirebaseAuth.instance.currentUser.uid;
-  //     final destination = 'serviceImage/$uid/$fileName';
-
-  //     task = FirebaseApi.uploadFile(destination, _file[i]);
-
-  //     if (task == null) return null;
-
-  //     final snapshot = await task.whenComplete(() {});
-  //     String urlDownload = await snapshot.ref.getDownloadURL();
-  //     imgUrl.add(urlDownload);
-  //     // DatabaseService().uploadImage(urlDownload);
-  //   }
-
-  //   setState(() {
-  //     imageUrls = imgUrl;
-  //   });
-  //   return imgUrl;
-  // }
 }
 
 class MyClip extends CustomClipper<Rect> {

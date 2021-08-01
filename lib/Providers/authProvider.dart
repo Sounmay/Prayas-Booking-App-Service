@@ -35,9 +35,9 @@ class AuthProvider {
       User user = result.user;
 
       FirebaseFirestore.instance
-          .collection('Users')
+          .collection('ServiceProviders')
           .doc("${user.uid}")
-          .set({"name": name, "image": ""});
+          .set({"name": name, "image": "", "isRegistered": false});
 
       return _userFromFirebaseUser(user);
     } catch (e) {

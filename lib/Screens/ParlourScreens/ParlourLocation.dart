@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -499,6 +500,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                     SizedBox(height: 30),
                     FlatButton(
                         onPressed: () async {
+                          // deleteFolder();
                           final uid = FirebaseAuth.instance.currentUser.uid;
                           if (_formKey.currentState.validate()) {
                             Location location = Location(

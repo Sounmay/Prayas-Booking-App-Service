@@ -118,7 +118,6 @@ class _ServiceKindState extends State<ServiceKind> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      // Navigator.pushNamed(context, '/uploadImage');
                       setState(() {
                         choice = 2;
                       });

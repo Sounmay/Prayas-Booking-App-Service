@@ -1,8 +1,11 @@
 import 'dart:collection';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
+import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Utils/Events.dart';
+import 'package:provider/provider.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +28,7 @@ class _ScheduleState extends State<Schedule> {
   var kFirstDay;
   var kLastDay;
 
-  String name = "Ramesh";
+  String name = "";
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.utc(1989);
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -126,6 +129,9 @@ class _ScheduleState extends State<Schedule> {
   }
 
   Widget build(BuildContext context) {
+    final userDetails = Provider.of<AppUserDetails>(context);
+    name = userDetails.name;
+
     final sl = MediaQuery.of(context).size.height;
     final sw = MediaQuery.of(context).size.width;
     return isLoad
@@ -165,10 +171,39 @@ class _ScheduleState extends State<Schedule> {
                           Column(
                             children: [
                               SizedBox(height: 35),
-                              CircleAvatar(
-                                  radius: 25,
-                                  foregroundImage:
-                                      AssetImage('assets/doctor 3.png')),
+                              new Container(
+                                width: 60,
+                                height: 60,
+                                margin: EdgeInsets.only(bottom: 8),
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: userDetails.image,
+                                    fit: BoxFit.fitHeight,
+                                    height: 40,
+                                    width: 40,
+
+                                    // placeholder: (context, url) =>
+                                    //     new Image.asset('assets/doctor.png'),
+                                    errorWidget: (context, url, error) =>
+                                        new Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Icon(Icons.hide_image, size: 40),
+                                        ClipRRect(
+                                          // Clip it cleanly.
+                                          child: Container(
+                                            color: Colors.grey[100]
+                                                .withOpacity(0.1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ],
