@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:weekday_selector/weekday_selector.dart';
 
 class DetailsThird extends StatefulWidget {
   @override
@@ -14,9 +13,10 @@ class DetailsThird extends StatefulWidget {
 class _DetailsThirdState extends State<DetailsThird> {
   List<String> _locations = ['AM', 'PM']; // Option 2
   String _fromSelectedFormat, _toSelectedFormat;
-  final values = List.filled(7, false);
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
+  bool clicked1=false,clicked2=false,clicked3=false,clicked4=false,clicked5=false,clicked6=false,clicked7=false;
+  List<String> _weekdays=['','','','','','',''];
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +78,7 @@ class _DetailsThirdState extends State<DetailsThird> {
             ),
             Container(
               margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+              width: MediaQuery.of(context).size.width * 1,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -92,64 +93,58 @@ class _DetailsThirdState extends State<DetailsThird> {
                       ),
                       Row(
                         children: [
-                          SizedBox(
-                            height: 50,
-                            width: 45,
-                            child: TextFormField(
-                              style: TextStyle(fontSize: 30),
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  border: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(5.0),
-                                    ),
-                                    borderSide: new BorderSide(
-                                      color: Colors.black,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  isDense: true,
-                                  labelText: '00',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  contentPadding: EdgeInsets.all(4)),
-                              onChanged: (val) {
-                                setState(() {
-                                  fromHr = val;
-                                });
-                              },
-                            ),
+                          Container(
+                              height: MediaQuery.of(context).size.width * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                border: Border.all(color: Colors.black)
+                              ),
+                              child:
+                              TextFormField(
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    isDense: true,
+                                    labelText: '00',
+                                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                                    contentPadding: EdgeInsets.all(4)
+                                ),
+                                onChanged: (val) {
+                                  setState(() {
+                                    fromHr = val;
+                                  });
+                                },
+                              )
                           ),
                           Text(
                             " : ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          SizedBox(
-                            height: 50,
-                            width: 45,
-                            child: TextFormField(
-                              style: TextStyle(fontSize: 30),
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  border: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(5.0),
-                                    ),
-                                    borderSide: new BorderSide(
-                                      color: Colors.black,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  isDense: true,
-                                  labelText: '00',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  contentPadding: EdgeInsets.all(4)),
-                              onChanged: (val) {
-                                fromMin = val;
-                              },
-                            ),
+                          Container(
+                              height: MediaQuery.of(context).size.width * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.black)
+                              ),
+                              child:
+                              TextFormField(
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    isDense: true,
+                                    labelText: '00',
+                                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                                    contentPadding: EdgeInsets.all(4)
+                                ),
+                                onChanged: (val) {
+                                  setState(() {
+                                    fromMin = val;
+                                  });
+                                },
+                              )
                           ),
                           SizedBox(
                             width: 20.0,
@@ -186,66 +181,58 @@ class _DetailsThirdState extends State<DetailsThird> {
                       ),
                       Row(
                         children: [
-                          SizedBox(
-                            height: 50,
-                            width: 45,
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              style: TextStyle(fontSize: 30),
-                              decoration: InputDecoration(
-                                  border: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(5.0),
-                                    ),
-                                    borderSide: new BorderSide(
-                                      color: Colors.black,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  isDense: true,
-                                  labelText: '00',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  contentPadding: EdgeInsets.all(4)),
-                              onChanged: (val) {
-                                setState(() {
-                                  toHr = val;
-                                });
-                              },
-                            ),
+                          Container(
+                              height: MediaQuery.of(context).size.width * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.black)
+                              ),
+                              child:
+                              TextFormField(
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    isDense: true,
+                                    labelText: '00',
+                                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                                    contentPadding: EdgeInsets.all(4)
+                                ),
+                                onChanged: (val) {
+                                  setState(() {
+                                    toHr = val;
+                                  });
+                                },
+                              )
                           ),
                           Text(
                             " : ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          SizedBox(
-                            height: 50,
-                            width: 45,
-                            child: TextFormField(
-                              style: TextStyle(fontSize: 30),
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  border: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(5.0),
-                                    ),
-                                    borderSide: new BorderSide(
-                                      color: Colors.black,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  isDense: true,
-                                  labelText: '00',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  contentPadding: EdgeInsets.all(4)),
-                              onChanged: (val) {
-                                setState(() {
-                                  toMin = val;
-                                });
-                              },
-                            ),
+                          Container(
+                              height: MediaQuery.of(context).size.width * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.black)
+                              ),
+                              child:
+                              TextFormField(
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    isDense: true,
+                                    labelText: '00',
+                                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                                    contentPadding: EdgeInsets.all(4)
+                                ),
+                                onChanged: (val) {
+                                  setState(() {
+                                    toMin = val;
+                                  });
+                                },
+                              )
                           ),
                           SizedBox(
                             width: 20.0,
@@ -290,9 +277,21 @@ class _DetailsThirdState extends State<DetailsThird> {
                         onChanged: (val) {
                           setState(() {
                             _switchValue = val;
-                            for (int i = 0; i < values.length; i++) {
-                              values[i] = val;
+                            clicked1=val;
+                            clicked2=val;
+                            clicked3=val;
+                            clicked4=val;
+                            clicked5=val;
+                            clicked6=val;
+                            clicked7=val;
+                            if(val==true){
+                              _weekdays.clear();
+                              _weekdays.add('Mon');_weekdays.add('Tue');_weekdays.add('Wed');_weekdays.add('Thu');_weekdays.add('Fri');_weekdays.add('Sat');_weekdays.add('Sun');
                             }
+                            else{
+                              _weekdays.clear();
+                            }
+                            print(_weekdays);
                           });
                         },
                       )
@@ -301,43 +300,172 @@ class _DetailsThirdState extends State<DetailsThird> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  WeekdaySelector(
-                    elevation: 1,
-                    disabledFillColor: Colors.grey[50],
-                    selectedFillColor: Colors.white,
-                    fillColor: Colors.grey[200],
-                    color: Colors.black54,
-                    selectedTextStyle: TextStyle(color: Colors.black),
-                    disabledTextStyle: TextStyle(color: Colors.black54),
-                    textStyle: TextStyle(color: Colors.black54),
-                    disabledShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: BorderSide(
-                            color: Colors.blue,
-                            width: 2,
-                            style: BorderStyle.solid)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    selectedShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                            color: Colors.blue,
-                            width: 2,
-                            style: BorderStyle.solid)),
-                    onChanged: (int day) {
-                      setState(() {
-                        final index = day % 7;
-                        values[index] = !values[index];
-                      });
-                    },
-                    values: values,
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked1=!clicked1;
+                          if(clicked1==true)
+                            _weekdays[0]='Mon';
+                          else
+                            _weekdays[0]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked1==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Mon", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked2=!clicked2;
+                          if(clicked2==true)
+                            _weekdays[1]='Tue';
+                          else
+                            _weekdays[1]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked2==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Tue", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked3=!clicked3;
+                          if(clicked3==true)
+                            _weekdays[2]='Wed';
+                          else
+                            _weekdays[2]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked3==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Wed", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked4=!clicked4;
+                          if(clicked4==true)
+                            _weekdays[3]='Thu';
+                          else
+                            _weekdays[3]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked4==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Thu", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked5=!clicked5;
+                          if(clicked5==true)
+                            _weekdays[4]='Fri';
+                          else
+                            _weekdays[4]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked5==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Fri", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked6=!clicked6;
+                          if(clicked6==true)
+                            _weekdays[5]='Sat';
+                          else
+                            _weekdays[5]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked6==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Sat", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                      InkWell(
+                        onTap: (){ setState(() {
+                          clicked7=!clicked7;
+                          if(clicked7==true)
+                            _weekdays[6]='Sun';
+                          else
+                            _weekdays[6]='';
+                        }); },
+                        child: Container(
+                            height: 40,
+                            width: 50,
+                            decoration: (clicked7==false)?BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey
+                            ):BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.blue
+                            ),
+                            child: Center(child: Text("Sun", style: TextStyle(color: Colors.white),),)
+                        ),
+                      ),
+                      SizedBox(width: 5.0,),
+                    ],
+                  )
                 ],
               ),
             ),
+            SizedBox(height: 40.0,),
             FlatButton(
                 onPressed: () async {
+                  _weekdays.removeWhere((item) => item == '');
                   if (fromHr != '' &&
                       fromMin != '' &&
                       toHr != '' &&
@@ -349,7 +477,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                       fromMin: fromMin,
                       toHr: toHr,
                       toMin: toMin,
-                      weekRange: '',
+                      weekRange: _weekdays.first.toString() +' - '+ _weekdays.last.toString(),
                     );
 
                     slotList.add(slots);
