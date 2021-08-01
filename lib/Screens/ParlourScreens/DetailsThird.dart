@@ -477,7 +477,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                       fromMin: fromMin,
                       toHr: toHr,
                       toMin: toMin,
-                      weekRange: _weekdays.first +' - '+ _weekdays.last.toString(),
+                      weekRange: _weekdays.first.toString() +' - '+ _weekdays.last.toString(),
                     );
 
                     slotList.add(slots);
