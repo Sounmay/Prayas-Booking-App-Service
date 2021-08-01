@@ -40,11 +40,11 @@ class _WrapperState extends State<Wrapper> {
           value: DatabaseService().streamUser(),
           child: SelectePage(),
         ),
-        StreamProvider<List<ParlourBooking>>.value(
-          initialData: [],
-          value: DatabaseService().streamBookings(),
-          child: Schedule(),
-        ),
+        // StreamProvider<ParlourBookingList>.value(
+        //   initialData: ParlourBookingList(parlourBooking: []),
+        //   value: DatabaseService().streamBookings(),
+        //   child: SelectePage(),
+        // ),
       ], child: SelectePage());
     }
   }

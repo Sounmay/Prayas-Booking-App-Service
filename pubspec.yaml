@@ -38,6 +38,7 @@ dependencies:
   file_picker: ^3.0.3
   image_picker: ^0.8.2
   table_calendar: ^3.0.1
+  pull_to_refresh: ^2.0.0
   marquee: ^2.2.0
   shared_preferences: ^2.0.6
   cached_network_image: ^3.1.0

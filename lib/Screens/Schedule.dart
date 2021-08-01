@@ -6,6 +6,7 @@ import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Utils/Events.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,7 @@ class _ScheduleState extends State<Schedule> {
           .get();
 
       List _eventList = data['event'];
+      _kEventSource = {};
 
       kToday = DateTime.now();
       kFirstDay = DateTime(kToday.year, kToday.month, kToday.day);
@@ -116,7 +118,11 @@ class _ScheduleState extends State<Schedule> {
     } catch (e) {
       e.toString();
     }
+    _refreshController.refreshCompleted();
   }
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -129,9 +135,8 @@ class _ScheduleState extends State<Schedule> {
   }
 
   Widget build(BuildContext context) {
+    print(_kEventSource);
     final userDetails = Provider.of<AppUserDetails>(context);
-    // final bookingList = Provider.of<List<ParlourBooking>>(context);
-    // print(bookingList);
     name = userDetails.name;
 
     final sl = MediaQuery.of(context).size.height;
@@ -143,690 +148,701 @@ class _ScheduleState extends State<Schedule> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [CircularProgressIndicator()])))
         : Scaffold(
-            body: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: sl * 0.15,
-                    color: Color(0xFF0F2735),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 40),
-                              Text(
-                                'Hello !!',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                              ),
-                              Text(name,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20))
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              SizedBox(height: 35),
-                              new Container(
-                                width: 60,
-                                height: 60,
-                                margin: EdgeInsets.only(bottom: 8),
-                                decoration: new BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: ClipOval(
-                                  child: CachedNetworkImage(
-                                    imageUrl: userDetails.image,
-                                    fit: BoxFit.fitHeight,
-                                    height: 40,
-                                    width: 40,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(70.0),
+              child: AppBar(
+                backgroundColor: Color(0xFF0F2735),
+                title: Text('Hello !!\n$name'),
+                actions: [
+                  new Container(
+                    width: 60,
+                    height: 60,
+                    margin: EdgeInsets.only(top: 4, right: 5),
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: userDetails.image,
+                        fit: BoxFit.fitHeight,
+                        height: 40,
+                        width: 40,
 
-                                    // placeholder: (context, url) =>
-                                    //     new Image.asset('assets/doctor.png'),
-                                    errorWidget: (context, url, error) =>
-                                        new Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        Icon(Icons.hide_image, size: 40),
-                                        ClipRRect(
-                                          // Clip it cleanly.
-                                          child: Container(
-                                            color: Colors.grey[100]
-                                                .withOpacity(0.1),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                        // placeholder: (context, url) =>
+                        //     new Image.asset('assets/doctor.png'),
+                        errorWidget: (context, url, error) => new Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Icon(Icons.hide_image, size: 40),
+                            ClipRRect(
+                              // Clip it cleanly.
+                              child: Container(
+                                color: Colors.grey[100].withOpacity(0.1),
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  InkWell(
-                    onTap: () {
-                      // print(bookingList);
-                    },
-                    child: Text(
-                      'Schedule',
-                      style: TextStyle(color: Color(0xFF0F2735)),
-                    ),
+                ],
+              ),
+            ),
+            body: SmartRefresher(
+              controller: _refreshController,
+              enablePullDown: true,
+              enablePullUp: false,
+              header: ClassicHeader(
+                completeIcon: Icon(Icons.done, color: Colors.white60),
+                refreshingIcon: SizedBox(
+                  width: 25,
+                  height: 25,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                    color: Colors.white60,
                   ),
-                  SizedBox(height: 20),
+                ),
+              ),
+              onRefresh: () => _loadEvents(),
+              child: Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 20),
+                      InkWell(
+                        onTap: () {
+                          // print(bookingList);
+                        },
+                        child: Text(
+                          'Schedule',
+                          style: TextStyle(color: Color(0xFF0F2735)),
+                        ),
+                      ),
+                      SizedBox(height: 20),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TableCalendar(
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                          weekendStyle: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold),
-                          weekdayStyle: TextStyle(fontWeight: FontWeight.bold)),
-                      headerStyle: HeaderStyle(
-                          headerMargin: EdgeInsets.only(bottom: 20),
-                          titleCentered: true,
-                          titleTextStyle:
-                              TextStyle(color: Colors.blue[700], fontSize: 18)),
-                      weekendDays: [DateTime.sunday],
-                      availableCalendarFormats: {_calendarFormat: 'Month'},
-                      firstDay: DateTime.utc(2010, 10, 16),
-                      lastDay: DateTime.utc(2030, 3, 14),
-                      focusedDay: _focusedDay,
-                      selectedDayPredicate: (day) {
-                        return isSameDay(_selectedDay, day);
-                      },
-                      onDaySelected: _onDaySelected,
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: TableCalendar(
+                          daysOfWeekStyle: DaysOfWeekStyle(
+                              weekendStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                              weekdayStyle:
+                                  TextStyle(fontWeight: FontWeight.bold)),
+                          headerStyle: HeaderStyle(
+                              headerMargin: EdgeInsets.only(bottom: 20),
+                              titleCentered: true,
+                              titleTextStyle: TextStyle(
+                                  color: Colors.blue[700], fontSize: 18)),
+                          weekendDays: [DateTime.sunday],
+                          availableCalendarFormats: {_calendarFormat: 'Month'},
+                          firstDay: DateTime.utc(2010, 10, 16),
+                          lastDay: DateTime.utc(2030, 3, 14),
+                          focusedDay: _focusedDay,
+                          selectedDayPredicate: (day) {
+                            return isSameDay(_selectedDay, day);
+                          },
+                          onDaySelected: _onDaySelected,
 
-                      //  (selectedDay, focusedDay) {
-                      //   setState(() {
-                      //     _selectedDay = selectedDay;
-                      //     _focusedDay = focusedDay;
-                      //     // update `_focusedDay` here as well
+                          //  (selectedDay, focusedDay) {
+                          //   setState(() {
+                          //     _selectedDay = selectedDay;
+                          //     _focusedDay = focusedDay;
+                          //     // update `_focusedDay` here as well
 
-                      //   });
-                      // },
-                      eventLoader: _getEventsForDay,
-                      onPageChanged: (focusedDay) {
-                        _focusedDay = focusedDay;
-                      },
-                      calendarFormat: _calendarFormat,
-                      onFormatChanged: (format) {
-                        setState(() {
-                          _calendarFormat = format;
-                        });
-                      },
-                      calendarStyle: CalendarStyle(
-                          weekendTextStyle: TextStyle(color: Colors.blue[700]),
-                          defaultTextStyle: TextStyle(color: Colors.blue[700]),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.blue[100],
-                          ),
-                          todayTextStyle: TextStyle(color: Colors.black),
-                          selectedTextStyle: TextStyle(color: Colors.black),
-                          selectedDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.pink[50],
-                          ),
-                          withinRangeDecoration:
-                              BoxDecoration(color: Colors.white)),
-                    ),
-                  ),
-                  SizedBox(height: 25),
-                  Text(date,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10),
-                  ValueListenableBuilder<List<Event>>(
-                    valueListenable: _selectedEvents,
-                    builder: (context, value, _) {
-                      if (value.length < 1)
-                        return Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FlatButton(
-                                  padding: EdgeInsets.all(0.0),
-                                  onPressed: () {},
-                                  child: Container(
-                                    height: sl * 0.05,
-                                    width: sw * 0.27,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(16.0)),
-                                    child: (Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('Slot booked',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12.0)),
-                                      ],
-                                    )),
-                                  )),
-                              SizedBox(width: 15.0),
-                              FlatButton(
-                                  padding: EdgeInsets.all(0.0),
-                                  onPressed: () {},
-                                  child: Container(
-                                    height: sl * 0.05,
-                                    width: sw * 0.30,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(16.0)),
-                                    child: (Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('Emergency booked',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12.0)),
-                                      ],
-                                    )),
-                                  )),
-                            ],
-                          ),
-                          SizedBox(height: 40),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('No bookings '),
-                              Text(
-                                'today',
-                                style: TextStyle(color: Colors.red),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 40)
-                        ]);
-                      else
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FlatButton(
-                                  padding: EdgeInsets.all(0.0),
-                                  onPressed: () {
-                                    setState(() {
-                                      a1 = !a1;
-                                      if (a1 == false) {
-                                        a2 = true;
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    height: sl * 0.05,
-                                    width: sw * 0.27,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.green),
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.greenAccent[100]),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('Slot booked  ',
-                                            style: TextStyle(fontSize: 12.0)),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0xff00E7A4)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              '${value.length}',
-                                              style: TextStyle(fontSize: 12.0),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 15.0),
-                                FlatButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    onPressed: () {
-                                      setState(() {
-                                        a2 = !a2;
-                                        if (a2 == false) {
-                                          a1 = true;
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      height: sl * 0.05,
-                                      width: sw * 0.30,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.orange),
-                                          borderRadius:
-                                              BorderRadius.circular(16.0)),
-                                      child: (Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text('Emergency booked',
-                                              style: TextStyle(fontSize: 12.0)),
-                                        ],
+                          //   });
+                          // },
+                          eventLoader: _getEventsForDay,
+                          onPageChanged: (focusedDay) {
+                            _focusedDay = focusedDay;
+                          },
+                          calendarFormat: _calendarFormat,
+                          onFormatChanged: (format) {
+                            setState(() {
+                              _calendarFormat = format;
+                            });
+                          },
+                          calendarStyle: CalendarStyle(
+                              weekendTextStyle:
+                                  TextStyle(color: Colors.blue[700]),
+                              defaultTextStyle:
+                                  TextStyle(color: Colors.blue[700]),
+                              todayDecoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.blue[100],
+                              ),
+                              todayTextStyle: TextStyle(color: Colors.black),
+                              selectedTextStyle: TextStyle(color: Colors.black),
+                              selectedDecoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.pink[50],
+                              ),
+                              withinRangeDecoration:
+                                  BoxDecoration(color: Colors.white)),
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      Text(date,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      ValueListenableBuilder<List<Event>>(
+                        valueListenable: _selectedEvents,
+                        builder: (context, value, _) {
+                          print(value);
+                          if (value.length < 1)
+                            return Column(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FlatButton(
+                                      padding: EdgeInsets.all(0.0),
+                                      onPressed: () {},
+                                      child: Container(
+                                        height: sl * 0.05,
+                                        width: sw * 0.27,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                            borderRadius:
+                                                BorderRadius.circular(16.0)),
+                                        child: (Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Slot booked',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12.0)),
+                                          ],
+                                        )),
                                       )),
-                                    )),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: value.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 12.0,
-                                      vertical: 4.0,
-                                    ),
-                                    child: Column(children: [
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Row(children: [
-                                          Container(
-                                            height: 80,
-                                            width: 4,
-                                            color: Color(0xFF3AD48A),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                        Icons
-                                                            .access_time_outlined,
-                                                        color:
-                                                            Color(0xFF5D5FEF)),
-                                                    SizedBox(width: 10),
-                                                    Text(
-                                                      '${value[index].timeslot}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 16),
-                                                    )
-                                                  ],
+                                  SizedBox(width: 15.0),
+                                  FlatButton(
+                                      padding: EdgeInsets.all(0.0),
+                                      onPressed: () {},
+                                      child: Container(
+                                        height: sl * 0.05,
+                                        width: sw * 0.30,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                            borderRadius:
+                                                BorderRadius.circular(16.0)),
+                                        child: (Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Emergency booked',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12.0)),
+                                          ],
+                                        )),
+                                      )),
+                                ],
+                              ),
+                              SizedBox(height: 40),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('No bookings '),
+                                  Text(
+                                    'today',
+                                    style: TextStyle(color: Colors.red),
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 40)
+                            ]);
+                          else
+                            return Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FlatButton(
+                                      padding: EdgeInsets.all(0.0),
+                                      onPressed: () {
+                                        setState(() {
+                                          a1 = !a1;
+                                          if (a1 == false) {
+                                            a2 = true;
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        height: sl * 0.05,
+                                        width: sw * 0.27,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.green),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Colors.greenAccent[100]),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Slot booked  ',
+                                                style:
+                                                    TextStyle(fontSize: 12.0)),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xff00E7A4)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  '${value.length}',
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 ),
-                                                SizedBox(height: 10),
-                                                Container(
-                                                  height: 35,
-                                                  width: 160,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Color(
-                                                              0xFF5D5FEF)),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      color: Colors.blue[50]),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text('Services booked  ',
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 15.0),
+                                    FlatButton(
+                                        padding: EdgeInsets.all(0.0),
+                                        onPressed: () {
+                                          setState(() {
+                                            a2 = !a2;
+                                            if (a2 == false) {
+                                              a1 = true;
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          height: sl * 0.05,
+                                          width: sw * 0.30,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.orange),
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0)),
+                                          child: (Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text('Emergency booked',
+                                                  style: TextStyle(
+                                                      fontSize: 12.0)),
+                                            ],
+                                          )),
+                                        )),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: value.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 12.0,
+                                          vertical: 4.0,
+                                        ),
+                                        child: Column(children: [
+                                          Container(
+                                            padding: EdgeInsets.all(10),
+                                            child: Row(children: [
+                                              Container(
+                                                height: 80,
+                                                width: 4,
+                                                color: Color(0xFF3AD48A),
+                                              ),
+                                              SizedBox(width: 10),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                            Icons
+                                                                .access_time_outlined,
+                                                            color: Color(
+                                                                0xFF5D5FEF)),
+                                                        SizedBox(width: 10),
+                                                        Text(
+                                                          '${value[index].timeslot}',
                                                           style: TextStyle(
-                                                              fontSize: 14.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 16),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    Container(
+                                                      height: 35,
+                                                      width: 160,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
                                                               color: Color(
-                                                                  0xFF5D5FEF))),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
+                                                                  0xFF5D5FEF)),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          color:
+                                                              Colors.blue[50]),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                              'Services booked  ',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  color: Color(
+                                                                      0xFF5D5FEF))),
+                                                          Container(
+                                                            decoration: BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
                                                                 color: Color(
                                                                     0xFF5D5FEF)),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            '1',
-                                                            style: TextStyle(
-                                                                fontSize: 14.0,
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Text(
+                                                                '1',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                          FlatButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                  context, '/approval',
-                                                  arguments: {
-                                                    "date": date,
-                                                    "timesl":
-                                                        "${value[index].timeslot}"
-                                                  });
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.all(2),
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                      color: Color(0xFF5D5FEF),
-                                                      width: 2)),
-                                              child: Icon(
-                                                  Icons
-                                                      .arrow_forward_ios_outlined,
-                                                  color: Color(0xff5D5FEF)),
-                                            ),
+                                              ),
+                                              FlatButton(
+                                                onPressed: () {
+                                                  Navigator.pushNamed(
+                                                      context, '/approval',
+                                                      arguments: {
+                                                        "date": date,
+                                                        "timesl":
+                                                            "${value[index].timeslot}"
+                                                      });
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.all(2),
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                          color:
+                                                              Color(0xFF5D5FEF),
+                                                          width: 2)),
+                                                  child: Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_outlined,
+                                                      color: Color(0xff5D5FEF)),
+                                                ),
+                                              )
+                                            ])
+                                            /*ListTile(
+                                            onTap: () => print('${value[index]}'),
+                                            title: Text('${value[index].service}'),
+                                          )*/
+                                            ,
                                           )
-                                        ])
-                                        /*ListTile(
-                                      onTap: () => print('${value[index]}'),
-                                      title: Text('${value[index].service}'),
-                                    )*/
-                                        ,
-                                      )
-                                    ]));
-                              },
-                            ),
-                          ],
-                        );
-                    },
-                  ),
-                  // if (finaleventList[_selectedDay] != null)
-                  //   ...finaleventList[_selectedDay]?.map((e) => Text(e.name)),
-                  // SizedBox(height: 20),
+                                        ]));
+                                  },
+                                ),
+                              ],
+                            );
+                        },
+                      ),
+                      // if (finaleventList[_selectedDay] != null)
+                      //   ...finaleventList[_selectedDay]?.map((e) => Text(e.name)),
+                      // SizedBox(height: 20),
 
-                  // a3
-                  //     ? Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           FlatButton(
-                  //               padding: EdgeInsets.all(0.0),
-                  //               onPressed: () {},
-                  //               child: Container(
-                  //                 padding: EdgeInsets.all(10),
-                  //                 decoration: BoxDecoration(
-                  //                     border: Border.all(color: Colors.grey),
-                  //                     borderRadius: BorderRadius.circular(16.0)),
-                  //                 child: (Row(
-                  //                   mainAxisAlignment: MainAxisAlignment.center,
-                  //                   children: [
-                  //                     Text('Slot booked',
-                  //                         style: TextStyle(
-                  //                             color: Colors.grey, fontSize: 12.0)),
-                  //                   ],
-                  //                 )),
-                  //               )),
-                  //           SizedBox(width: 15.0),
-                  //           FlatButton(
-                  //               padding: EdgeInsets.all(0.0),
-                  //               onPressed: () {},
-                  //               child: Container(
-                  //                 padding: EdgeInsets.all(10),
-                  //                 decoration: BoxDecoration(
-                  //                     border: Border.all(color: Colors.grey),
-                  //                     borderRadius: BorderRadius.circular(16.0)),
-                  //                 child: (Row(
-                  //                   mainAxisAlignment: MainAxisAlignment.center,
-                  //                   children: [
-                  //                     Text('Emergency booked',
-                  //                         style: TextStyle(
-                  //                             color: Colors.grey, fontSize: 12.0)),
-                  //                   ],
-                  //                 )),
-                  //               )),
-                  //         ],
-                  //       )
-                  //     : Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           FlatButton(
-                  //             padding: EdgeInsets.all(0.0),
-                  //             onPressed: () {
-                  //               setState(() {
-                  //                 a1 = !a1;
-                  //                 if (a1 == false) {
-                  //                   a2 = true;
-                  //                 }
-                  //               });
-                  //             },
-                  //             child: a1
-                  //                 ? Container(
-                  //                     height: 35,
-                  //                     width: 80,
-                  //                     decoration: BoxDecoration(
-                  //                         border: Border.all(color: Colors.green),
-                  //                         borderRadius: BorderRadius.circular(16.0)),
-                  //                     child: (Row(
-                  //                       mainAxisAlignment: MainAxisAlignment.center,
-                  //                       children: [
-                  //                         Text('Slot booked',
-                  //                             style: TextStyle(fontSize: 12.0)),
-                  //                       ],
-                  //                     )),
-                  //                   )
-                  //                 : Container(
-                  //                     height: 35,
-                  //                     width: 120,
-                  //                     decoration: BoxDecoration(
-                  //                         border: Border.all(color: Colors.green),
-                  //                         borderRadius: BorderRadius.circular(20),
-                  //                         color: Colors.greenAccent[100]),
-                  //                     child: Row(
-                  //                       mainAxisAlignment: MainAxisAlignment.center,
-                  //                       children: [
-                  //                         Text('Slot booked  ',
-                  //                             style: TextStyle(fontSize: 12.0)),
-                  //                         Container(
-                  //                           decoration: BoxDecoration(
-                  //                               shape: BoxShape.circle,
-                  //                               color: Color(0xff00E7A4)),
-                  //                           child: Padding(
-                  //                             padding: const EdgeInsets.all(8.0),
-                  //                             child: Text(
-                  //                               '$sb',
-                  //                               style: TextStyle(fontSize: 12.0),
-                  //                             ),
-                  //                           ),
-                  //                         )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //           ),
-                  //           SizedBox(width: 15.0),
-                  //           FlatButton(
-                  //             padding: EdgeInsets.all(0.0),
-                  //             onPressed: () {
-                  //               setState(() {
-                  //                 a2 = !a2;
-                  //                 if (a2 == false) {
-                  //                   a1 = true;
-                  //                 }
-                  //               });
-                  //             },
-                  //             child: a2
-                  //                 ? Container(
-                  //                     height: 35,
-                  //                     width: 120,
-                  //                     decoration: BoxDecoration(
-                  //                         border: Border.all(color: Colors.orange),
-                  //                         borderRadius: BorderRadius.circular(16.0)),
-                  //                     child: (Row(
-                  //                       mainAxisAlignment: MainAxisAlignment.center,
-                  //                       children: [
-                  //                         Text('Emergency booked',
-                  //                             style: TextStyle(fontSize: 12.0)),
-                  //                       ],
-                  //                     )),
-                  //                   )
-                  //                 : Container(
-                  //                     height: 35,
-                  //                     width: 160,
-                  //                     decoration: BoxDecoration(
-                  //                         border: Border.all(color: Colors.orange),
-                  //                         borderRadius: BorderRadius.circular(20),
-                  //                         color: Colors.pink[50]),
-                  //                     child: Row(
-                  //                       mainAxisAlignment: MainAxisAlignment.center,
-                  //                       children: [
-                  //                         Text('Emergency booked  ',
-                  //                             style: TextStyle(fontSize: 12.0)),
-                  //                         Container(
-                  //                           decoration: BoxDecoration(
-                  //                               shape: BoxShape.circle,
-                  //                               color: Colors.yellow[300]),
-                  //                           child: Padding(
-                  //                             padding: const EdgeInsets.all(8.0),
-                  //                             child: Text(
-                  //                               '$eb',
-                  //                               style: TextStyle(fontSize: 12.0),
-                  //                             ),
-                  //                           ),
-                  //                         )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  // SizedBox(height: 20),
-                  // a3
-                  //     ? Column(children: [
-                  //         SizedBox(height: 40),
-                  //         Row(
-                  //           mainAxisAlignment: MainAxisAlignment.center,
-                  //           children: [
-                  //             Text('No bookings '),
-                  //             Text(
-                  //               'today',
-                  //               style: TextStyle(color: Colors.red),
-                  //             )
-                  //           ],
-                  //         ),
-                  //         SizedBox(height: 40)
-                  //       ])
-                  //     : Column(
-                  //         children: [
-                  //           a1
-                  //               ? SizedBox(height: 80)
-                  //               : Column(
-                  //                   children: [
-                  //                     Container(
-                  //                         padding: EdgeInsets.all(10),
-                  //                         child: Row(
-                  //                           children: [
-                  //                             Container(
-                  //                               height: 80,
-                  //                               width: 4,
-                  //                               color: Color(0xFF3AD48A),
-                  //                             ),
-                  //                             SizedBox(width: 10),
-                  //                             Expanded(
-                  //                               child: Column(
-                  //                                 crossAxisAlignment:
-                  //                                     CrossAxisAlignment.start,
-                  //                                 children: [
-                  //                                   Row(
-                  //                                     children: [
-                  //                                       Icon(
-                  //                                           Icons
-                  //                                               .access_time_outlined,
-                  //                                           color: Color(0xFF5D5FEF)),
-                  //                                       SizedBox(width: 10),
-                  //                                       Text(
-                  //                                         '8:00 AM - 10:00 AM',
-                  //                                         style: TextStyle(
-                  //                                             fontWeight:
-                  //                                                 FontWeight.bold,
-                  //                                             fontSize: 16),
-                  //                                       )
-                  //                                     ],
-                  //                                   ),
-                  //                                   SizedBox(height: 10),
-                  //                                   Container(
-                  //                                     height: 35,
-                  //                                     width: 160,
-                  //                                     decoration: BoxDecoration(
-                  //                                         border: Border.all(
-                  //                                             color:
-                  //                                                 Color(0xFF5D5FEF)),
-                  //                                         borderRadius:
-                  //                                             BorderRadius.circular(
-                  //                                                 20),
-                  //                                         color: Colors.blue[50]),
-                  //                                     child: Row(
-                  //                                       mainAxisAlignment:
-                  //                                           MainAxisAlignment.center,
-                  //                                       children: [
-                  //                                         Text('Services booked  ',
-                  //                                             style: TextStyle(
-                  //                                                 fontSize: 14.0,
-                  //                                                 color: Color(
-                  //                                                     0xFF5D5FEF))),
-                  //                                         Container(
-                  //                                           decoration: BoxDecoration(
-                  //                                               shape:
-                  //                                                   BoxShape.circle,
-                  //                                               color: Color(
-                  //                                                   0xFF5D5FEF)),
-                  //                                           child: Padding(
-                  //                                             padding:
-                  //                                                 const EdgeInsets
-                  //                                                     .all(8.0),
-                  //                                             child: Text(
-                  //                                               '1',
-                  //                                               style: TextStyle(
-                  //                                                   fontSize: 14.0,
-                  //                                                   color:
-                  //                                                       Colors.white),
-                  //                                             ),
-                  //                                           ),
-                  //                                         )
-                  //                                       ],
-                  //                                     ),
-                  //                                   ),
-                  //                                 ],
-                  //                               ),
-                  //                             ),
-                  //                             Container(
-                  //                               padding: EdgeInsets.all(2),
-                  //                               decoration: BoxDecoration(
-                  //                                   shape: BoxShape.circle,
-                  //                                   border: Border.all(
-                  //                                       color: Color(0xFF5D5FEF),
-                  //                                       width: 2)),
-                  //                               child: Icon(
-                  //                                   Icons.arrow_forward_ios_outlined,
-                  //                                   color: Color(0xff5D5FEF)),
-                  //                             )
-                  //                           ],
-                  //                         )),
-                ],
+                      // a3
+                      //     ? Row(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           FlatButton(
+                      //               padding: EdgeInsets.all(0.0),
+                      //               onPressed: () {},
+                      //               child: Container(
+                      //                 padding: EdgeInsets.all(10),
+                      //                 decoration: BoxDecoration(
+                      //                     border: Border.all(color: Colors.grey),
+                      //                     borderRadius: BorderRadius.circular(16.0)),
+                      //                 child: (Row(
+                      //                   mainAxisAlignment: MainAxisAlignment.center,
+                      //                   children: [
+                      //                     Text('Slot booked',
+                      //                         style: TextStyle(
+                      //                             color: Colors.grey, fontSize: 12.0)),
+                      //                   ],
+                      //                 )),
+                      //               )),
+                      //           SizedBox(width: 15.0),
+                      //           FlatButton(
+                      //               padding: EdgeInsets.all(0.0),
+                      //               onPressed: () {},
+                      //               child: Container(
+                      //                 padding: EdgeInsets.all(10),
+                      //                 decoration: BoxDecoration(
+                      //                     border: Border.all(color: Colors.grey),
+                      //                     borderRadius: BorderRadius.circular(16.0)),
+                      //                 child: (Row(
+                      //                   mainAxisAlignment: MainAxisAlignment.center,
+                      //                   children: [
+                      //                     Text('Emergency booked',
+                      //                         style: TextStyle(
+                      //                             color: Colors.grey, fontSize: 12.0)),
+                      //                   ],
+                      //                 )),
+                      //               )),
+                      //         ],
+                      //       )
+                      //     : Row(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           FlatButton(
+                      //             padding: EdgeInsets.all(0.0),
+                      //             onPressed: () {
+                      //               setState(() {
+                      //                 a1 = !a1;
+                      //                 if (a1 == false) {
+                      //                   a2 = true;
+                      //                 }
+                      //               });
+                      //             },
+                      //             child: a1
+                      //                 ? Container(
+                      //                     height: 35,
+                      //                     width: 80,
+                      //                     decoration: BoxDecoration(
+                      //                         border: Border.all(color: Colors.green),
+                      //                         borderRadius: BorderRadius.circular(16.0)),
+                      //                     child: (Row(
+                      //                       mainAxisAlignment: MainAxisAlignment.center,
+                      //                       children: [
+                      //                         Text('Slot booked',
+                      //                             style: TextStyle(fontSize: 12.0)),
+                      //                       ],
+                      //                     )),
+                      //                   )
+                      //                 : Container(
+                      //                     height: 35,
+                      //                     width: 120,
+                      //                     decoration: BoxDecoration(
+                      //                         border: Border.all(color: Colors.green),
+                      //                         borderRadius: BorderRadius.circular(20),
+                      //                         color: Colors.greenAccent[100]),
+                      //                     child: Row(
+                      //                       mainAxisAlignment: MainAxisAlignment.center,
+                      //                       children: [
+                      //                         Text('Slot booked  ',
+                      //                             style: TextStyle(fontSize: 12.0)),
+                      //                         Container(
+                      //                           decoration: BoxDecoration(
+                      //                               shape: BoxShape.circle,
+                      //                               color: Color(0xff00E7A4)),
+                      //                           child: Padding(
+                      //                             padding: const EdgeInsets.all(8.0),
+                      //                             child: Text(
+                      //                               '$sb',
+                      //                               style: TextStyle(fontSize: 12.0),
+                      //                             ),
+                      //                           ),
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //           ),
+                      //           SizedBox(width: 15.0),
+                      //           FlatButton(
+                      //             padding: EdgeInsets.all(0.0),
+                      //             onPressed: () {
+                      //               setState(() {
+                      //                 a2 = !a2;
+                      //                 if (a2 == false) {
+                      //                   a1 = true;
+                      //                 }
+                      //               });
+                      //             },
+                      //             child: a2
+                      //                 ? Container(
+                      //                     height: 35,
+                      //                     width: 120,
+                      //                     decoration: BoxDecoration(
+                      //                         border: Border.all(color: Colors.orange),
+                      //                         borderRadius: BorderRadius.circular(16.0)),
+                      //                     child: (Row(
+                      //                       mainAxisAlignment: MainAxisAlignment.center,
+                      //                       children: [
+                      //                         Text('Emergency booked',
+                      //                             style: TextStyle(fontSize: 12.0)),
+                      //                       ],
+                      //                     )),
+                      //                   )
+                      //                 : Container(
+                      //                     height: 35,
+                      //                     width: 160,
+                      //                     decoration: BoxDecoration(
+                      //                         border: Border.all(color: Colors.orange),
+                      //                         borderRadius: BorderRadius.circular(20),
+                      //                         color: Colors.pink[50]),
+                      //                     child: Row(
+                      //                       mainAxisAlignment: MainAxisAlignment.center,
+                      //                       children: [
+                      //                         Text('Emergency booked  ',
+                      //                             style: TextStyle(fontSize: 12.0)),
+                      //                         Container(
+                      //                           decoration: BoxDecoration(
+                      //                               shape: BoxShape.circle,
+                      //                               color: Colors.yellow[300]),
+                      //                           child: Padding(
+                      //                             padding: const EdgeInsets.all(8.0),
+                      //                             child: Text(
+                      //                               '$eb',
+                      //                               style: TextStyle(fontSize: 12.0),
+                      //                             ),
+                      //                           ),
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      // SizedBox(height: 20),
+                      // a3
+                      //     ? Column(children: [
+                      //         SizedBox(height: 40),
+                      //         Row(
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: [
+                      //             Text('No bookings '),
+                      //             Text(
+                      //               'today',
+                      //               style: TextStyle(color: Colors.red),
+                      //             )
+                      //           ],
+                      //         ),
+                      //         SizedBox(height: 40)
+                      //       ])
+                      //     : Column(
+                      //         children: [
+                      //           a1
+                      //               ? SizedBox(height: 80)
+                      //               : Column(
+                      //                   children: [
+                      //                     Container(
+                      //                         padding: EdgeInsets.all(10),
+                      //                         child: Row(
+                      //                           children: [
+                      //                             Container(
+                      //                               height: 80,
+                      //                               width: 4,
+                      //                               color: Color(0xFF3AD48A),
+                      //                             ),
+                      //                             SizedBox(width: 10),
+                      //                             Expanded(
+                      //                               child: Column(
+                      //                                 crossAxisAlignment:
+                      //                                     CrossAxisAlignment.start,
+                      //                                 children: [
+                      //                                   Row(
+                      //                                     children: [
+                      //                                       Icon(
+                      //                                           Icons
+                      //                                               .access_time_outlined,
+                      //                                           color: Color(0xFF5D5FEF)),
+                      //                                       SizedBox(width: 10),
+                      //                                       Text(
+                      //                                         '8:00 AM - 10:00 AM',
+                      //                                         style: TextStyle(
+                      //                                             fontWeight:
+                      //                                                 FontWeight.bold,
+                      //                                             fontSize: 16),
+                      //                                       )
+                      //                                     ],
+                      //                                   ),
+                      //                                   SizedBox(height: 10),
+                      //                                   Container(
+                      //                                     height: 35,
+                      //                                     width: 160,
+                      //                                     decoration: BoxDecoration(
+                      //                                         border: Border.all(
+                      //                                             color:
+                      //                                                 Color(0xFF5D5FEF)),
+                      //                                         borderRadius:
+                      //                                             BorderRadius.circular(
+                      //                                                 20),
+                      //                                         color: Colors.blue[50]),
+                      //                                     child: Row(
+                      //                                       mainAxisAlignment:
+                      //                                           MainAxisAlignment.center,
+                      //                                       children: [
+                      //                                         Text('Services booked  ',
+                      //                                             style: TextStyle(
+                      //                                                 fontSize: 14.0,
+                      //                                                 color: Color(
+                      //                                                     0xFF5D5FEF))),
+                      //                                         Container(
+                      //                                           decoration: BoxDecoration(
+                      //                                               shape:
+                      //                                                   BoxShape.circle,
+                      //                                               color: Color(
+                      //                                                   0xFF5D5FEF)),
+                      //                                           child: Padding(
+                      //                                             padding:
+                      //                                                 const EdgeInsets
+                      //                                                     .all(8.0),
+                      //                                             child: Text(
+                      //                                               '1',
+                      //                                               style: TextStyle(
+                      //                                                   fontSize: 14.0,
+                      //                                                   color:
+                      //                                                       Colors.white),
+                      //                                             ),
+                      //                                           ),
+                      //                                         )
+                      //                                       ],
+                      //                                     ),
+                      //                                   ),
+                      //                                 ],
+                      //                               ),
+                      //                             ),
+                      //                             Container(
+                      //                               padding: EdgeInsets.all(2),
+                      //                               decoration: BoxDecoration(
+                      //                                   shape: BoxShape.circle,
+                      //                                   border: Border.all(
+                      //                                       color: Color(0xFF5D5FEF),
+                      //                                       width: 2)),
+                      //                               child: Icon(
+                      //                                   Icons.arrow_forward_ios_outlined,
+                      //                                   color: Color(0xff5D5FEF)),
+                      //                             )
+                      //                           ],
+                      //                         )),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ));
+            ));
   }
 }

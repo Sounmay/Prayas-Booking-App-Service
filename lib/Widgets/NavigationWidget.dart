@@ -10,10 +10,9 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = [Schedule(), OTPScreen()];
-
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _children = [Schedule(), OTPScreen()];
     return Scaffold(
       // body: _children[_currentIndex],
       body: IndexedStack(
@@ -27,12 +26,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
         showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, color: Colors.white,),
+            icon: Icon(
+              Icons.calendar_today,
+              color: Colors.white,
+            ),
             label: 'calendar',
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit, color: Colors.white,),
+              icon: Icon(
+                Icons.ac_unit,
+                color: Colors.white,
+              ),
               label: 'calendar',
               backgroundColor: Colors.white)
         ],
