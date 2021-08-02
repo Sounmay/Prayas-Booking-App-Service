@@ -26,6 +26,8 @@ class _ParlourServicesState extends State<ParlourServices> {
 
   @override
   Widget build(BuildContext context) {
+    final sl = MediaQuery.of(context).size.height;
+    final sw = MediaQuery.of(context).size.width;
     final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
     print(name);
 
@@ -41,7 +43,7 @@ class _ParlourServicesState extends State<ParlourServices> {
               key: _formKey,
               child: Column(children: [
                 SizedBox(
-                  height: 20,
+                  height: sl * 0.02,
                 ),
                 Row(children: [
                   Container(
@@ -98,57 +100,68 @@ class _ParlourServicesState extends State<ParlourServices> {
                       ),
                       ...List.generate(
                           _servicesNum, (index) => serviceDeets(index)),
-                      Column(children: [
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 14),
-                                    decoration: InputDecoration(
-                                        isDense: true,
-                                        labelText: 'Name of Service',
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
-                                        contentPadding:
-                                            EdgeInsets.only(bottom: 4)),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        name[_servicesNum] = value;
-                                      });
-                                    },
-                                  ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                child: TextFormField(
+                                  validator: (val) =>
+                                      val.isEmpty ? 'enter' : null,
+                                  style: TextStyle(fontSize: 15),
+                                  decoration: InputDecoration(
+                                      errorStyle: TextStyle(
+                                          height: 0, color: Colors.transparent),
+                                      isDense: true,
+                                      labelText: 'Name of Service',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.auto,
+                                      contentPadding:
+                                          EdgeInsets.only(bottom: 4)),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      name[_servicesNum] = value;
+                                    });
+                                  },
                                 ),
-                                SizedBox(height: 10),
-                                Row(
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                child: Row(
                                   children: [
                                     SizedBox(
-                                      height: 30,
-                                      width: 30,
+                                      height: sl * 0.07,
+                                      width: sw * 0.08,
                                       child: TextFormField(
+                                        validator: (val) =>
+                                            val.isEmpty || val.length > 2
+                                                ? ''
+                                                : null,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(fontSize: 14),
+                                        style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
-                                            border: new OutlineInputBorder(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                const Radius.circular(5.0),
-                                              ),
-                                              borderSide: new BorderSide(
-                                                color: Colors.black,
-                                                width: 1.0,
-                                              ),
+                                          errorStyle: TextStyle(
+                                              height: 0,
+                                              color: Colors.transparent),
+                                          contentPadding: EdgeInsets.all(6),
+                                          border: new OutlineInputBorder(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              const Radius.circular(5.0),
                                             ),
-                                            isDense: true,
-                                            labelText: '00',
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.never,
-                                            contentPadding: EdgeInsets.all(4)),
+                                            borderSide: new BorderSide(
+                                              color: Colors.black,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          isDense: true,
+                                          labelText: '00',
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.never,
+                                        ),
                                         onChanged: (value) {
                                           setState(() {
                                             hr[_servicesNum] = value;
@@ -169,12 +182,19 @@ class _ParlourServicesState extends State<ParlourServices> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
-                                      height: 30,
-                                      width: 30,
+                                      height: sl * 0.07,
+                                      width: sw * 0.08,
                                       child: TextFormField(
+                                        validator: (val) =>
+                                            val.isEmpty || val.length > 2
+                                                ? ''
+                                                : null,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(fontSize: 14),
+                                        style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
+                                            errorStyle: TextStyle(
+                                                height: 0,
+                                                color: Colors.transparent),
                                             border: new OutlineInputBorder(
                                               borderRadius:
                                                   const BorderRadius.all(
@@ -189,7 +209,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             labelText: '00',
                                             floatingLabelBehavior:
                                                 FloatingLabelBehavior.never,
-                                            contentPadding: EdgeInsets.all(4)),
+                                            contentPadding: EdgeInsets.all(6)),
                                         onChanged: (value) {
                                           setState(() {
                                             min[_servicesNum] = value;
@@ -204,67 +224,69 @@ class _ParlourServicesState extends State<ParlourServices> {
                                           TextStyle(color: Color(0xff5D5FEF)),
                                     ),
                                   ],
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(fontSize: 14),
-                                decoration: InputDecoration(
-                                    prefixText: '\u20B9  ',
-                                    border: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(5.0),
-                                      ),
-                                      borderSide: new BorderSide(
-                                        color: Colors.black,
-                                        width: 1.0,
-                                      ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.08,
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: TextFormField(
+                              validator: (val) => val.isEmpty ? '' : null,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(fontSize: 15),
+                              decoration: InputDecoration(
+                                  errorStyle: TextStyle(
+                                      height: 0, color: Colors.transparent),
+                                  prefixText: '\u20B9  ',
+                                  border: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(5.0),
                                     ),
-                                    isDense: true,
-                                    labelText: 'Price in \u20B9',
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.auto,
-                                    contentPadding: EdgeInsets.all(4)),
-                                onChanged: (value) {
-                                  setState(() {
-                                    price[_servicesNum] = value;
-                                  });
-                                },
-                              ),
+                                    borderSide: new BorderSide(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  isDense: true,
+                                  labelText: 'Price in \u20B9',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                  contentPadding: EdgeInsets.all(6)),
+                              onChanged: (value) {
+                                setState(() {
+                                  price[_servicesNum] = value;
+                                });
+                              },
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                      ]),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Row(children: [
-                          TextButton(
-                            onPressed: () {
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(children: [
+                        TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
                               print('hdf');
                               setState(() {
                                 _servicesNum = _servicesNum + 1;
                                 print('here');
                               });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              color: Color(0xff5D5FEF),
-                              child: Row(
-                                children: [
-                                  Text(' Add Service   ',
-                                      style: TextStyle(color: Colors.white)),
-                                  Icon(Icons.add, color: Colors.white, size: 16)
-                                ],
-                              ),
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            color: Color(0xff5D5FEF),
+                            child: Row(
+                              children: [
+                                Text(' Add Service   ',
+                                    style: TextStyle(color: Colors.white)),
+                                Icon(Icons.add, color: Colors.white, size: 16)
+                              ],
                             ),
                           ),
-                        ]),
-                      ),
+                        ),
+                      ]),
                       SizedBox(height: 70),
                     ],
                   ),
