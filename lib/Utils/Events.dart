@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
-  final String id;
-  final String customerName;
-  final List<dynamic> serviceNames;
-  final List<dynamic> price;
-  final List<dynamic> timeList;
+  String id;
+  String customerName;
+  List<dynamic> serviceNames;
+  List<dynamic> price;
+  List<dynamic> timeList;
   Timestamp day;
   String timeSlot;
   int subtotal;
@@ -27,6 +27,21 @@ class Event {
       this.subtotal,
       this.timeSlot,
       this.time});
+
+  Event.fromJson(Map<String, dynamic> json) {
+    uid = json['serviceId'];
+    isApproved = json['isApproved'];
+    id = json['id'];
+    otp = json['otp'];
+    customerName = json['name'];
+    serviceNames = json['serviceName'].cast<String>();
+    price = json['price'].cast<int>();
+    day = json['date'];
+    timeList = json['serviceTimeList'];
+    timeSlot = json['timeslot'];
+    subtotal = json['amount'];
+    time = json['serviceTime'];
+  }
 
   Map<String, dynamic> toJson(String uid, bool approval) => {
         "serviceId": uid,

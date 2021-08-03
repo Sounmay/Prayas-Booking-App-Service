@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +17,7 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
+  Event searchedOrder;
   bool _isPressed = false;
   bool res = false;
   @override
@@ -65,26 +68,43 @@ class _OTPScreenState extends State<OTPScreen> {
                         activeColor: Color(0xff5D5FEF),
                         selectedColor: Colors.white,
                       ),
-                      onCompleted: (value) {
-                        if (value == requiredNumber) {
-                          res = true;
+                      onCompleted: (value) async {
+                        if (widget.customerOrder != null) {
+                          if (value == requiredNumber) {
+                            res = true;
+                          } else {
+                            res = false;
+                          }
                         } else {
-                          res = false;
+                          final document = await FirebaseFirestore.instance
+                              .collection('ServiceProviders')
+                              .doc(FirebaseAuth.instance.currentUser.uid)
+                              .get();
+                          final List dataList = document['event'];
+                          setState(() {
+                            var ds = dataList.firstWhere(
+                                (element) => element['otp'] == value);
+
+                            searchedOrder = Event.fromJson(ds);
+                            res = true;
+                          });
                         }
                       },
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      setState(() {
-                        if (res == true)
-                          Navigator.pushNamed(context, '/startservice');
-                      });
-                      if (res == true) {
-                        print('valid pin');
-                      } else {
-                        print('invalid pin');
-                      }
+                      if (widget.customerOrder != null) {
+                        setState(() {
+                          if (res == true)
+                            Navigator.pushNamed(context, '/startservice');
+                        });
+                        if (res == true) {
+                          print('valid pin');
+                        } else {
+                          print('invalid pin');
+                        }
+                      } else {}
                     },
                     child: Container(
                         height: MediaQuery.of(context).size.height * 0.05,
@@ -109,7 +129,9 @@ class _OTPScreenState extends State<OTPScreen> {
             SizedBox(
               height: 30.0,
             ),
-            if (widget.customerOrder != null) _fadedList(widget.customerOrder)
+            if (widget.customerOrder != null) _fadedList(widget.customerOrder),
+            if (widget.customerOrder == null && searchedOrder != null)
+              _fadedList(searchedOrder)
           ],
         ),
       )),

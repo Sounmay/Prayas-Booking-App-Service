@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
 import 'package:freelance_booking_app_service/Utils/Events.dart';
+import 'dart:developer' as developer;
 
 class Approval extends StatefulWidget {
   Approval({Key key}) : super(key: key);
@@ -217,6 +218,9 @@ class _ApprovalState extends State<Approval> {
                                       approveToggle = true;
                                     });
                                   } else {
+                                    developer.log(bookedEvent
+                                        .toJson(bookedEvent.uid, true)
+                                        .toString());
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
