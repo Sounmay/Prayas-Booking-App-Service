@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Utils/Events.dart';
@@ -72,8 +73,8 @@ class _ScheduleState extends State<Schedule> {
   _loadEvents() async {
     try {
       final data = await FirebaseFirestore.instance
-          .collection('events')
-          .doc('thisevent')
+          .collection('ServiceProviders')
+          .doc(FirebaseAuth.instance.currentUser.uid)
           .get();
 
       List _eventList = data['event'];
@@ -90,17 +91,33 @@ class _ScheduleState extends State<Schedule> {
             .containsKey(DateTime.utc(_date.year, _date.month, _date.day))) {
           _kEventSource[DateTime.utc(_date.year, _date.month, _date.day)].add(
               Event(
-                  name: element['name'],
-                  service: element['service'],
-                  timeslot: element['timeslot'],
-                  amount: element['amount']));
+                  customerName: element['name'],
+                  serviceNames: element['serviceName'],
+                  timeSlot: element['timeslot'],
+                  subtotal: element['amount'],
+                  id: element['id'],
+                  uid: element['serviceId'],
+                  otp: element['otp'],
+                  price: element['price'],
+                  timeList: element['serviceTimeList'],
+                  day: element['date'],
+                  time: element['serviceTime'],
+                  isApproved: element['isApproved']));
         } else {
           _kEventSource[DateTime.utc(_date.year, _date.month, _date.day)] = [
             Event(
-                name: element['name'],
-                service: element['service'],
-                timeslot: element['timeslot'],
-                amount: element['amount'])
+                customerName: element['name'],
+                serviceNames: element['serviceName'],
+                timeSlot: element['timeslot'],
+                subtotal: element['amount'],
+                uid: element['serviceId'],
+                otp: element['otp'],
+                id: element['id'],
+                price: element['price'],
+                timeList: element['serviceTimeList'],
+                day: element['date'],
+                time: element['serviceTime'],
+                isApproved: element['isApproved'])
           ];
         }
       });
@@ -116,7 +133,7 @@ class _ScheduleState extends State<Schedule> {
         isLoad = false;
       });
     } catch (e) {
-      e.toString();
+      print(e.toString());
     }
     _refreshController.refreshCompleted();
   }
@@ -135,12 +152,11 @@ class _ScheduleState extends State<Schedule> {
   }
 
   Widget build(BuildContext context) {
-    print(_kEventSource);
     final userDetails = Provider.of<AppUserDetails>(context);
     name = userDetails.name;
 
-    final sl = MediaQuery.of(context).size.height;
-    final sw = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return isLoad
         ? Scaffold(
             body: Center(
@@ -193,13 +209,13 @@ class _ScheduleState extends State<Schedule> {
               enablePullDown: true,
               enablePullUp: false,
               header: ClassicHeader(
-                completeIcon: Icon(Icons.done, color: Colors.white60),
+                completeIcon: Icon(Icons.done, color: Colors.green),
                 refreshingIcon: SizedBox(
                   width: 25,
                   height: 25,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.0,
-                    color: Colors.white60,
+                    color: Colors.blue,
                   ),
                 ),
               ),
@@ -290,7 +306,6 @@ class _ScheduleState extends State<Schedule> {
                       ValueListenableBuilder<List<Event>>(
                         valueListenable: _selectedEvents,
                         builder: (context, value, _) {
-                          print(value);
                           if (value.length < 1)
                             return Column(children: [
                               Row(
@@ -300,8 +315,8 @@ class _ScheduleState extends State<Schedule> {
                                       padding: EdgeInsets.all(0.0),
                                       onPressed: () {},
                                       child: Container(
-                                        height: sl * 0.05,
-                                        width: sw * 0.27,
+                                        height: height * 0.05,
+                                        width: width * 0.27,
                                         decoration: BoxDecoration(
                                             border:
                                                 Border.all(color: Colors.grey),
@@ -323,8 +338,8 @@ class _ScheduleState extends State<Schedule> {
                                       padding: EdgeInsets.all(0.0),
                                       onPressed: () {},
                                       child: Container(
-                                        height: sl * 0.05,
-                                        width: sw * 0.30,
+                                        height: height * 0.05,
+                                        width: width * 0.30,
                                         decoration: BoxDecoration(
                                             border:
                                                 Border.all(color: Colors.grey),
@@ -373,8 +388,8 @@ class _ScheduleState extends State<Schedule> {
                                         });
                                       },
                                       child: Container(
-                                        height: sl * 0.05,
-                                        width: sw * 0.27,
+                                        height: height * 0.05,
+                                        width: width * 0.27,
                                         decoration: BoxDecoration(
                                             border:
                                                 Border.all(color: Colors.green),
@@ -418,8 +433,8 @@ class _ScheduleState extends State<Schedule> {
                                           });
                                         },
                                         child: Container(
-                                          height: sl * 0.05,
-                                          width: sw * 0.30,
+                                          height: height * 0.05,
+                                          width: width * 0.30,
                                           decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: Colors.orange),
@@ -472,7 +487,7 @@ class _ScheduleState extends State<Schedule> {
                                                                 0xFF5D5FEF)),
                                                         SizedBox(width: 10),
                                                         Text(
-                                                          '${value[index].timeslot}',
+                                                          '${value[index].timeSlot}',
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -539,7 +554,8 @@ class _ScheduleState extends State<Schedule> {
                                                       arguments: {
                                                         "date": date,
                                                         "timesl":
-                                                            "${value[index].timeslot}"
+                                                            "${value[index].timeSlot}",
+                                                        "event": value[index]
                                                       });
                                                 },
                                                 child: Container(

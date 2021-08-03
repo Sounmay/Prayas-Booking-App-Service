@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
+import 'package:freelance_booking_app_service/Utils/Events.dart';
 
 class Approval extends StatefulWidget {
   Approval({Key key}) : super(key: key);
@@ -10,8 +14,9 @@ class Approval extends StatefulWidget {
 class _ApprovalState extends State<Approval> {
   String date;
   String tsl;
-  bool a1 = true, a2 = true, a3 = true;
-  int toapp = 1, aprvd = 0;
+  bool approveToggle = false;
+  bool isStart = true;
+  // int toapp = 1, aprvd = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +24,11 @@ class _ApprovalState extends State<Approval> {
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
     final date = _args["date"];
     final tsl = _args["timesl"];
+    final Event bookedEvent = _args["event"];
+    if (isStart) {
+      approveToggle = bookedEvent.isApproved;
+      isStart = false;
+    }
     final sl = MediaQuery.of(context).size.height;
     final sw = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -86,7 +96,7 @@ class _ApprovalState extends State<Approval> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '$toapp',
+                              approveToggle ? '0' : '1',
                               style: TextStyle(
                                   fontSize: 12.0, color: Colors.white),
                             ),
@@ -116,7 +126,7 @@ class _ApprovalState extends State<Approval> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '$aprvd',
+                              approveToggle ? '1' : '0',
                               style: TextStyle(
                                   fontSize: 12.0, color: Colors.white),
                             ),
@@ -150,95 +160,105 @@ class _ApprovalState extends State<Approval> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Services selected 03',
+                            Text('Services ${bookedEvent.otp}',
                                 style: TextStyle(
                                     color: Color(0xff5D5FEF),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 17)),
-                            a3
-                                ? ButtonTheme(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 0.0, horizontal: 0.0),
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    minWidth: 0,
-                                    height: 0,
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          if (a3 == true) {
-                                            toapp--;
-                                            aprvd++;
-                                          }
-                                          a3 = !a3;
-                                        });
-                                      },
-                                      child: Container(
-                                        height: sl * 0.05,
-                                        width: sw * 0.19,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xffE5FFF8),
-                                            border: Border.all(
-                                                color: Color(0xff00A676)),
-                                            borderRadius:
-                                                BorderRadius.circular(16.0)),
-                                        child: (Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text('Approve',
-                                                style: TextStyle(
-                                                    fontSize: 12.0,
-                                                    color: Color(0xff39BC96))),
-                                          ],
-                                        )),
-                                      ),
-                                    ),
-                                  )
-                                : ButtonTheme(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 0.0, horizontal: 0.0),
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    minWidth: 0,
-                                    height: 0,
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          if (a3 == false) {
-                                            toapp++;
-                                            aprvd--;
-                                          }
-                                          a3 = !a3;
-                                        });
-                                      },
-                                      child: Container(
-                                        height: sl * 0.05,
-                                        width: sw * 0.26,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xff39BC96),
-                                            borderRadius:
-                                                BorderRadius.circular(16.0)),
-                                        child: (Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8.0),
-                                              child: Text('Approved',
-                                                  style: TextStyle(
-                                                      letterSpacing: 1,
-                                                      fontSize: 12.0,
-                                                      color: Colors.white)),
-                                            ),
-                                            Icon(Icons.check,
-                                                color: Colors.white, size: 18)
-                                          ],
-                                        )),
-                                      ),
-                                    ),
-                                  )
+                            ButtonTheme(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 0.0, horizontal: 0.0),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              minWidth: 0,
+                              height: 0,
+                              child: FlatButton(
+                                onPressed: () async {
+                                  // await FirebaseFirestore.instance.collection('Users')
+                                  if (approveToggle == false) {
+                                    await FirebaseFirestore.instance
+                                        .collection('Users')
+                                        .doc(bookedEvent.id)
+                                        .update({
+                                      "bookings": FieldValue.arrayUnion([
+                                        bookedEvent.toJson(
+                                            bookedEvent.uid, true)
+                                      ])
+                                    });
+                                    await FirebaseFirestore.instance
+                                        .collection('Users')
+                                        .doc(bookedEvent.id)
+                                        .update({
+                                      "bookings": FieldValue.arrayRemove([
+                                        bookedEvent.toJson(
+                                            bookedEvent.uid, false)
+                                      ])
+                                    });
+                                    await FirebaseFirestore.instance
+                                        .collection('ServiceProviders')
+                                        .doc(bookedEvent.uid)
+                                        .update({
+                                      "event": FieldValue.arrayUnion([
+                                        bookedEvent.toJson(
+                                            bookedEvent.uid, true)
+                                      ])
+                                    });
+                                    await FirebaseFirestore.instance
+                                        .collection('ServiceProviders')
+                                        .doc(bookedEvent.uid)
+                                        .update({
+                                      "event": FieldValue.arrayRemove([
+                                        bookedEvent.toJson(
+                                            bookedEvent.uid, false)
+                                      ])
+                                    });
+
+                                    setState(() {
+                                      approveToggle = true;
+                                    });
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => OTPScreen(
+                                                customerOrder: bookedEvent,
+                                              )),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  height: sl * 0.05,
+                                  width: !approveToggle ? sw * 0.19 : sw * 0.26,
+                                  decoration: BoxDecoration(
+                                      color: !approveToggle
+                                          ? Color(0xffE5FFF8)
+                                          : Color(0xff39BC96),
+                                      border:
+                                          Border.all(color: Color(0xff00A676)),
+                                      borderRadius:
+                                          BorderRadius.circular(16.0)),
+                                  child: (Row(
+                                    mainAxisAlignment: approveToggle
+                                        ? MainAxisAlignment.center
+                                        : MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                          bookedEvent.isApproved == true
+                                              ? 'Approved'
+                                              : 'Approve',
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: !approveToggle
+                                                  ? Color(0xff39BC96)
+                                                  : Colors.white)),
+                                      if (approveToggle == true)
+                                        Icon(Icons.check,
+                                            color: Colors.white, size: 18)
+                                    ],
+                                  )),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         ButtonTheme(

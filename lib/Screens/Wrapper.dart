@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
@@ -35,16 +36,10 @@ class _WrapperState extends State<Wrapper> {
     } else {
       return MultiProvider(providers: [
         StreamProvider<AppUserDetails>.value(
-          initialData: AppUserDetails(
-              uid: FirebaseAuth.instance?.currentUser?.uid ?? ''),
+          initialData: AppUserDetails(uid: user.uid),
           value: DatabaseService().streamUser(),
           child: SelectePage(),
         ),
-        // StreamProvider<ParlourBookingList>.value(
-        //   initialData: ParlourBookingList(parlourBooking: []),
-        //   value: DatabaseService().streamBookings(),
-        //   child: SelectePage(),
-        // ),
       ], child: SelectePage());
     }
   }
@@ -58,9 +53,26 @@ class SelectePage extends StatefulWidget {
 }
 
 class _SelectePageState extends State<SelectePage> {
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     final userDetails = Provider.of<AppUserDetails>(context);
-    return userDetails.isRegistered == true ? BottomNavBar() : ServiceKind();
+    if (userDetails.name != "") {
+      setState(() {
+        isLoading = false;
+      });
+    }
+    return isLoading == true
+        ? Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [CircularProgressIndicator()],
+              ),
+            ),
+          )
+        : userDetails.isRegistered == true
+            ? BottomNavBar()
+            : ServiceKind();
   }
 }

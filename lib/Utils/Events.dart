@@ -1,20 +1,45 @@
-import 'dart:collection';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:table_calendar/table_calendar.dart';
-
-/// Example event class.
 class Event {
-  final String name;
-  final String service;
-  final String amount;
-  final String timeslot;
+  final String id;
+  final String customerName;
+  final List<dynamic> serviceNames;
+  final List<dynamic> price;
+  final List<dynamic> timeList;
+  Timestamp day;
+  String timeSlot;
+  int subtotal;
+  int time;
+  bool isApproved;
+  String otp;
+  String uid;
 
-  const Event({this.name, this.service, this.amount, this.timeslot});
+  Event(
+      {this.id,
+      this.uid,
+      this.otp,
+      this.isApproved,
+      this.customerName,
+      this.serviceNames,
+      this.price,
+      this.timeList,
+      this.day,
+      this.subtotal,
+      this.timeSlot,
+      this.time});
 
-  // @override
-  // String toString() => title;
+  Map<String, dynamic> toJson(String uid, bool approval) => {
+        "serviceId": uid,
+        "isApproved": approval,
+        "id": id,
+        "otp": otp,
+        "name": "naiyar",
+        "serviceName": serviceNames,
+        "price": price,
+        "serviceTimeList": timeList,
+        "date": day,
+        "timeslot": timeSlot,
+        "amount": subtotal,
+        "serviceTime": time,
+      };
 }
-
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
