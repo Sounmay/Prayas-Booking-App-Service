@@ -117,6 +117,12 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             FloatingLabelBehavior.auto,
                                         contentPadding:
                                             EdgeInsets.only(bottom: 4)),
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please enter the service\'s name';
+                                      }
+                                      return null;
+                                    },
                                     onChanged: (value) {
                                       setState(() {
                                         name[_servicesNum] = value;
@@ -229,6 +235,12 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     floatingLabelBehavior:
                                         FloatingLabelBehavior.auto,
                                     contentPadding: EdgeInsets.all(4)),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter the price in INR';
+                                  }
+                                  return null;
+                                },
                                 onChanged: (value) {
                                   setState(() {
                                     price[_servicesNum] = value;
@@ -245,11 +257,13 @@ class _ParlourServicesState extends State<ParlourServices> {
                         child: Row(children: [
                           TextButton(
                             onPressed: () {
-                              print('hdf');
-                              setState(() {
-                                _servicesNum = _servicesNum + 1;
-                                print('here');
-                              });
+                              if(_formKey.currentState.validate()){
+                                print('hdf');
+                                setState(() {
+                                  _servicesNum = _servicesNum + 1;
+                                  print('here');
+                                });
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.all(4),
