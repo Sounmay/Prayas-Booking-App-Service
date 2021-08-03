@@ -26,6 +26,8 @@ class _ParlourServicesState extends State<ParlourServices> {
 
   @override
   Widget build(BuildContext context) {
+    final sl = MediaQuery.of(context).size.height;
+    final sw = MediaQuery.of(context).size.width;
     final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
     print(name);
 
@@ -41,7 +43,7 @@ class _ParlourServicesState extends State<ParlourServices> {
               key: _formKey,
               child: Column(children: [
                 SizedBox(
-                  height: 20,
+                  height: sl * 0.02,
                 ),
                 Row(children: [
                   Container(
@@ -59,7 +61,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                         padding: EdgeInsets.only(left: 10),
                         child: Text('List down your services',
                             style:
-                                TextStyle(fontSize: 22, color: Colors.black)),
+                            TextStyle(fontSize: 22, color: Colors.black)),
                       ),
                     ],
                   )
@@ -72,16 +74,16 @@ class _ParlourServicesState extends State<ParlourServices> {
                         text: 'Enter your services - ',
                         style: TextStyle(fontSize: 12, color: Colors.black),
                         children: [
-                      TextSpan(
-                          text: 'Name, Price ',
-                          style: TextStyle(
-                              color: Color(0xff5D5FEF), fontSize: 12)),
-                      TextSpan(text: 'and ', style: TextStyle(fontSize: 12)),
-                      TextSpan(
-                          text: 'Estimated time for each service',
-                          style:
+                          TextSpan(
+                              text: 'Name, Price ',
+                              style: TextStyle(
+                                  color: Color(0xff5D5FEF), fontSize: 12)),
+                          TextSpan(text: 'and ', style: TextStyle(fontSize: 12)),
+                          TextSpan(
+                              text: 'Estimated time for each service',
+                              style:
                               TextStyle(color: Color(0xff5D5FEF), fontSize: 12))
-                    ])),
+                        ])),
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -98,57 +100,68 @@ class _ParlourServicesState extends State<ParlourServices> {
                       ),
                       ...List.generate(
                           _servicesNum, (index) => serviceDeets(index)),
-                      Column(children: [
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 14),
-                                    decoration: InputDecoration(
-                                        isDense: true,
-                                        labelText: 'Name of Service',
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
-                                        contentPadding:
-                                            EdgeInsets.only(bottom: 4)),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        name[_servicesNum] = value;
-                                      });
-                                    },
-                                  ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                child: TextFormField(
+                                  validator: (val) =>
+                                  val.isEmpty ? 'enter' : null,
+                                  style: TextStyle(fontSize: 15),
+                                  decoration: InputDecoration(
+                                      errorStyle: TextStyle(
+                                          height: 0, color: Colors.transparent),
+                                      isDense: true,
+                                      labelText: 'Name of Service',
+                                      floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                      contentPadding:
+                                      EdgeInsets.only(bottom: 4)),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      name[_servicesNum] = value;
+                                    });
+                                  },
                                 ),
-                                SizedBox(height: 10),
-                                Row(
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                child: Row(
                                   children: [
                                     SizedBox(
-                                      height: 30,
-                                      width: 30,
+                                      height: sl * 0.07,
+                                      width: sw * 0.08,
                                       child: TextFormField(
+                                        validator: (val) =>
+                                        val.isEmpty || val.length > 2
+                                            ? ''
+                                            : null,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(fontSize: 14),
+                                        style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
-                                            border: new OutlineInputBorder(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                const Radius.circular(5.0),
-                                              ),
-                                              borderSide: new BorderSide(
-                                                color: Colors.black,
-                                                width: 1.0,
-                                              ),
+                                          errorStyle: TextStyle(
+                                              height: 0,
+                                              color: Colors.transparent),
+                                          contentPadding: EdgeInsets.all(6),
+                                          border: new OutlineInputBorder(
+                                            borderRadius:
+                                            const BorderRadius.all(
+                                              const Radius.circular(5.0),
                                             ),
-                                            isDense: true,
-                                            labelText: '00',
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.never,
-                                            contentPadding: EdgeInsets.all(4)),
+                                            borderSide: new BorderSide(
+                                              color: Colors.black,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          isDense: true,
+                                          labelText: '00',
+                                          floatingLabelBehavior:
+                                          FloatingLabelBehavior.never,
+                                        ),
                                         onChanged: (value) {
                                           setState(() {
                                             hr[_servicesNum] = value;
@@ -160,7 +173,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     Text(
                                       ' hr',
                                       style:
-                                          TextStyle(color: Color(0xff5D5FEF)),
+                                      TextStyle(color: Color(0xff5D5FEF)),
                                     ),
                                     Text(
                                       ' : ',
@@ -169,15 +182,22 @@ class _ParlourServicesState extends State<ParlourServices> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
-                                      height: 30,
-                                      width: 30,
+                                      height: sl * 0.07,
+                                      width: sw * 0.08,
                                       child: TextFormField(
+                                        validator: (val) =>
+                                        val.isEmpty || val.length > 2
+                                            ? ''
+                                            : null,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(fontSize: 14),
+                                        style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
+                                            errorStyle: TextStyle(
+                                                height: 0,
+                                                color: Colors.transparent),
                                             border: new OutlineInputBorder(
                                               borderRadius:
-                                                  const BorderRadius.all(
+                                              const BorderRadius.all(
                                                 const Radius.circular(5.0),
                                               ),
                                               borderSide: new BorderSide(
@@ -188,8 +208,8 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             isDense: true,
                                             labelText: '00',
                                             floatingLabelBehavior:
-                                                FloatingLabelBehavior.never,
-                                            contentPadding: EdgeInsets.all(4)),
+                                            FloatingLabelBehavior.never,
+                                            contentPadding: EdgeInsets.all(6)),
                                         onChanged: (value) {
                                           setState(() {
                                             min[_servicesNum] = value;
@@ -201,70 +221,72 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     Text(
                                       ' min',
                                       style:
-                                          TextStyle(color: Color(0xff5D5FEF)),
+                                      TextStyle(color: Color(0xff5D5FEF)),
                                     ),
                                   ],
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(fontSize: 14),
-                                decoration: InputDecoration(
-                                    prefixText: '\u20B9  ',
-                                    border: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(5.0),
-                                      ),
-                                      borderSide: new BorderSide(
-                                        color: Colors.black,
-                                        width: 1.0,
-                                      ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.08,
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: TextFormField(
+                              validator: (val) => val.isEmpty ? '' : null,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(fontSize: 15),
+                              decoration: InputDecoration(
+                                  errorStyle: TextStyle(
+                                      height: 0, color: Colors.transparent),
+                                  prefixText: '\u20B9  ',
+                                  border: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(5.0),
                                     ),
-                                    isDense: true,
-                                    labelText: 'Price in \u20B9',
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.auto,
-                                    contentPadding: EdgeInsets.all(4)),
-                                onChanged: (value) {
-                                  setState(() {
-                                    price[_servicesNum] = value;
-                                  });
-                                },
-                              ),
+                                    borderSide: new BorderSide(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  isDense: true,
+                                  labelText: 'Price in \u20B9',
+                                  floatingLabelBehavior:
+                                  FloatingLabelBehavior.auto,
+                                  contentPadding: EdgeInsets.all(6)),
+                              onChanged: (value) {
+                                setState(() {
+                                  price[_servicesNum] = value;
+                                });
+                              },
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                      ]),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Row(children: [
-                          TextButton(
-                            onPressed: () {
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(children: [
+                        TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
                               print('hdf');
                               setState(() {
                                 _servicesNum = _servicesNum + 1;
                                 print('here');
                               });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              color: Color(0xff5D5FEF),
-                              child: Row(
-                                children: [
-                                  Text(' Add Service   ',
-                                      style: TextStyle(color: Colors.white)),
-                                  Icon(Icons.add, color: Colors.white, size: 16)
-                                ],
-                              ),
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            color: Color(0xff5D5FEF),
+                            child: Row(
+                              children: [
+                                Text(' Add Service   ',
+                                    style: TextStyle(color: Colors.white)),
+                                Icon(Icons.add, color: Colors.white, size: 16)
+                              ],
                             ),
                           ),
-                        ]),
-                      ),
+                        ),
+                      ]),
                       SizedBox(height: 70),
                     ],
                   ),
@@ -348,12 +370,12 @@ class _ParlourServicesState extends State<ParlourServices> {
                       children: [
                         h[index] > 0 && m[index] > 0
                             ? Text('${hr[index]} hour ${min[index]} mins',
-                                style: TextStyle(color: Color(0xff5D5FEF)))
+                            style: TextStyle(color: Color(0xff5D5FEF)))
                             : m[index] > 0
-                                ? Text('${min[index]} mins',
-                                    style: TextStyle(color: Color(0xff5D5FEF)))
-                                : Text('${hr[index]} hour',
-                                    style: TextStyle(color: Color(0xff5D5FEF)))
+                            ? Text('${min[index]} mins',
+                            style: TextStyle(color: Color(0xff5D5FEF)))
+                            : Text('${hr[index]} hour',
+                            style: TextStyle(color: Color(0xff5D5FEF)))
                       ],
                     )
                   ],
