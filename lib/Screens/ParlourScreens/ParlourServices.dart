@@ -113,8 +113,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                       val.isEmpty ? 'enter' : null,
                                   style: TextStyle(fontSize: 15),
                                   decoration: InputDecoration(
-                                      errorStyle: TextStyle(
-                                          height: 0, color: Colors.transparent),
+                                      errorStyle: TextStyle(height: 0),
                                       isDense: true,
                                       labelText: 'Name of Service',
                                       floatingLabelBehavior:
@@ -192,9 +191,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                         keyboardType: TextInputType.number,
                                         style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
-                                            errorStyle: TextStyle(
-                                                height: 0,
-                                                color: Colors.transparent),
+                                            errorStyle: TextStyle(height: 0),
                                             border: new OutlineInputBorder(
                                               borderRadius:
                                                   const BorderRadius.all(
@@ -236,8 +233,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                               keyboardType: TextInputType.number,
                               style: TextStyle(fontSize: 15),
                               decoration: InputDecoration(
-                                  errorStyle: TextStyle(
-                                      height: 0, color: Colors.transparent),
+                                  errorStyle: TextStyle(height: 0),
                                   prefixText: '\u20B9  ',
                                   border: new OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
