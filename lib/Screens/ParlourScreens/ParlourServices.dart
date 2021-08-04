@@ -23,6 +23,10 @@ class _ParlourServicesState extends State<ParlourServices> {
   var m = List.filled(20, 0, growable: true);
   var price = List.filled(20, '', growable: true);
   int _servicesNum = 0;
+  var controller1 = TextEditingController();
+  var controller2 = TextEditingController();
+  var controller3 = TextEditingController();
+  var controller4 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                         padding: EdgeInsets.only(left: 10),
                         child: Text('List down your services',
                             style:
-                            TextStyle(fontSize: 22, color: Colors.black)),
+                                TextStyle(fontSize: 22, color: Colors.black)),
                       ),
                     ],
                   )
@@ -74,16 +78,16 @@ class _ParlourServicesState extends State<ParlourServices> {
                         text: 'Enter your services - ',
                         style: TextStyle(fontSize: 12, color: Colors.black),
                         children: [
-                          TextSpan(
-                              text: 'Name, Price ',
-                              style: TextStyle(
-                                  color: Color(0xff5D5FEF), fontSize: 12)),
-                          TextSpan(text: 'and ', style: TextStyle(fontSize: 12)),
-                          TextSpan(
-                              text: 'Estimated time for each service',
-                              style:
+                      TextSpan(
+                          text: 'Name, Price ',
+                          style: TextStyle(
+                              color: Color(0xff5D5FEF), fontSize: 12)),
+                      TextSpan(text: 'and ', style: TextStyle(fontSize: 12)),
+                      TextSpan(
+                          text: 'Estimated time for each service',
+                          style:
                               TextStyle(color: Color(0xff5D5FEF), fontSize: 12))
-                        ])),
+                    ])),
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -109,17 +113,18 @@ class _ParlourServicesState extends State<ParlourServices> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 child: TextFormField(
+                                  controller: controller1,
                                   validator: (val) =>
-                                  val.isEmpty ? 'enter' : null,
+                                      val.isEmpty ? 'enter' : null,
                                   style: TextStyle(fontSize: 15),
                                   decoration: InputDecoration(
-                                      errorStyle: TextStyle(height: 0),
+                                      errorStyle: TextStyle(fontSize: 10),
                                       isDense: true,
                                       labelText: 'Name of Service',
                                       floatingLabelBehavior:
-                                      FloatingLabelBehavior.auto,
+                                          FloatingLabelBehavior.auto,
                                       contentPadding:
-                                      EdgeInsets.only(bottom: 4)),
+                                          EdgeInsets.only(bottom: 4)),
                                   onChanged: (value) {
                                     setState(() {
                                       name[_servicesNum] = value;
@@ -135,10 +140,11 @@ class _ParlourServicesState extends State<ParlourServices> {
                                       height: sl * 0.07,
                                       width: sw * 0.08,
                                       child: TextFormField(
+                                        controller: controller2,
                                         validator: (val) =>
-                                        val.isEmpty || val.length > 2
-                                            ? ''
-                                            : null,
+                                            val.isEmpty || val.length > 2
+                                                ? ''
+                                                : null,
                                         keyboardType: TextInputType.number,
                                         style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
@@ -148,7 +154,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                           contentPadding: EdgeInsets.all(6),
                                           border: new OutlineInputBorder(
                                             borderRadius:
-                                            const BorderRadius.all(
+                                                const BorderRadius.all(
                                               const Radius.circular(5.0),
                                             ),
                                             borderSide: new BorderSide(
@@ -159,7 +165,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                           isDense: true,
                                           labelText: '00',
                                           floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
+                                              FloatingLabelBehavior.never,
                                         ),
                                         onChanged: (value) {
                                           setState(() {
@@ -172,7 +178,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     Text(
                                       ' hr',
                                       style:
-                                      TextStyle(color: Color(0xff5D5FEF)),
+                                          TextStyle(color: Color(0xff5D5FEF)),
                                     ),
                                     Text(
                                       ' : ',
@@ -184,17 +190,18 @@ class _ParlourServicesState extends State<ParlourServices> {
                                       height: sl * 0.07,
                                       width: sw * 0.08,
                                       child: TextFormField(
+                                        controller: controller3,
                                         validator: (val) =>
-                                        val.isEmpty || val.length > 2
-                                            ? ''
-                                            : null,
+                                            val.isEmpty || val.length > 2
+                                                ? ''
+                                                : null,
                                         keyboardType: TextInputType.number,
                                         style: TextStyle(fontSize: 15),
                                         decoration: InputDecoration(
                                             errorStyle: TextStyle(height: 0),
                                             border: new OutlineInputBorder(
                                               borderRadius:
-                                              const BorderRadius.all(
+                                                  const BorderRadius.all(
                                                 const Radius.circular(5.0),
                                               ),
                                               borderSide: new BorderSide(
@@ -205,7 +212,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                             isDense: true,
                                             labelText: '00',
                                             floatingLabelBehavior:
-                                            FloatingLabelBehavior.never,
+                                                FloatingLabelBehavior.never,
                                             contentPadding: EdgeInsets.all(6)),
                                         onChanged: (value) {
                                           setState(() {
@@ -218,7 +225,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                     Text(
                                       ' min',
                                       style:
-                                      TextStyle(color: Color(0xff5D5FEF)),
+                                          TextStyle(color: Color(0xff5D5FEF)),
                                     ),
                                   ],
                                 ),
@@ -229,6 +236,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.2,
                             child: TextFormField(
+                              controller: controller4,
                               validator: (val) => val.isEmpty ? '' : null,
                               keyboardType: TextInputType.number,
                               style: TextStyle(fontSize: 15),
@@ -247,7 +255,7 @@ class _ParlourServicesState extends State<ParlourServices> {
                                   isDense: true,
                                   labelText: 'Price in \u20B9',
                                   floatingLabelBehavior:
-                                  FloatingLabelBehavior.auto,
+                                      FloatingLabelBehavior.auto,
                                   contentPadding: EdgeInsets.all(6)),
                               onChanged: (value) {
                                 setState(() {
@@ -265,6 +273,10 @@ class _ParlourServicesState extends State<ParlourServices> {
                             if (_formKey.currentState.validate()) {
                               print('hdf');
                               setState(() {
+                                controller1.clear();
+                                controller2.clear();
+                                controller3.clear();
+                                controller4.clear();
                                 _servicesNum = _servicesNum + 1;
                                 print('here');
                               });
@@ -366,12 +378,12 @@ class _ParlourServicesState extends State<ParlourServices> {
                       children: [
                         h[index] > 0 && m[index] > 0
                             ? Text('${hr[index]} hour ${min[index]} mins',
-                            style: TextStyle(color: Color(0xff5D5FEF)))
+                                style: TextStyle(color: Color(0xff5D5FEF)))
                             : m[index] > 0
-                            ? Text('${min[index]} mins',
-                            style: TextStyle(color: Color(0xff5D5FEF)))
-                            : Text('${hr[index]} hour',
-                            style: TextStyle(color: Color(0xff5D5FEF)))
+                                ? Text('${min[index]} mins',
+                                    style: TextStyle(color: Color(0xff5D5FEF)))
+                                : Text('${hr[index]} hour',
+                                    style: TextStyle(color: Color(0xff5D5FEF)))
                       ],
                     )
                   ],
