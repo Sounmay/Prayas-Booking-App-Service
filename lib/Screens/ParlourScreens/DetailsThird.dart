@@ -300,165 +300,168 @@ class _DetailsThirdState extends State<DetailsThird> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked1=!clicked1;
-                          if(clicked1==true)
-                            _weekdays[0]='Mon';
-                          else
-                            _weekdays[0]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked1==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Mon", style: TextStyle(color: Colors.white),),)
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked1=!clicked1;
+                            if(clicked1==true)
+                              _weekdays[0]='Mon';
+                            else
+                              _weekdays[0]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked1==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Mon", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked2=!clicked2;
-                          if(clicked2==true)
-                            _weekdays[1]='Tue';
-                          else
-                            _weekdays[1]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked2==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Tue", style: TextStyle(color: Colors.white),),)
+                        SizedBox(width: 5.0,),
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked2=!clicked2;
+                            if(clicked2==true)
+                              _weekdays[1]='Tue';
+                            else
+                              _weekdays[1]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked2==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Tue", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked3=!clicked3;
-                          if(clicked3==true)
-                            _weekdays[2]='Wed';
-                          else
-                            _weekdays[2]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked3==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Wed", style: TextStyle(color: Colors.white),),)
+                        SizedBox(width: 5.0,),
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked3=!clicked3;
+                            if(clicked3==true)
+                              _weekdays[2]='Wed';
+                            else
+                              _weekdays[2]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked3==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Wed", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked4=!clicked4;
-                          if(clicked4==true)
-                            _weekdays[3]='Thu';
-                          else
-                            _weekdays[3]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked4==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Thu", style: TextStyle(color: Colors.white),),)
+                        SizedBox(width: 5.0,),
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked4=!clicked4;
+                            if(clicked4==true)
+                              _weekdays[3]='Thu';
+                            else
+                              _weekdays[3]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked4==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Thu", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked5=!clicked5;
-                          if(clicked5==true)
-                            _weekdays[4]='Fri';
-                          else
-                            _weekdays[4]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked5==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Fri", style: TextStyle(color: Colors.white),),)
+                        SizedBox(width: 5.0,),
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked5=!clicked5;
+                            if(clicked5==true)
+                              _weekdays[4]='Fri';
+                            else
+                              _weekdays[4]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked5==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Fri", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked6=!clicked6;
-                          if(clicked6==true)
-                            _weekdays[5]='Sat';
-                          else
-                            _weekdays[5]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked6==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Sat", style: TextStyle(color: Colors.white),),)
+                        SizedBox(width: 5.0,),
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked6=!clicked6;
+                            if(clicked6==true)
+                              _weekdays[5]='Sat';
+                            else
+                              _weekdays[5]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked6==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Sat", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                      InkWell(
-                        onTap: (){ setState(() {
-                          clicked7=!clicked7;
-                          if(clicked7==true)
-                            _weekdays[6]='Sun';
-                          else
-                            _weekdays[6]='';
-                        }); },
-                        child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: (clicked7==false)?BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.grey
-                            ):BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.blue
-                            ),
-                            child: Center(child: Text("Sun", style: TextStyle(color: Colors.white),),)
+                        SizedBox(width: 5.0,),
+                        InkWell(
+                          onTap: (){ setState(() {
+                            clicked7=!clicked7;
+                            if(clicked7==true)
+                              _weekdays[6]='Sun';
+                            else
+                              _weekdays[6]='';
+                          }); },
+                          child: Container(
+                              height: 40,
+                              width: 50,
+                              decoration: (clicked7==false)?BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.grey
+                              ):BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.blue
+                              ),
+                              child: Center(child: Text("Sun", style: TextStyle(color: Colors.white),),)
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 5.0,),
-                    ],
-                  )
+                        SizedBox(width: 5.0,),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
