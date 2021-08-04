@@ -51,7 +51,7 @@ class Event {
         "isApproved": approval,
         "id": id,
         "otp": otp,
-        "name": "naiyar",
+        "name": customerName,
         "serviceName": serviceNames,
         "price": price,
         "serviceTimeList": timeList,
