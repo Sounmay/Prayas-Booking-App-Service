@@ -31,483 +31,483 @@ class _DetailsThirdState extends State<DetailsThird> {
         ),
         body: SingleChildScrollView(
             child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Row(
               children: [
-                Container(
-                    height: 60,
-                    width: 10,
-                    decoration: BoxDecoration(
-                        color: Color(0xff5D5FEF),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10)))),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text('Add your working hours ',
-                          style: TextStyle(fontSize: 22, color: Colors.black)),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Enter your Parlour\'s ',
-                    style: TextStyle(fontSize: 12, color: Color(0xff606572))),
-                Text('opening hours ',
-                    style: TextStyle(fontSize: 12, color: Color(0xff5D5FEF))),
-                Text('and ',
-                    style: TextStyle(fontSize: 12, color: Color(0xff606572))),
-                Text('working days. ',
-                    style: TextStyle(fontSize: 12, color: Color(0xff5D5FEF))),
-              ],
-            ),
-            SizedBox(
-              height: 40.0,
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-              width: MediaQuery.of(context).size.width * 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text('From',
-                          style: TextStyle(
-                              fontSize: 12, color: Color(0xff606572))),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              height: MediaQuery.of(context).size.width * 0.1,
-                              width: MediaQuery.of(context).size.width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child:
-                              TextFormField(
-                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    labelText: '00',
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
-                                ),
-                                onChanged: (val) {
-                                  setState(() {
-                                    fromMin = val;
-                                  });
-                                },
-                              )
-                          ),
-                          Text(
-                            " : ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          Container(
-                              height: MediaQuery.of(context).size.width * 0.1,
-                              width: MediaQuery.of(context).size.width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child:
-                              TextFormField(
-                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    labelText: '00',
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
-                                ),
-                                onChanged: (val) {
-                                  setState(() {
-                                    fromMin = val;
-                                  });
-                                },
-                              )
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          DropdownButton(
-                            hint: Text('AM'), // Not necessary for Option 1
-                            value: _fromSelectedFormat,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _fromSelectedFormat = newValue;
-                              });
-                            },
-                            items: _locations.map((location) {
-                              return DropdownMenuItem(
-                                child: new Text(location),
-                                value: location,
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Column(
-                    children: [
-                      Text('To',
-                          style: TextStyle(
-                              fontSize: 12, color: Color(0xff606572))),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              height: MediaQuery.of(context).size.width * 0.1,
-                              width: MediaQuery.of(context).size.width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child:
-                              TextFormField(
-                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    labelText: '00',
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
-                                ),
-                                onChanged: (val) {
-                                  setState(() {
-                                    toHr = val;
-                                  });
-                                },
-                              )
-                          ),
-                          Text(
-                            " : ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          Container(
-                              height: MediaQuery.of(context).size.width * 0.1,
-                              width: MediaQuery.of(context).size.width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child:
-                              TextFormField(
-                                style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    labelText: '00',
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
-                                ),
-                                onChanged: (val) {
-                                  setState(() {
-                                    toMin = val;
-                                  });
-                                },
-                              )
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          DropdownButton(
-                            hint: Text('AM'), // Not necessary for Option 1
-                            value: _toSelectedFormat,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _toSelectedFormat = newValue;
-                              });
-                            },
-                            items: _locations.map((location) {
-                              return DropdownMenuItem(
-                                child: new Text(location),
-                                value: location,
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Working Days ',
-                          style: TextStyle(
-                              fontSize: 20, color: Color(0xff5D5FEF))),
-                      CupertinoSwitch(
-                        value: _switchValue,
-                        onChanged: (val) {
-                          setState(() {
-                            _switchValue = val;
-                            clicked1=val;
-                            clicked2=val;
-                            clicked3=val;
-                            clicked4=val;
-                            clicked5=val;
-                            clicked6=val;
-                            clicked7=val;
-                            if(val==true){
-                              _weekdays.clear();
-                              _weekdays.add('Mon');_weekdays.add('Tue');_weekdays.add('Wed');_weekdays.add('Thu');_weekdays.add('Fri');_weekdays.add('Sat');_weekdays.add('Sun');
-                            }
-                            else{
-                              _weekdays.clear();
-                            }
-                            print(_weekdays);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Container(
+                        height: 60,
+                        width: 10,
+                        decoration: BoxDecoration(
+                            color: Color(0xff5D5FEF),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10)))),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked1=!clicked1;
-                            if(clicked1==true)
-                              _weekdays[0]='Mon';
-                            else
-                              _weekdays[0]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked1==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Mon", style: TextStyle(color: Colors.white),),)
-                          ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text('Add your working hours ',
+                              style: TextStyle(fontSize: 22, color: Colors.black)),
                         ),
-                        SizedBox(width: 5.0,),
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked2=!clicked2;
-                            if(clicked2==true)
-                              _weekdays[1]='Tue';
-                            else
-                              _weekdays[1]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked2==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Tue", style: TextStyle(color: Colors.white),),)
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked3=!clicked3;
-                            if(clicked3==true)
-                              _weekdays[2]='Wed';
-                            else
-                              _weekdays[2]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked3==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Wed", style: TextStyle(color: Colors.white),),)
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked4=!clicked4;
-                            if(clicked4==true)
-                              _weekdays[3]='Thu';
-                            else
-                              _weekdays[3]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked4==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Thu", style: TextStyle(color: Colors.white),),)
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked5=!clicked5;
-                            if(clicked5==true)
-                              _weekdays[4]='Fri';
-                            else
-                              _weekdays[4]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked5==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Fri", style: TextStyle(color: Colors.white),),)
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked6=!clicked6;
-                            if(clicked6==true)
-                              _weekdays[5]='Sat';
-                            else
-                              _weekdays[5]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked6==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Sat", style: TextStyle(color: Colors.white),),)
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
-                        InkWell(
-                          onTap: (){ setState(() {
-                            clicked7=!clicked7;
-                            if(clicked7==true)
-                              _weekdays[6]='Sun';
-                            else
-                              _weekdays[6]='';
-                          }); },
-                          child: Container(
-                              height: 40,
-                              width: 50,
-                              decoration: (clicked7==false)?BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.grey
-                              ):BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: Colors.blue
-                              ),
-                              child: Center(child: Text("Sun", style: TextStyle(color: Colors.white),),)
-                          ),
-                        ),
-                        SizedBox(width: 5.0,),
                       ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 40.0,),
-            FlatButton(
-                onPressed: () async {
-                  _weekdays.removeWhere((item) => item == '');
-                  if (fromHr != '' &&
-                      fromMin != '' &&
-                      toHr != '' &&
-                      toMin != '') {
-                    List<ParlourSlotDetails> slotList = [];
-
-                    ParlourSlotDetails slots = ParlourSlotDetails(
-                      fromHr: fromHr,
-                      fromMin: fromMin,
-                      toHr: toHr,
-                      toMin: toMin,
-                      weekRange: _weekdays.first.toString() +' - '+ _weekdays.last.toString(),
-                    );
-
-                    slotList.add(slots);
-                    print(slotList);
-
-                    parlourProvider.updateSlotListDetails(slotList);
-
-                    Navigator.pushNamed(
-                      context,
-                      '/finalParlourPage',
-                    );
-                  }
-                },
-                child: Container(
-                    height: MediaQuery.of(context).size.height * 0.07,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF263238),
-                      borderRadius: BorderRadius.circular(2.0),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Save & Proceed",
-                        style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Enter your Parlour\'s ',
+                        style: TextStyle(fontSize: 12, color: Color(0xff606572))),
+                    Text('opening hours ',
+                        style: TextStyle(fontSize: 12, color: Color(0xff5D5FEF))),
+                    Text('and ',
+                        style: TextStyle(fontSize: 12, color: Color(0xff606572))),
+                    Text('working days. ',
+                        style: TextStyle(fontSize: 12, color: Color(0xff5D5FEF))),
+                  ],
+                ),
+                SizedBox(
+                  height: 40.0,
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                  width: MediaQuery.of(context).size.width * 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('From',
+                              style: TextStyle(
+                                  fontSize: 12, color: Color(0xff606572))),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  height: MediaQuery.of(context).size.width * 0.1,
+                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(color: Colors.black)
+                                  ),
+                                  child:
+                                  TextFormField(
+                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: '00',
+                                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                                        contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
+                                    ),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        fromHr = val;
+                                      });
+                                    },
+                                  )
+                              ),
+                              Text(
+                                " : ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              Container(
+                                  height: MediaQuery.of(context).size.width * 0.1,
+                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(color: Colors.black)
+                                  ),
+                                  child:
+                                  TextFormField(
+                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: '00',
+                                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                                        contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
+                                    ),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        fromMin = val;
+                                      });
+                                    },
+                                  )
+                              ),
+                              SizedBox(
+                                width: 20.0,
+                              ),
+                              DropdownButton(
+                                hint: Text('AM'), // Not necessary for Option 1
+                                value: _fromSelectedFormat,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _fromSelectedFormat = newValue;
+                                  });
+                                },
+                                items: _locations.map((location) {
+                                  return DropdownMenuItem(
+                                    child: new Text(location),
+                                    value: location,
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                    )))
-          ],
-        )));
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Column(
+                        children: [
+                          Text('To',
+                              style: TextStyle(
+                                  fontSize: 12, color: Color(0xff606572))),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                  height: MediaQuery.of(context).size.width * 0.1,
+                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(color: Colors.black)
+                                  ),
+                                  child:
+                                  TextFormField(
+                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: '00',
+                                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                                        contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
+                                    ),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        toHr = val;
+                                      });
+                                    },
+                                  )
+                              ),
+                              Text(
+                                " : ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              Container(
+                                  height: MediaQuery.of(context).size.width * 0.1,
+                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(color: Colors.black)
+                                  ),
+                                  child:
+                                  TextFormField(
+                                    style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: '00',
+                                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                                        contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
+                                    ),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        toMin = val;
+                                      });
+                                    },
+                                  )
+                              ),
+                              SizedBox(
+                                width: 20.0,
+                              ),
+                              DropdownButton(
+                                hint: Text('AM'), // Not necessary for Option 1
+                                value: _toSelectedFormat,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _toSelectedFormat = newValue;
+                                  });
+                                },
+                                items: _locations.map((location) {
+                                  return DropdownMenuItem(
+                                    child: new Text(location),
+                                    value: location,
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Working Days ',
+                              style: TextStyle(
+                                  fontSize: 20, color: Color(0xff5D5FEF))),
+                          CupertinoSwitch(
+                            value: _switchValue,
+                            onChanged: (val) {
+                              setState(() {
+                                _switchValue = val;
+                                clicked1=val;
+                                clicked2=val;
+                                clicked3=val;
+                                clicked4=val;
+                                clicked5=val;
+                                clicked6=val;
+                                clicked7=val;
+                                if(val==true){
+                                  _weekdays.clear();
+                                  _weekdays.add('Mon');_weekdays.add('Tue');_weekdays.add('Wed');_weekdays.add('Thu');_weekdays.add('Fri');_weekdays.add('Sat');_weekdays.add('Sun');
+                                }
+                                else{
+                                  _weekdays.clear();
+                                }
+                                print(_weekdays);
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked1=!clicked1;
+                                if(clicked1==true)
+                                  _weekdays[0]='Mon';
+                                else
+                                  _weekdays[0]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked1==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Mon", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked2=!clicked2;
+                                if(clicked2==true)
+                                  _weekdays[1]='Tue';
+                                else
+                                  _weekdays[1]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked2==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Tue", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked3=!clicked3;
+                                if(clicked3==true)
+                                  _weekdays[2]='Wed';
+                                else
+                                  _weekdays[2]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked3==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Wed", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked4=!clicked4;
+                                if(clicked4==true)
+                                  _weekdays[3]='Thu';
+                                else
+                                  _weekdays[3]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked4==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Thu", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked5=!clicked5;
+                                if(clicked5==true)
+                                  _weekdays[4]='Fri';
+                                else
+                                  _weekdays[4]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked5==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Fri", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked6=!clicked6;
+                                if(clicked6==true)
+                                  _weekdays[5]='Sat';
+                                else
+                                  _weekdays[5]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked6==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Sat", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                            InkWell(
+                              onTap: (){ setState(() {
+                                clicked7=!clicked7;
+                                if(clicked7==true)
+                                  _weekdays[6]='Sun';
+                                else
+                                  _weekdays[6]='';
+                              }); },
+                              child: Container(
+                                  height: 40,
+                                  width: 50,
+                                  decoration: (clicked7==false)?BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.grey
+                                  ):BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.blue
+                                  ),
+                                  child: Center(child: Text("Sun", style: TextStyle(color: Colors.white),),)
+                              ),
+                            ),
+                            SizedBox(width: 5.0,),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 40.0,),
+                FlatButton(
+                    onPressed: () async {
+                      _weekdays.removeWhere((item) => item == '');
+                      if (fromHr != '' &&
+                          fromMin != '' &&
+                          toHr != '' &&
+                          toMin != '') {
+                        List<ParlourSlotDetails> slotList = [];
+
+                        ParlourSlotDetails slots = ParlourSlotDetails(
+                          fromHr: fromHr,
+                          fromMin: fromMin,
+                          toHr: toHr,
+                          toMin: toMin,
+                          weekRange: _weekdays.first.toString() +' - '+ _weekdays.last.toString(),
+                        );
+
+                        slotList.add(slots);
+                        print(slotList);
+
+                        parlourProvider.updateSlotListDetails(slotList);
+
+                        Navigator.pushNamed(
+                          context,
+                          '/finalParlourPage',
+                        );
+                      }
+                    },
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF263238),
+                          borderRadius: BorderRadius.circular(2.0),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Save & Proceed",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )))
+              ],
+            )));
   }
 }
