@@ -93,6 +93,7 @@ class _ScheduleState extends State<Schedule> {
               Event(
                   customerName: element['name'],
                   serviceNames: element['serviceName'],
+                  shopName: element['shopName'],
                   timeSlot: element['timeslot'],
                   subtotal: element['amount'],
                   id: element['id'],
@@ -107,6 +108,7 @@ class _ScheduleState extends State<Schedule> {
           _kEventSource[DateTime.utc(_date.year, _date.month, _date.day)] = [
             Event(
                 customerName: element['name'],
+                shopName: element['shopName'],
                 serviceNames: element['serviceName'],
                 timeSlot: element['timeslot'],
                 subtotal: element['amount'],

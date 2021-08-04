@@ -7,7 +7,7 @@ class Event {
   List<dynamic> price;
   List<dynamic> timeList;
   Timestamp day;
-  String timeSlot;
+  String timeSlot, shopName;
   int subtotal;
   int time;
   bool isApproved;
@@ -24,6 +24,7 @@ class Event {
       this.price,
       this.timeList,
       this.day,
+      this.shopName,
       this.subtotal,
       this.timeSlot,
       this.time});
@@ -32,6 +33,7 @@ class Event {
     uid = json['serviceId'];
     isApproved = json['isApproved'];
     id = json['id'];
+    shopName = json['shopName'];
     otp = json['otp'];
     customerName = json['name'];
     serviceNames = json['serviceName'].cast<String>();
@@ -45,6 +47,7 @@ class Event {
 
   Map<String, dynamic> toJson(String uid, bool approval) => {
         "serviceId": uid,
+        "shopName": shopName,
         "isApproved": approval,
         "id": id,
         "otp": otp,
