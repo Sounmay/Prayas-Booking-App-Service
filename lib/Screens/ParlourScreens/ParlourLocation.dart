@@ -19,6 +19,8 @@ class ParlourLocation extends StatefulWidget {
 class _ParlourLocationState extends State<ParlourLocation> {
   final _formKey = GlobalKey<FormState>();
 
+  bool setGPS=false;
+  bool setImage=false;
   var geoLocator = Geolocator();
   String lati, longi;
   void locatePosition() async {
@@ -137,11 +139,13 @@ class _ParlourLocationState extends State<ParlourLocation> {
                       ],
                     ),
                     SizedBox(height: 40),
-                    Text(
-                        'Enter details to help customers better locate and get your services.',
-                        style:
-                            TextStyle(fontSize: 12, color: Color(0xff606572))),
-                    SizedBox(height: 30),
+                    Center(
+                      child:  Text(
+                          'Enter details to help customers better locate and get your services. \n Fields marked with an asterisk(*) shows compulsory fields.',
+                          style:
+                          TextStyle(fontSize: 12, color: Color(0xff606572))),
+                    ),
+                    SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -154,11 +158,11 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                     '',
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Parlour name',
+                                hintText: 'Parlour name *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter the parlour\'s name';
                               }
                               return null;
                             },
@@ -174,11 +178,11 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 '',
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Registered Shop no.',
+                                hintText: 'Registered Shop no. *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter the Shop Number';
                               }
                               return null;
                             },
@@ -196,11 +200,11 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 : _addresspreference[0],
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Address/Floor',
+                                hintText: 'Address/Floor *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter the building name/address ';
                               }
                               return null;
                             },
@@ -216,11 +220,11 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 : _addresspreference[1],
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Area/Street Name/Plot no/Sector.',
+                                hintText: 'Area/Street Name/Plot no/Sector. *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter the Locality';
                               }
                               return null;
                             },
@@ -238,12 +242,12 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Landmark',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter a Landmark';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 landmark = value;
@@ -259,6 +263,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                       children: [
                         FlatButton(
                             onPressed: () {
+                              setGPS=true;
                               locatePosition();
                             },
                             child: Row(
@@ -428,6 +433,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                                 children: [
                                                   InkWell(
                                                     onTap: () async {
+                                                      setImage=true;
                                                       try {
                                                         XFile image =
                                                             await ImagePicker()
@@ -470,7 +476,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                           ]),
                     ]),
                     SizedBox(height: 20),
-                    _title("About", true),
+                    _title("About Parlour Owner", true),
                     SizedBox(height: 10),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.94,

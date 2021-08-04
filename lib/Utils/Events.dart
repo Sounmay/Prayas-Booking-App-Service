@@ -1,20 +1,60 @@
-import 'dart:collection';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:table_calendar/table_calendar.dart';
-
-/// Example event class.
 class Event {
-  final String name;
-  final String service;
-  final String amount;
-  final String timeslot;
+  String id;
+  String customerName;
+  List<dynamic> serviceNames;
+  List<dynamic> price;
+  List<dynamic> timeList;
+  Timestamp day;
+  String timeSlot;
+  int subtotal;
+  int time;
+  bool isApproved;
+  String otp;
+  String uid;
 
-  const Event({this.name, this.service, this.amount, this.timeslot});
+  Event(
+      {this.id,
+      this.uid,
+      this.otp,
+      this.isApproved,
+      this.customerName,
+      this.serviceNames,
+      this.price,
+      this.timeList,
+      this.day,
+      this.subtotal,
+      this.timeSlot,
+      this.time});
 
-  // @override
-  // String toString() => title;
+  Event.fromJson(Map<String, dynamic> json) {
+    uid = json['serviceId'];
+    isApproved = json['isApproved'];
+    id = json['id'];
+    otp = json['otp'];
+    customerName = json['name'];
+    serviceNames = json['serviceName'].cast<String>();
+    price = json['price'].cast<int>();
+    day = json['date'];
+    timeList = json['serviceTimeList'];
+    timeSlot = json['timeslot'];
+    subtotal = json['amount'];
+    time = json['serviceTime'];
+  }
+
+  Map<String, dynamic> toJson(String uid, bool approval) => {
+        "serviceId": uid,
+        "isApproved": approval,
+        "id": id,
+        "otp": otp,
+        "name": "naiyar",
+        "serviceName": serviceNames,
+        "price": price,
+        "serviceTimeList": timeList,
+        "date": day,
+        "timeslot": timeSlot,
+        "amount": subtotal,
+        "serviceTime": time,
+      };
 }
-
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
