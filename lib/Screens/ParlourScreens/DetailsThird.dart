@@ -97,8 +97,8 @@ class _DetailsThirdState extends State<DetailsThird> {
                               height: MediaQuery.of(context).size.width * 0.1,
                               width: MediaQuery.of(context).size.width * 0.1,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                border: Border.all(color: Colors.black)
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.black)
                               ),
                               child:
                               TextFormField(
@@ -108,11 +108,11 @@ class _DetailsThirdState extends State<DetailsThird> {
                                     isDense: true,
                                     labelText: '00',
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.all(4)
+                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
                                 ),
                                 onChanged: (val) {
                                   setState(() {
-                                    fromHr = val;
+                                    fromMin = val;
                                   });
                                 },
                               )
@@ -137,7 +137,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                                     isDense: true,
                                     labelText: '00',
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.all(4)
+                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
                                 ),
                                 onChanged: (val) {
                                   setState(() {
@@ -196,7 +196,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                                     isDense: true,
                                     labelText: '00',
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.all(4)
+                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
                                 ),
                                 onChanged: (val) {
                                   setState(() {
@@ -225,7 +225,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                                     isDense: true,
                                     labelText: '00',
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.all(4)
+                                    contentPadding: EdgeInsets.only(left: 5.0, bottom: 10.0)
                                 ),
                                 onChanged: (val) {
                                   setState(() {

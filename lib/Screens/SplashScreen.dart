@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
       // Navigator.popAndPushNamed(context, '/details3');
-      Navigator.popAndPushNamed(context, '/wrapper');
+      Navigator.popAndPushNamed(context, '/details3');
     });
     return Scaffold(
       body: Container(
