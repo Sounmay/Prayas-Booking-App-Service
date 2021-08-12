@@ -46,6 +46,10 @@ class _FinalEditPageState extends State<FinalEditPage> {
     Details _details = parlourProvider.parlourDetails;
     List<EmployeeDetailList> _employeeList =
         parlourProvider.parlourEmployeeDetails;
+
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    final title = args["title"];
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -442,12 +446,21 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                     parlourType: _details.parlourType,
                                     numOfEmployees: _details.numOfEmployees);
 
-                                DatabaseService().uploadParlourServiceData(
-                                    finalParlourLocation,
-                                    finalParlourDetails,
-                                    finalEmployeeList,
-                                    parlourProvider.parlourServiceListDetails,
-                                    parlourProvider.parlourSlotListDetails);
+                                if (title == "PARLOUR") {
+                                  DatabaseService().uploadParlourServiceData(
+                                      finalParlourLocation,
+                                      finalParlourDetails,
+                                      finalEmployeeList,
+                                      parlourProvider.parlourServiceListDetails,
+                                      parlourProvider.parlourSlotListDetails);
+                                } else {
+                                  DatabaseService().uploadSalonServiceData(
+                                      finalParlourLocation,
+                                      finalParlourDetails,
+                                      finalEmployeeList,
+                                      parlourProvider.parlourServiceListDetails,
+                                      parlourProvider.parlourSlotListDetails);
+                                }
 
                                 setState(() {
                                   isLoading = false;

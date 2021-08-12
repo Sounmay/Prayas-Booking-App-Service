@@ -225,9 +225,11 @@ class _ServiceKindState extends State<ServiceKind> {
                   if (choice == 1)
                     Navigator.pushNamed(context, '/doctorlocation');
                   else if (choice == 2)
-                    Navigator.pushNamed(context, '/parlourlocation');
+                    Navigator.pushNamed(context, '/parlourlocation',
+                        arguments: {"title": "PARLOUR"});
                   else if (choice == 3)
-                    Navigator.pushNamed(context, '/salonlocation');
+                    Navigator.pushNamed(context, '/parlourlocation',
+                        arguments: {"title": "SALON"});
                 },
                 child: Container(
                     height: MediaQuery.of(context).size.height * 0.07,

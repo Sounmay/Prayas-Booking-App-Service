@@ -35,6 +35,10 @@ class _ParlourServicesState extends State<ParlourServices> {
     final parlourProvider = Provider.of<ParlourDetailsProvider>(context);
     print(name);
 
+        final args =
+        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    final title = args["title"];
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -318,7 +322,7 @@ class _ParlourServicesState extends State<ParlourServices> {
 
                         parlourProvider
                             .updateServiceListDetails(parlourServices);
-                        Navigator.pushNamed(context, '/details3');
+                        Navigator.pushNamed(context, '/details3',arguments: {"title": title});
                       }
                       print("hello");
                     },

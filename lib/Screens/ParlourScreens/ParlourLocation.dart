@@ -19,8 +19,8 @@ class ParlourLocation extends StatefulWidget {
 class _ParlourLocationState extends State<ParlourLocation> {
   final _formKey = GlobalKey<FormState>();
 
-  bool setGPS=false;
-  bool setImage=false;
+  bool setGPS = false;
+  bool setImage = false;
   var geoLocator = Geolocator();
   String lati, longi;
   void locatePosition() async {
@@ -71,6 +71,9 @@ class _ParlourLocationState extends State<ParlourLocation> {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    final title = args['title']??"";
     final parlourLocation = Provider.of<ParlourDetailsProvider>(context);
     if (longi == '') {
       longi = parlourLocation?.parlourLocationDetails?.longitude ?? '';
@@ -125,7 +128,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 Container(
                                   color: Color(0xff5D5FEF),
                                   padding: EdgeInsets.all(3),
-                                  child: Text('PARLOUR',
+                                  child: Text(title??"",
                                       style: TextStyle(
                                           fontSize: 22, color: Colors.white)),
                                 )
@@ -140,10 +143,10 @@ class _ParlourLocationState extends State<ParlourLocation> {
                     ),
                     SizedBox(height: 40),
                     Center(
-                      child:  Text(
+                      child: Text(
                           'Enter details to help customers better locate and get your services. \n Fields marked with an asterisk(*) shows compulsory fields.',
-                          style:
-                          TextStyle(fontSize: 12, color: Color(0xff606572))),
+                          style: TextStyle(
+                              fontSize: 12, color: Color(0xff606572))),
                     ),
                     SizedBox(height: 20),
                     Padding(
@@ -263,7 +266,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                       children: [
                         FlatButton(
                             onPressed: () {
-                              setGPS=true;
+                              setGPS = true;
                               locatePosition();
                             },
                             child: Row(
@@ -433,7 +436,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                                 children: [
                                                   InkWell(
                                                     onTap: () async {
-                                                      setImage=true;
+                                                      setImage = true;
                                                       try {
                                                         XFile image =
                                                             await ImagePicker()

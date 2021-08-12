@@ -7,6 +7,17 @@ class ParlourDetailsProvider with ChangeNotifier {
   List<EmployeeDetailList> _employeeDetails;
   List<ParlourServiceDetails> _parlourServiceList;
   List<ParlourSlotDetails> _parlourSlotList;
+  String _slotDuration, _intervals;
+
+  String get slotDuration {
+    String temp = _slotDuration;
+    return temp;
+  }
+
+  String get intervals {
+    String temp = _intervals;
+    return temp;
+  }
 
   Location get parlourLocationDetails {
     Location temp = _parlourLocationDetails;
@@ -22,6 +33,7 @@ class ParlourDetailsProvider with ChangeNotifier {
     List<ParlourServiceDetails> temp = _parlourServiceList;
     return temp;
   }
+
   List<ParlourSlotDetails> get parlourSlotListDetails {
     List<ParlourSlotDetails> temp = _parlourSlotList;
     return temp;
@@ -42,6 +54,16 @@ class ParlourDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateSlotDuration(String duration) {
+    _slotDuration = duration;
+    notifyListeners();
+  }
+
+  void updateInterval(String interval) {
+    _intervals = interval;
+    notifyListeners();
+  }
+
   void updatePralourEmployeeDetails(List<EmployeeDetailList> _employees) {
     _employeeDetails = _employees;
     notifyListeners();
@@ -56,9 +78,4 @@ class ParlourDetailsProvider with ChangeNotifier {
     _parlourSlotList = _slotList;
     notifyListeners();
   }
-
-  // void changeWidgetIndex(int index) {
-  //   _widgetIndex = index;
-  //   notifyListeners();
-  // }
 }

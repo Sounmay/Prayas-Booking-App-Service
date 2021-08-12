@@ -244,6 +244,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
                     parlourProvider.updatePralourDetails(details);
                     parlourProvider.updatePralourEmployeeDetails(employeeList);
                     Navigator.pushNamed(context, '/ps', arguments: {
+                      "title": _pagetitle,
                       "details": details,
                     });
                   }

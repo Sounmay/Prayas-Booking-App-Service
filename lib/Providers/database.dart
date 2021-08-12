@@ -58,4 +58,28 @@ class DatabaseService {
     // await getUserdata(user);
     // notifyListeners();
   }
+  uploadSalonServiceData(
+      Location location,
+      Details details,
+      List<EmployeeDetailList> finalEmployeeList,
+      List<ParlourServiceDetails> parlourServiceList,
+      List<ParlourSlotDetails> parlourSlotList) async {
+    try {
+      await _db.collection('SalonServices').doc(uid).set({
+        "location": location.toJson(),
+        "details": details.toJson(),
+        "employeeDetails": finalEmployeeList.map((e) => e.toJson()).toList(),
+        "servicesList": parlourServiceList.map((e) => e.toJson()).toList(),
+        "slotList": parlourSlotList.map((e) => e.toJson()).toList(),
+      });
+      await _db
+          .collection('ServiceProviders')
+          .doc(uid)
+          .update({"image": location.ownerImage});
+    } catch (e) {
+      print(e.toString());
+    }
+    // await getUserdata(user);
+    // notifyListeners();
+  }
 }
