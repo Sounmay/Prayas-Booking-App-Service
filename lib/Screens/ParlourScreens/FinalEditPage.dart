@@ -75,7 +75,10 @@ class _FinalEditPageState extends State<FinalEditPage> {
                             color: Color(0xff5D5FEF),
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10)))),
+                                bottomRight: Radius.circular(10)
+                            )
+                        )
+                    ),
                     Container(
                       width: width * 0.7,
                       margin: EdgeInsets.only(left: 10),

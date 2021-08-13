@@ -6,7 +6,9 @@ import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.d
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 // import 'package:freelance_booking_app_service/Providers/database.dart';
 import 'package:freelance_booking_app_service/Screens/Approval.dart';
+import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorFinal.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocation.dart';
+import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorSecond.dart';
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsThird.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourServices.dart';
@@ -61,7 +63,9 @@ class MyApp extends StatelessWidget {
             // '/otpscreen': (context) => OTPScreen(),
             '/ps': (context) => ParlourServices(),
             '/startservice': (context) => StartService(),
-            '/approval': (context) => Approval()
+            '/approval': (context) => Approval(),
+            '/doctorsecond': (context) => DoctorSecond(),
+            '/doctorfinal': (context) => DoctorFinal(),
           },
         ),
       ),
