@@ -84,7 +84,7 @@ class _DoctorFinalState extends State<DoctorFinal> {
                             border: Border.all(color: Color(0xff5D5FEF)),
                             borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Center(child: Text('MD in Medicines', style: TextStyle(color: Color(0xff00E7A4)),),)
+                          child: Center(child: Text('MD in Medicines', style: TextStyle(color: Color(0xff00E7A4)),),) // rand comment
                         )
                       ],
                     ),
