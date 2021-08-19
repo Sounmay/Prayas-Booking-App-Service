@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:random_string/random_string.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +19,8 @@ class ParlourLocation extends StatefulWidget {
 
 class _ParlourLocationState extends State<ParlourLocation> {
   final _formKey = GlobalKey<FormState>();
+
+  String serviceid = randomAlphaNumeric(6);
 
   bool setGPS = false;
   bool setImage = false;
@@ -513,7 +516,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                           final uid = FirebaseAuth.instance.currentUser.uid;
                           if (_formKey.currentState.validate()) {
                             Location location = Location(
-                                serviceUid: uid.toString(),
+                                serviceUid: serviceid,
                                 name: parlourName,
                                 shopNo: shopNo,
                                 address: '$address, $area, $landmark',

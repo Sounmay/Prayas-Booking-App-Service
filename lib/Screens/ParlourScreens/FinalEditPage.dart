@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:random_string/random_string.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
@@ -30,6 +32,8 @@ class _FinalEditPageState extends State<FinalEditPage> {
   bool employeeImagesuploaded = false,
       parlourImageuploaded = false,
       ownerImageuploaded = false;
+
+  String uid = randomAlphaNumeric(6);
 
   List<String> imageUrls = [];
 
