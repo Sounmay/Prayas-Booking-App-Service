@@ -35,6 +35,8 @@ class Location {
   String aboutOwner;
   String latitude;
   String longitude;
+  String status;
+  DateTime regDate;
 
   Location(
       {this.name,
@@ -46,7 +48,9 @@ class Location {
       this.ownerImage,
       this.ownerName,
       this.ownerNumber,
-      this.aboutOwner});
+      this.aboutOwner,
+      this.status,
+      this.regDate});
 
   Location.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -59,6 +63,8 @@ class Location {
     ownerName = json['ownerName'];
     ownerNumber = json['ownerNumber'];
     aboutOwner = json['aboutOwner'];
+    status = json['status'];
+    regDate =json['regDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,23 +79,30 @@ class Location {
     data['ownerNumber'] = this.ownerNumber;
     data['aboutOwner'] = this.aboutOwner;
     data['serviceUid'] = this.serviceUid;
+    data['status'] = this.status;
+    data['regDate'] = this.regDate;
     return data;
   }
 }
 
 class Details {
+  String serviceType;
   String parlourType;
   String aboutParlour;
   String numOfEmployees;
   String parlourImage;
 
+
   Details(
-      {this.parlourType,
+      {
+        this.serviceType,
+        this.parlourType,
       this.aboutParlour,
       this.parlourImage,
       this.numOfEmployees});
 
   Details.fromJson(Map<String, dynamic> json) {
+    serviceType = json['serviceType'];
     parlourType = json['parlourType'];
     aboutParlour = json['aboutParlour'];
     parlourImage = json['parlourImage'];
@@ -98,6 +111,7 @@ class Details {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['serviceType'] = this.serviceType;
     data['parlourType'] = this.parlourType;
     data['aboutParlour'] = this.aboutParlour;
     data['parlourImage'] = this.parlourImage;

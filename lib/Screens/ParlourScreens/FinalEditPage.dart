@@ -29,6 +29,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
   bool isLoading = false;
   String parlourImageUrl = '';
   String ownerImageUrl = '';
+  String status='';
   bool employeeImagesuploaded = false,
       parlourImageuploaded = false,
       ownerImageuploaded = false;
@@ -445,13 +446,16 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                     shopNo: _location.shopNo,
                                     longitude: _location.longitude,
                                     latitude: _location.latitude,
-                                    serviceUid: _location.serviceUid);
+                                    serviceUid: _location.serviceUid,
+                                    status: status,
+                                    regDate: DateTime.now());
 
                                 Details finalParlourDetails = Details(
                                     aboutParlour: _details.aboutParlour,
                                     parlourImage: parlourImageUrl,
                                     parlourType: _details.parlourType,
-                                    numOfEmployees: _details.numOfEmployees);
+                                    numOfEmployees: _details.numOfEmployees,
+                                    serviceType: 'Parlour');
 
                                 if (title == "PARLOUR") {
                                   DatabaseService().uploadParlourServiceData(
