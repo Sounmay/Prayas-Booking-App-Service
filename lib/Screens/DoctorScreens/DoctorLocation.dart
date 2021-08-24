@@ -37,10 +37,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 color: Color(0xff5D5FEF),
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)
-                                )
-                            )
-                        ),
+                                    bottomRight: Radius.circular(10)))),
                         Container(
                           padding: EdgeInsets.only(left: 20.0),
                           child: Column(
@@ -48,14 +45,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             children: [
                               Text('Enter details and ',
                                   style: TextStyle(
-                                      fontSize: 22, color: Colors.black)
-                              ),
+                                      fontSize: 22, color: Colors.black)),
                               Row(
                                 children: [
                                   Text('location about the ',
                                       style: TextStyle(
-                                          fontSize: 22, color: Colors.black)
-                                  ),
+                                          fontSize: 22, color: Colors.black)),
                                   Container(
                                     color: Color(0xff5D5FEF),
                                     padding: EdgeInsets.all(3),
@@ -74,9 +69,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     Text(
                         'Enter details to help customers better locate and get your services.',
                         style:
-                            TextStyle(fontSize: 12, color: Color(0xff606572)
-                            )
-                    ),
+                            TextStyle(fontSize: 12, color: Color(0xff606572))),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -113,9 +106,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           SizedBox(height: 40),
                           Text('Clinic location details',
                               style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5D5FEF)
-                              )
-                          ),
+                                  fontSize: 14, color: Color(0xff5D5FEF))),
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
@@ -177,21 +168,18 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     ),
                     SizedBox(height: 20),
                     Container(
-                      width: MediaQuery.of(context).size.width*1,
+                      width: MediaQuery.of(context).size.width * 1,
                       padding: EdgeInsets.only(left: 20.0),
-                      child: Text('Clinic location details',
+                      child: Text('About your clinic',
                           style: TextStyle(
-                              fontSize: 14, color: Color(0xff5D5FEF)
-                          )
-                      ),
+                              fontSize: 14, color: Color(0xff5D5FEF))),
                     ),
                     SizedBox(height: 20),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.94,
                       child: TextFormField(
                         onChanged: (text) {
-                          setState(() {
-                          });
+                          setState(() {});
                         },
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
@@ -224,14 +212,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 "Save & Proceed",
                                 style: TextStyle(color: Colors.white),
                               ),
-                            )
-                        )
-                    )
+                            )))
                   ],
                 ),
               ),
-            )
-        ),
+            )),
       ),
     );
   }
