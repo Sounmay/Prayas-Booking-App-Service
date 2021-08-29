@@ -26,6 +26,7 @@
 
 class Location {
   String serviceUid;
+  String servId;
   String name;
   String shopNo;
   String address;
@@ -41,6 +42,7 @@ class Location {
   Location(
       {this.name,
       this.serviceUid,
+        this.servId,
       this.latitude,
       this.longitude,
       this.shopNo,
@@ -59,6 +61,7 @@ class Location {
     latitude = json['latitude'];
     longitude = json['longitude'];
     serviceUid = json['serviceUid'];
+    servId = json['servId'];
     ownerImage = json['ownerImage'];
     ownerName = json['ownerName'];
     ownerNumber = json['ownerNumber'];

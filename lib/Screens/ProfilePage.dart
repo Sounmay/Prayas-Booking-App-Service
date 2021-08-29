@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +31,13 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: EdgeInsets.only(top: 8.0),
             child: Column(
               children: <Widget>[
-                Icon(
-                  Icons.logout_outlined,
+                IconButton(
+                  icon: Icon(Icons.logout_outlined),
                   color: Theme.of(context).accentColor,
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+                  },
                 ),
                 Text('Log Out'),
               ],

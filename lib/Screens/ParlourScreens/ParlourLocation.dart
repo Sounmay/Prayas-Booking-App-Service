@@ -20,7 +20,7 @@ class ParlourLocation extends StatefulWidget {
 class _ParlourLocationState extends State<ParlourLocation> {
   final _formKey = GlobalKey<FormState>();
 
-  String serviceid = randomAlphaNumeric(6);
+  String serviceid = FirebaseAuth.instance.currentUser.uid;
 
   bool setGPS = false;
   bool setImage = false;

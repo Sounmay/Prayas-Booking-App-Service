@@ -34,8 +34,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
       parlourImageuploaded = false,
       ownerImageuploaded = false;
 
-  String uid = randomAlphaNumeric(6);
-//  String uid = FirebaseAuth.instance.currentUser.uid;
+  String sUid = randomAlphaNumeric(6);
 
   List<String> imageUrls = [];
 
@@ -448,6 +447,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                     longitude: _location.longitude,
                                     latitude: _location.latitude,
                                     serviceUid: _location.serviceUid,
+                                    servId: sUid,
                                     status: status,
                                     regDate: DateTime.now());
 
