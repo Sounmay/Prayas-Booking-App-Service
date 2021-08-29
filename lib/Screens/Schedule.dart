@@ -172,37 +172,42 @@ class _ScheduleState extends State<Schedule> {
                 backgroundColor: Color(0xFF0F2735),
                 title: Text('Hello !!\n$name'),
                 actions: [
-                  new Container(
-                    width: 60,
-                    height: 60,
-                    margin: EdgeInsets.only(top: 4, right: 5),
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: userDetails.image,
-                        fit: BoxFit.fitHeight,
-                        height: 40,
-                        width: 40,
+                  new GestureDetector(
+                    onTap: (){
+                        Navigator.pushNamed(context, '/profilepage');
+                      },
+                    child: new Container(
+                      width: 60,
+                      height: 60,
+                      margin: EdgeInsets.only(top: 4, right: 5),
+                      decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: userDetails.image,
+                          fit: BoxFit.fitHeight,
+                          height: 40,
+                          width: 40,
 
-                        // placeholder: (context, url) =>
-                        //     new Image.asset('assets/doctor.png'),
-                        errorWidget: (context, url, error) => new Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Icon(Icons.hide_image, size: 40),
-                            ClipRRect(
-                              // Clip it cleanly.
-                              child: Container(
-                                color: Colors.grey[100].withOpacity(0.1),
+                          // placeholder: (context, url) =>
+                          //     new Image.asset('assets/doctor.png'),
+                          errorWidget: (context, url, error) => new Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Icon(Icons.hide_image, size: 40),
+                              ClipRRect(
+                                // Clip it cleanly.
+                                child: Container(
+                                  color: Colors.grey[100].withOpacity(0.1),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

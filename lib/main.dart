@@ -15,6 +15,7 @@ import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourServ
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsSecond.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/FinalEditPage.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourLocation.dart';
+import 'package:freelance_booking_app_service/Screens/ProfilePage.dart';
 import 'package:freelance_booking_app_service/Screens/SalonScreens/SalonLocation.dart';
 import 'package:freelance_booking_app_service/Screens/Schedule.dart';
 import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
             '/approval': (context) => Approval(),
             '/doctorsecond': (context) => DoctorSecond(),
             '/doctorfinal': (context) => DoctorFinal(),
+            '/profilepage': (context) => ProfilePage(),
           },
         ),
       ),

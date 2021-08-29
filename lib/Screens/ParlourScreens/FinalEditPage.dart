@@ -35,6 +35,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
       ownerImageuploaded = false;
 
   String uid = randomAlphaNumeric(6);
+//  String uid = FirebaseAuth.instance.currentUser.uid;
 
   List<String> imageUrls = [];
 
