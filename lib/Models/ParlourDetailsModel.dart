@@ -82,6 +82,7 @@ class Location {
     data['ownerNumber'] = this.ownerNumber;
     data['aboutOwner'] = this.aboutOwner;
     data['serviceUid'] = this.serviceUid;
+    data['servId'] = this.servId;
     data['status'] = this.status;
     data['regDate'] = this.regDate;
     return data;
