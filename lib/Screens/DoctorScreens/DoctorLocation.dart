@@ -69,14 +69,15 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     Text(
                         'Enter details to help customers better locate and get your services.',
                         style:
-                            TextStyle(fontSize: 12, color: Color(0xff606572))),
+                            TextStyle(fontSize: 12, color: Color(0xff606572))
+                    ),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Enter shop details',
+                          Text('Enter clinic details',
                               style: TextStyle(
                                   fontSize: 14, color: Color(0xff5D5FEF))),
                           TextFormField(
@@ -212,7 +213,9 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 "Save & Proceed",
                                 style: TextStyle(color: Colors.white),
                               ),
-                            )))
+                            )
+                        )
+                    )
                   ],
                 ),
               ),

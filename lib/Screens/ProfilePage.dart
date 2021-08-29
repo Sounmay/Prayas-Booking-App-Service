@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 60,
+        height: 100,
         color: Colors.white,
         child: InkWell(
           onTap: () => print('tap on close'),
