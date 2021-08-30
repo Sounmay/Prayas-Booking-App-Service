@@ -174,7 +174,9 @@ class _ScheduleState extends State<Schedule> {
                 actions: [
                   new GestureDetector(
                     onTap: (){
-                        Navigator.pushNamed(context, '/profilepage');
+                        Navigator.pushNamed(context, '/profilepage', arguments: {
+                          "userDetails": userDetails
+                        });
                       },
                     child: new Container(
                       width: 60,
