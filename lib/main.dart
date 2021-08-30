@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
+import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 // import 'package:freelance_booking_app_service/Providers/database.dart';
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
       value: AuthProvider().user,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider())
+          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider()),
+          ChangeNotifierProvider(create: (ctx) => ClinicDetailsProvider())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

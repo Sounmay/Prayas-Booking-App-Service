@@ -5,6 +5,7 @@ import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 class ClinicDetailsProvider with ChangeNotifier {
   ClinicLocationAndDoctor _clinicLocationAndDoctor;
   AdminDetails _adminDetails;
+  List<DoctorDetails> _doctorDetails = [];
   List<ParlourServiceDetails> _clinicServiceList;
   List<ParlourSlotDetails> _clinicSlotList;
   String _slotDuration, _intervals;
@@ -39,6 +40,11 @@ class ClinicDetailsProvider with ChangeNotifier {
     return temp;
   }
 
+  List<DoctorDetails> get doctorDetails {
+    List<DoctorDetails> temp = _doctorDetails;
+    return temp;
+  }
+
   void updateClinicLocationAndDoctor(ClinicLocationAndDoctor _location) {
     _clinicLocationAndDoctor = _location;
     notifyListeners();
@@ -61,6 +67,11 @@ class ClinicDetailsProvider with ChangeNotifier {
 
   void updateServiceListDetails(List<ParlourServiceDetails> _serviceList) {
     _clinicServiceList = _serviceList;
+    notifyListeners();
+  }
+
+  void updateDoctorListDetails(DoctorDetails _doctorList) {
+    _doctorDetails.add(_doctorList);
     notifyListeners();
   }
 

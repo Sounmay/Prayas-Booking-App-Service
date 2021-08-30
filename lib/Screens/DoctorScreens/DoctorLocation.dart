@@ -1,6 +1,14 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
+import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
+import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorSecond.dart';
+import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
 class DoctorLocation extends StatefulWidget {
   @override
@@ -10,8 +18,65 @@ class DoctorLocation extends StatefulWidget {
 class _DoctorLocationState extends State<DoctorLocation> {
   final _formKey = GlobalKey<FormState>();
 
+  String clinicName = "",
+      shopNo = "",
+      address = "",
+      about = "",
+      area = "",
+      landmark = "";
+  String lati, longi;
+  String _numOfEmployees = "";
+
+  Widget radioButton(String label, String groupValue) {
+    return Row(
+      children: [
+        SizedBox(
+          height: 30,
+          width: 30,
+          child: Radio(
+              value: label,
+              groupValue: groupValue,
+              onChanged: (value) {
+                setState(() {
+                  _numOfEmployees = value;
+                });
+              }),
+        ),
+        Text(label)
+      ],
+    );
+  }
+
+  void locatePosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      lati = position.latitude.toString();
+      longi = position.longitude.toString();
+    });
+    print(position == null
+        ? 'Unknown'
+        : 'Latitude : ' + lati + ', ' + 'Longitude : ' + longi);
+  }
+
+  String serviceid = FirebaseAuth.instance.currentUser.uid;
+
+  bool setGPS = false;
+
+  Widget _title(String text) {
+    return Row(children: [
+      Text(text,
+          style: TextStyle(
+              color: Color(0xff5D5FEF),
+              fontSize: 14,
+              fontWeight: FontWeight.bold)),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -69,17 +134,17 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     Text(
                         'Enter details to help customers better locate and get your services.',
                         style:
-                            TextStyle(fontSize: 12, color: Color(0xff606572))
-                    ),
+                            TextStyle(fontSize: 12, color: Color(0xff606572))),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Enter clinic details',
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5D5FEF))),
+                          _title("Enter clinic details"),
+                          // Text('Enter clinic details',
+                          //     style: TextStyle(
+                          //         fontSize: 14, color: Color(0xff5D5FEF))),
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
@@ -90,6 +155,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 return 'Please enter some text';
                               }
                               return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                clinicName = value;
+                              });
                             },
                           ),
                           TextFormField(
@@ -103,11 +173,14 @@ class _DoctorLocationState extends State<DoctorLocation> {
                               }
                               return null;
                             },
+                            onChanged: (value) {
+                              setState(() {
+                                clinicName = value;
+                              });
+                            },
                           ),
                           SizedBox(height: 40),
-                          Text('Clinic location details',
-                              style: TextStyle(
-                                  fontSize: 14, color: Color(0xff5D5FEF))),
+                          _title("Clinic location details"),
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
@@ -118,6 +191,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 return 'Please enter some text';
                               }
                               return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                address = value;
+                              });
                             },
                           ),
                           TextFormField(
@@ -131,6 +209,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                               }
                               return null;
                             },
+                            onChanged: (value) {
+                              setState(() {
+                                area = value;
+                              });
+                            },
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
@@ -143,16 +226,24 @@ class _DoctorLocationState extends State<DoctorLocation> {
                               }
                               return null;
                             },
+                            onChanged: (value) {
+                              setState(() {
+                                landmark = value;
+                              });
+                            },
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setGPS = true;
+                              locatePosition();
+                            },
                             child: Row(
                               children: [
                                 Text('Set location using the GPS tracker ',
@@ -167,20 +258,34 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             color: Color(0xff5D5FEF)),
                       ],
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 1,
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Text('About your clinic',
-                          style: TextStyle(
-                              fontSize: 14, color: Color(0xff5D5FEF))),
+                    SizedBox(height: 10),
+                    Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: _title("Number of Doctors")),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        radioButton('1', _numOfEmployees),
+                        radioButton('2', _numOfEmployees),
+                        radioButton('3', _numOfEmployees),
+                        radioButton('4', _numOfEmployees),
+                        radioButton('5', _numOfEmployees),
+                        radioButton('6', _numOfEmployees),
+                      ],
                     ),
+                    SizedBox(height: 20),
+                    Padding(
+                        padding: EdgeInsets.only(left: 20.0),
+                        child: _title("About your clinic")),
                     SizedBox(height: 20),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.94,
                       child: TextFormField(
                         onChanged: (text) {
-                          setState(() {});
+                          setState(() {
+                            about = text;
+                          });
                         },
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
@@ -198,8 +303,40 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     ),
                     SizedBox(height: 20),
                     FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/doctorsecond');
+                        onPressed: () async {
+                          print(_numOfEmployees);
+                          if (_formKey.currentState.validate() &&
+                              _numOfEmployees != "") {
+                            ClinicLocationAndDoctor _location =
+                                ClinicLocationAndDoctor(
+                                    serviceUid: serviceid,
+                                    clinicName: clinicName,
+                                    shopNo: shopNo,
+                                    address: '$address, $area, $landmark',
+                                    latitude: lati,
+                                    longitude: longi,
+                                    aboutClinic: about ?? '');
+
+                            clinicLocation
+                                .updateClinicLocationAndDoctor(_location);
+
+                            try {
+                              await SharedPreferencesForm.setAddressFormDetails(
+                                  [address, area, landmark]);
+                            } catch (e) {
+                              print(e.toString());
+                            }
+                            // Navigator.pushNamed(context, '/details2',
+                            //     arguments: {
+                            //       "title": title,
+                            //     });
+                            // Navigator.pushNamed(context, '/doctorsecond',
+                            //     arguments: {"id": _numOfEmployees});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DoctorSecond(id: int.parse(_numOfEmployees), curr: 1,)));
+                          }
                         },
                         child: Container(
                             height: MediaQuery.of(context).size.height * 0.07,
@@ -213,9 +350,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 "Save & Proceed",
                                 style: TextStyle(color: Colors.white),
                               ),
-                            )
-                        )
-                    )
+                            )))
                   ],
                 ),
               ),

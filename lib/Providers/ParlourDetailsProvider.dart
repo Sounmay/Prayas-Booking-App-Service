@@ -79,3 +79,4 @@ class ParlourDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+ 
