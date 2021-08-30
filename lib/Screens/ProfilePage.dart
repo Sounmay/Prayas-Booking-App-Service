@@ -198,16 +198,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   SizedBox(height: 10.0,),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.book_online, color: Color(0xff5D5FEF), size: 40,),
-                          SizedBox(width: 20.0,),
-                          Text('Terms and Conditions', style: TextStyle(color: Color(0xff5D5FEF), fontSize: 15),),
-                        ],
-                      )
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/T&C');
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.book_online, color: Color(0xff5D5FEF), size: 40,),
+                            SizedBox(width: 20.0,),
+                            Text('Terms and Conditions', style: TextStyle(color: Color(0xff5D5FEF), fontSize: 15),),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(height: 10.0,),
                   Column(

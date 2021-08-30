@@ -43,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
                   Container(
                     width: 150,
                     height: 150,
-                    margin: EdgeInsets.all(10.0),
+                    margin: EdgeInsets.all(20.0),
                     decoration: new BoxDecoration(
                       shape: BoxShape.circle,
                     ),
