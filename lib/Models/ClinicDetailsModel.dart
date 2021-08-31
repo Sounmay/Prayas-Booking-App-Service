@@ -89,3 +89,44 @@ class AdminDetails {
     return data;
   }
 }
+
+class DoctorDetails {
+  String name;
+  String number;
+  String imagefile;
+  String specialization;
+  String yearsOfExperience;
+  String aboutDoctor;
+  String workingDays;
+
+  DoctorDetails(
+      {this.name,
+      this.specialization,
+      this.workingDays="",
+      this.aboutDoctor,
+      this.yearsOfExperience,
+      this.number,
+      this.imagefile});
+
+  DoctorDetails.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    number = json['number'];
+    imagefile = json['imagefile'];
+    specialization = json['specialization'];
+    aboutDoctor = json['aboutDoctor'];
+    yearsOfExperience = json['yearsOfExperience'];
+    workingDays = json['workingDays'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['number'] = this.number;
+    data['imagefile'] = this.imagefile;
+    data['specialization'] = this.specialization;
+    data['aboutDoctor'] = this.aboutDoctor;
+    data['yearsOfExperience'] = this.yearsOfExperience;
+    data['workingDays'] = this.workingDays;
+    return data;
+  }
+}

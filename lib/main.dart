@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
+import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Providers/authProvider.dart';
 // import 'package:freelance_booking_app_service/Providers/database.dart';
@@ -9,6 +10,7 @@ import 'package:freelance_booking_app_service/Screens/Approval.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorFinal.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocation.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorSecond.dart';
+import 'package:freelance_booking_app_service/Screens/EditProfile.dart';
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsFourth.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsThird.dart';
@@ -22,6 +24,7 @@ import 'package:freelance_booking_app_service/Screens/Schedule.dart';
 import 'package:freelance_booking_app_service/Screens/ServiceKind.dart';
 import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/StartService.dart';
+import 'package:freelance_booking_app_service/Screens/T&C.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
 // import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
@@ -43,7 +46,8 @@ class MyApp extends StatelessWidget {
       value: AuthProvider().user,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider())
+          ChangeNotifierProvider(create: (ctx) => ParlourDetailsProvider()),
+          ChangeNotifierProvider(create: (ctx) => ClinicDetailsProvider())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -70,6 +74,8 @@ class MyApp extends StatelessWidget {
             '/doctorsecond': (context) => DoctorSecond(),
             '/doctorfinal': (context) => DoctorFinal(),
             '/profilepage': (context) => ProfilePage(),
+            '/editprofile': (context) => EditProfile(),
+            '/T&C': (context) => TC(),
           },
         ),
       ),

@@ -12,6 +12,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+    final userDetails = args["userDetails"];
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -72,6 +74,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     )
                   ),
+                  onPressed: (){
+                    Navigator.pushNamed(
+                        context, '/editprofile',
+                        arguments: {
+                          "userDetails": userDetails
+                        }
+                    );
+                  },
                 )
               ],
             ),
@@ -80,18 +90,19 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   width: 100,
                   height: 100,
-                  margin: EdgeInsets.only(top: 4, right: 5),
+                  margin: EdgeInsets.all(10.0),
                   decoration: new BoxDecoration(
                     shape: BoxShape.circle,
                   ),
                   child: ClipOval(
                     child: CachedNetworkImage(
+                      imageUrl: userDetails.image,
                       fit: BoxFit.fitHeight,
-                      height: 100,
-                      width: 100,
+                      height: 40,
+                      width: 40,
 
-                       placeholder: (context, url) =>
-                           new Image.asset('assets/doctor.png'),
+                      // placeholder: (context, url) =>
+                      //     new Image.asset('assets/doctor.png'),
                       errorWidget: (context, url, error) => new Stack(
                         fit: StackFit.expand,
                         children: [
@@ -99,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ClipRRect(
                             // Clip it cleanly.
                             child: Container(
-                              color: Colors.blue[100].withOpacity(0.1),
+                              color: Colors.grey[100].withOpacity(0.1),
                             ),
                           ),
                         ],
@@ -107,17 +118,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+                SizedBox(width: 20.0,),
                 Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('Lokesh Jain', style: TextStyle(color: Colors.black, fontSize: 22),),
-                      Text('+918249275008', style: TextStyle(color: Colors.black),),
-                      Text('lokeshgain@gmail.com', style: TextStyle(color: Colors.black),),
+                      Text('${userDetails.name}', style: TextStyle(color: Colors.black, fontSize: 22),),
+                      Text('${userDetails.number}', style: TextStyle(color: Colors.black),),
+//                      Text('lokeshgain@gmail.com', style: TextStyle(color: Colors.black),),
                     ],
                   ),
                 ),
-
               ],
             ),
             Container(
@@ -187,16 +198,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   SizedBox(height: 10.0,),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.book_online, color: Color(0xff5D5FEF), size: 40,),
-                          SizedBox(width: 20.0,),
-                          Text('Terms and Conditions', style: TextStyle(color: Color(0xff5D5FEF), fontSize: 15),),
-                        ],
-                      )
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/T&C');
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.book_online, color: Color(0xff5D5FEF), size: 40,),
+                            SizedBox(width: 20.0,),
+                            Text('Terms and Conditions', style: TextStyle(color: Color(0xff5D5FEF), fontSize: 15),),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(height: 10.0,),
                   Column(
