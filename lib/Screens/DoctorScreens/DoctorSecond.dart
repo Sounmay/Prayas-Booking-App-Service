@@ -1,8 +1,18 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
+import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorThird.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class DoctorSecond extends StatefulWidget {
+  final int id, curr;
+  DoctorSecond({this.id, this.curr});
   @override
   _DoctorSecondState createState() => _DoctorSecondState();
 }
@@ -10,8 +20,29 @@ class DoctorSecond extends StatefulWidget {
 class _DoctorSecondState extends State<DoctorSecond> {
   final _formKey = GlobalKey<FormState>();
 
+  UploadTask task;
+  File file;
+  var employeeImage = "";
+  String name = "",
+      specialization = "",
+      yearsOfExperience = "",
+      number = "",
+      about = "",
+      workingDays = "";
+
+  Widget _title(String text) {
+    return Row(children: [
+      Text(text,
+          style: TextStyle(
+              color: Color(0xff5D5FEF),
+              fontSize: 14,
+              fontWeight: FontWeight.bold)),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
     List<String> _locations = ['AM', 'PM']; // Option 2
     String _fromSelectedFormat, _toSelectedFormat;
     bool _switchValue = false;
@@ -57,7 +88,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                         Container(
                           color: Color(0xff5D5FEF),
                           padding: EdgeInsets.all(3),
-                          child: Text('DOCTOR 1',
+                          child: Text('DOCTOR ${widget.curr}',
                               style:
                                   TextStyle(fontSize: 22, color: Colors.white)),
                         )
@@ -69,12 +100,30 @@ class _DoctorSecondState extends State<DoctorSecond> {
               SizedBox(
                 height: 20,
               ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(8),
+              //   child: Container(
+              //     decoration: BoxDecoration(color: Colors.grey[400]),
+              //     height: MediaQuery.of(context).size.height * 0.22,
+              //     width: MediaQuery.of(context).size.width * 0.4,
+              //   ),
+              // ),
               ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(5),
                 child: Container(
-                  decoration: BoxDecoration(color: Colors.grey[400]),
                   height: MediaQuery.of(context).size.height * 0.22,
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.height * 0.3,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      image: DecorationImage(
+                          image: AssetImage('assets/user.png'))),
+                  child: file != null
+                      ? Image.file(
+                          File(file.path),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )
+                      : null,
                 ),
               ),
               SizedBox(
@@ -84,7 +133,96 @@ class _DoctorSecondState extends State<DoctorSecond> {
                 height: 40,
                 width: 110,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30)),
+                        ),
+                        context: context,
+                        builder: (builder) {
+                          return new Container(
+                            padding: EdgeInsets.only(top: 10, bottom: 40),
+                            height: 170.0,
+                            color: Colors.transparent,
+                            child: Column(children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Divider(
+                                  thickness: 2.0,
+                                  color: Color(0xff5D5FEF),
+                                ),
+                              ),
+                              Text("ADD PHOTO"),
+                              Spacer(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          try {
+                                            XFile image = await ImagePicker()
+                                                .pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+
+                                            setState(() {
+                                              file = File(image.path);
+                                              employeeImage =
+                                                  file.path.toString();
+                                            });
+                                            Navigator.pop(context);
+                                            // print(file.path
+                                            //     .toString());
+                                          } catch (e) {
+                                            print(e.toString());
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.photo_outlined,
+                                          size: 40,
+                                          color: Color(0xff5D5FEF),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text("Photo Gallery")
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          try {
+                                            XFile image = await ImagePicker()
+                                                .pickImage(
+                                                    source: ImageSource.camera);
+                                            setState(() {
+                                              file = File(image.path);
+                                            });
+                                          } catch (e) {
+                                            print(e.toString());
+                                          }
+                                        },
+                                        child: Icon(
+                                          CupertinoIcons.camera,
+                                          color: Color(0xff5D5FEF),
+                                          size: 40,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text("Camera")
+                                    ],
+                                  )
+                                ],
+                              )
+                            ]),
+                          );
+                        });
+                  },
                   child: Row(children: [
                     Text('Add Photo', style: TextStyle(color: Colors.white)),
                     Icon(Icons.photo_outlined, color: Colors.white)
@@ -99,9 +237,10 @@ class _DoctorSecondState extends State<DoctorSecond> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Enter necessary details',
-                        style:
-                            TextStyle(fontSize: 14, color: Color(0xff5D5FEF))),
+                    // Text('Enter necessary details',
+                    //     style:
+                    //         TextStyle(fontSize: 14, color: Color(0xff5D5FEF))),
+                    _title("Enter necessary details"),
                     TextFormField(
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: -20),
@@ -112,6 +251,11 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           return 'Please enter some text';
                         }
                         return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          name = value;
+                        });
                       },
                     ),
                     TextFormField(
@@ -124,6 +268,11 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           return 'Please enter some text';
                         }
                         return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          specialization = value;
+                        });
                       },
                     ),
                     Row(
@@ -140,6 +289,11 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 return 'Please enter some text';
                               }
                               return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                yearsOfExperience = value;
+                              });
                             },
                           ),
                         ),
@@ -158,6 +312,11 @@ class _DoctorSecondState extends State<DoctorSecond> {
                               }
                               return null;
                             },
+                            onChanged: (value) {
+                              setState(() {
+                                number = value;
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -166,18 +325,17 @@ class _DoctorSecondState extends State<DoctorSecond> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width * 1,
-                padding: EdgeInsets.only(left: 20.0),
-                child: Text('About doctor',
-                    style: TextStyle(fontSize: 14, color: Color(0xff5D5FEF))),
-              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: _title("About doctor")),
               SizedBox(height: 20),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.94,
                 child: TextFormField(
                   onChanged: (text) {
-                    setState(() {});
+                    setState(() {
+                      about = text;
+                    });
                   },
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
@@ -202,7 +360,9 @@ class _DoctorSecondState extends State<DoctorSecond> {
                 child: Text('Add Timing',
                     style: TextStyle(fontSize: 14, color: Color(0xff5D5FEF))),
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               Container(
                 margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
                 child: Column(
@@ -266,11 +426,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked1 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Mon",
@@ -296,11 +458,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked2 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Tue",
@@ -326,11 +490,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked3 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Wed",
@@ -356,11 +522,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked4 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Thu",
@@ -386,11 +554,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked5 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Fri",
@@ -416,11 +586,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked6 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Sat",
@@ -446,11 +618,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked7 == false)
                                     ? BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.grey)
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.grey)
                                     : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Sun",
@@ -467,13 +641,38 @@ class _DoctorSecondState extends State<DoctorSecond> {
                   ],
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               FlatButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => new DoctorThird()));
+                    if (_formKey.currentState.validate()) {
+                      DoctorDetails _doctorDetails = DoctorDetails(
+                          name: name,
+                          specialization: specialization,
+                          number: number,
+                          imagefile: employeeImage);
+
+                      clinicLocation.updateDoctorListDetails(_doctorDetails);
+                      // Navigator.pushNamed(context, '/details2',
+                      //     arguments: {
+                      //       "title": title,
+                      //     });
+                      final newId = widget.id - 1;
+                      final newCurr = widget.curr + 1;
+                      if (newId >= 1) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DoctorSecond(id: newId, curr: newCurr)));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorThird()));
+                      }
+                    }
                   },
                   child: Container(
                       height: MediaQuery.of(context).size.height * 0.07,
@@ -487,9 +686,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           "Save & Proceed",
                           style: TextStyle(color: Colors.white),
                         ),
-                      )
-                  )
-              ),
+                      ))),
               SizedBox(height: 20)
             ],
           ),
