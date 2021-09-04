@@ -135,19 +135,24 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.insert_drive_file, color: Color(0xff5D5FEF), size: 40,),
-                          SizedBox(width: 20.0,),
-                          Text('Edit Form', style: TextStyle(color: Color(0xff5D5FEF), fontSize: 15),),
-                          Divider(
-                              color: Colors.black
-                          )
-                        ],
-                      )
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/selectform');
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.insert_drive_file, color: Color(0xff5D5FEF), size: 40,),
+                            SizedBox(width: 20.0,),
+                            Text('Edit Form', style: TextStyle(color: Color(0xff5D5FEF), fontSize: 15),),
+                            Divider(
+                                color: Colors.black
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(height: 10.0,),
                   Column(

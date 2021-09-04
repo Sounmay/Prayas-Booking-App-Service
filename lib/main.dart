@@ -24,6 +24,7 @@ import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/StartService.dart';
 import 'package:freelance_booking_app_service/Screens/T&C.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
+import 'package:freelance_booking_app_service/Screens/selectForm.dart';
 // import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
             '/profilepage': (context) => ProfilePage(),
             '/editprofile': (context) => EditProfile(),
             '/T&C': (context) => TC(),
+            '/selectform': (context) => selectForm(),
           },
         ),
       ),
