@@ -1,6 +1,14 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
+import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
+import 'package:freelance_booking_app_service/Providers/database.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:marquee/marquee.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class DoctorFinal extends StatefulWidget {
   @override
@@ -8,8 +16,13 @@ class DoctorFinal extends StatefulWidget {
 }
 
 class _DoctorFinalState extends State<DoctorFinal> {
+  UploadTask task;
+  File file;
+  var employeeImage = "";
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final clinic = Provider.of<ClinicDetailsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -47,81 +60,8 @@ class _DoctorFinalState extends State<DoctorFinal> {
               SizedBox(
                 height: 20.0,
               ),
-              Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height * 0.32,
-                  width: MediaQuery.of(context).size.width * 1,
-                  margin: EdgeInsets.symmetric(horizontal: 20.0),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Color(0xff0F2735)),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.blueAccent,
-                              radius: 30.0,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  'DR. MUKUND DEV',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.phone_outlined,
-                                        color: Color(0xff5D5FEF)),
-                                    Text(
-                                      '+91992334789',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            decoration: BoxDecoration(
-                                color: Color(0xffC4C4C4).withOpacity(0.2),
-                                border: Border.all(color: Color(0xff5D5FEF)),
-                                borderRadius: BorderRadius.circular(5.0)),
-                            child: Center(
-                              child: Text(
-                                'MD in Medicines',
-                                style: TextStyle(color: Color(0xff00E7A4)),
-                              ),
-                            ) // rand comment
-                            ),
-                        Text(
-                          '- - - - - - - -',
-                          style: TextStyle(color: Color(0xffFBFBFB)),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Experience',
-                          style: TextStyle(color: Color(0xffFFC700)),
-                        ),
-                        Text(
-                          '5+ years',
-                          style: TextStyle(color: Color(0xffFFFFFF)),
-                        ),
-                      ],
-                    ),
-                  )),
+              ...List.generate(clinic?.doctorDetails?.length ?? 0,
+                  (index) => doctorCards(clinic?.doctorDetails[index])),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text(
@@ -129,12 +69,27 @@ class _DoctorFinalState extends State<DoctorFinal> {
                   style: TextStyle(color: Color(0xff606572)),
                 ),
               ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(8),
+              //   child: Container(
+              //     decoration: BoxDecoration(color: Colors.grey[400]),
+              //     height: MediaQuery.of(context).size.height * 0.22,
+              //     width: MediaQuery.of(context).size.width * 0.4,
+              //   ),
+              // ),
               ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(5),
                 child: Container(
-                  decoration: BoxDecoration(color: Colors.grey[400]),
                   height: MediaQuery.of(context).size.height * 0.22,
                   width: MediaQuery.of(context).size.width * 0.4,
+                  decoration: BoxDecoration(color: Colors.grey[400]),
+                  child: file != null
+                      ? Image.file(
+                          File(file.path),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )
+                      : null,
                 ),
               ),
               Padding(
@@ -143,7 +98,98 @@ class _DoctorFinalState extends State<DoctorFinal> {
                   height: 40,
                   width: 110,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30)),
+                          ),
+                          context: context,
+                          builder: (builder) {
+                            return new Container(
+                              padding: EdgeInsets.only(top: 10, bottom: 40),
+                              height: 170.0,
+                              color: Colors.transparent,
+                              child: Column(children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Divider(
+                                    thickness: 2.0,
+                                    color: Color(0xff5D5FEF),
+                                  ),
+                                ),
+                                Text("ADD PHOTO"),
+                                Spacer(),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            try {
+                                              XFile image = await ImagePicker()
+                                                  .pickImage(
+                                                      source:
+                                                          ImageSource.gallery);
+
+                                              setState(() {
+                                                file = File(image.path);
+                                                employeeImage =
+                                                    file.path.toString();
+                                              });
+                                              Navigator.pop(context);
+                                              // print(file.path
+                                              //     .toString());
+                                            } catch (e) {
+                                              print(e.toString());
+                                            }
+                                          },
+                                          child: Icon(
+                                            Icons.photo_outlined,
+                                            size: 40,
+                                            color: Color(0xff5D5FEF),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text("Photo Gallery")
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            try {
+                                              XFile image = await ImagePicker()
+                                                  .pickImage(
+                                                      source:
+                                                          ImageSource.camera);
+                                              setState(() {
+                                                file = File(image.path);
+                                              });
+                                            } catch (e) {
+                                              print(e.toString());
+                                            }
+                                          },
+                                          child: Icon(
+                                            CupertinoIcons.camera,
+                                            color: Color(0xff5D5FEF),
+                                            size: 40,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text("Camera")
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ]),
+                            );
+                          });
+                    },
                     child: Row(children: [
                       Text('Add Photo', style: TextStyle(color: Colors.white)),
                       Icon(Icons.photo_outlined, color: Colors.white)
@@ -174,7 +220,9 @@ class _DoctorFinalState extends State<DoctorFinal> {
                         width: MediaQuery.of(context).size.width * 0.35,
                         height: MediaQuery.of(context).size.height * 0.06,
                         child: Marquee(
-                            text: 'Sec 19, Near library, Rourkela',
+                            text: clinic
+                                    ?.clinicLocationAndDoctorDetails?.address ??
+                                "",
                             scrollAxis: Axis.horizontal,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             blankSpace: 20.0,
@@ -189,7 +237,7 @@ class _DoctorFinalState extends State<DoctorFinal> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
-                  'Shri Clinic',
+                  clinic?.clinicLocationAndDoctorDetails?.clinicName ?? "",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -232,7 +280,8 @@ class _DoctorFinalState extends State<DoctorFinal> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: Text(
-                          'Step into our salon and experience the most contemporary hair cutting, coloring, and designing techniques in demand today. Our talented team of devoted stylists has dedicated their time by continuing their education to ensure you have the latest up to date style.',
+                          clinic?.clinicLocationAndDoctorDetails?.aboutClinic ??
+                              "",
                           softWrap: true,
                           textAlign: TextAlign.left,
                           style: TextStyle(color: Color(0xff8F8F8F))),
@@ -247,32 +296,49 @@ class _DoctorFinalState extends State<DoctorFinal> {
                     SizedBox(
                       height: 10,
                     ),
-                    new Container(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        margin: EdgeInsets.only(bottom: 8),
-                        decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                                fit: BoxFit.fill,
-                                image: AssetImage('assets/doctor 3.png')
-                                /*FileImage(File(
-                                                    _employeeList[index]
-                                                        .imagefile))*/
-                                ))),
+                    // new Container(
+                    //     width: MediaQuery.of(context).size.width * 0.25,
+                    //     height: MediaQuery.of(context).size.height * 0.1,
+                    //     margin: EdgeInsets.only(bottom: 8),
+                    //     decoration: new BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         image: new DecorationImage(
+                    //             fit: BoxFit.fill,
+                    //             image: AssetImage('assets/doctor 3.png')
+                    //             /*FileImage(File(
+                    //                                 _employeeList[index]
+                    //                                     .imagefile))*/
+                    //             ))),
+                    ClipOval(
+                      child: Container(
+                          height: MediaQuery.of(context).size.height * 0.14,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/user.png',
+                                  ),
+                                  fit: BoxFit.contain)),
+                          child: Image.file(
+                            File(clinic?.adminDetails?.imagefile ?? ""),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          )),
+                    ),
                     new Text(
-                      'Martha',
+                      clinic?.adminDetails?.name ?? "",
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: new Text(
-                        'NURSE',
+                        clinic?.adminDetails?.designation ?? "",
                         style:
                             TextStyle(color: Color(0xff00A676), fontSize: 12),
                       ),
                     ),
                     new Text(
-                      '+91 1234567890',
+                      clinic?.adminDetails?.number ?? "",
                       style: TextStyle(color: Color(0xff5D5FEF), fontSize: 12),
                     )
                   ],
@@ -282,64 +348,24 @@ class _DoctorFinalState extends State<DoctorFinal> {
                 children: [
                   TextButton(
                       onPressed: () async {
-                        /*
-                            setState(() {
-                              isLoading = true;
-                              employeeList = _employeeList;
-                            });
-                            try {
-                              // deleteFolder();
-                              await uploadEmployeeImages();
-                              await uploadImage(_location.ownerImage, true);
-                              await uploadImage(parlourImagepath, false);
+                        setState(() {
+                          isLoading = true;
+                        });
+                        try {
+                          DatabaseService().uploadClinicServiceData(
+                              clinic.clinicLocationAndDoctorDetails,
+                              clinic.doctorDetails,
+                              clinic.adminDetails);
 
-                              if (parlourImageuploaded &&
-                                  ownerImageuploaded &&
-                                  employeeImagesuploaded) {
-                                Location finalParlourLocation = Location(
-                                    aboutOwner: _location.aboutOwner,
-                                    ownerImage: ownerImageUrl,
-                                    ownerName: _location.ownerName,
-                                    ownerNumber: _location.ownerNumber,
-                                    name: _location.name,
-                                    address: _location.address,
-                                    shopNo: _location.shopNo,
-                                    longitude: _location.longitude,
-                                    latitude: _location.latitude,
-                                    serviceUid: _location.serviceUid);
-
-                                Details finalParlourDetails = Details(
-                                    aboutParlour: _details.aboutParlour,
-                                    parlourImage: parlourImageUrl,
-                                    parlourType: _details.parlourType,
-                                    numOfEmployees: _details.numOfEmployees);
-
-                                if (title == "PARLOUR") {
-                                  DatabaseService().uploadParlourServiceData(
-                                      finalParlourLocation,
-                                      finalParlourDetails,
-                                      finalEmployeeList,
-                                      parlourProvider.parlourServiceListDetails,
-                                      parlourProvider.parlourSlotListDetails);
-                                } else {
-                                  DatabaseService().uploadSalonServiceData(
-                                      finalParlourLocation,
-                                      finalParlourDetails,
-                                      finalEmployeeList,
-                                      parlourProvider.parlourServiceListDetails,
-                                      parlourProvider.parlourSlotListDetails);
-                                }
-
-                                setState(() {
-                                  isLoading = false;
-                                  DatabaseService().setRegistered().then(
-                                      (value) => Navigator.popUntil(context,
-                                          ModalRoute.withName('/wrapper')));
-                                });
-                              }
-                            } catch (e) {
-                              print(e.toString());
-                            }*/
+                          setState(() {
+                            isLoading = false;
+                            DatabaseService().setRegistered().then((value) =>
+                                Navigator.popUntil(
+                                    context, ModalRoute.withName('/wrapper')));
+                          });
+                        } catch (e) {
+                          print(e.toString());
+                        }
                       },
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
@@ -383,5 +409,92 @@ class _DoctorFinalState extends State<DoctorFinal> {
         ),
       ),
     );
+  }
+
+  Widget doctorCards(DoctorDetails doctorDetails) {
+    return Container(
+        alignment: Alignment.center,
+        height: MediaQuery.of(context).size.height * 0.32,
+        width: MediaQuery.of(context).size.width * 1,
+        margin: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: Color(0xff0F2735)),
+        child: Container(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  ClipOval(
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        width: MediaQuery.of(context).size.width * 0.13,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/user.png',
+                                ),
+                                fit: BoxFit.contain)),
+                        child: Image.file(
+                          File(doctorDetails?.imagefile),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        doctorDetails.name,
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.phone_outlined, color: Color(0xff5D5FEF)),
+                          Text(
+                            doctorDetails.number,
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  decoration: BoxDecoration(
+                      color: Color(0xffC4C4C4).withOpacity(0.2),
+                      border: Border.all(color: Color(0xff5D5FEF)),
+                      borderRadius: BorderRadius.circular(5.0)),
+                  child: Center(
+                    child: Text(
+                      doctorDetails.specialization,
+                      style: TextStyle(color: Color(0xff00E7A4)),
+                    ),
+                  ) // rand comment
+                  ),
+              Text(
+                '- - - - - - - -',
+                style: TextStyle(color: Color(0xffFBFBFB)),
+              ),
+              SizedBox(height: 5),
+              Text(
+                'Experience',
+                style: TextStyle(color: Color(0xffFFC700)),
+              ),
+              Text(
+                '${doctorDetails.yearsOfExperience}+ years',
+                style: TextStyle(color: Color(0xffFFFFFF)),
+              ),
+            ],
+          ),
+        ));
   }
 }

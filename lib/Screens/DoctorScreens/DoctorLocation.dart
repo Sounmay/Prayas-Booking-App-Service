@@ -315,6 +315,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     address: '$address, $area, $landmark',
                                     latitude: lati,
                                     longitude: longi,
+                                    
                                     aboutClinic: about ?? '');
 
                             clinicLocation

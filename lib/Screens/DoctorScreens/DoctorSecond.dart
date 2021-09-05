@@ -112,7 +112,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.22,
-                  width: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.width * 0.3,
                   decoration: BoxDecoration(
                       color: Colors.grey[400],
                       image: DecorationImage(
@@ -651,6 +651,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           name: name,
                           specialization: specialization,
                           number: number,
+                          aboutDoctor: about,
+                          yearsOfExperience: yearsOfExperience,
                           imagefile: employeeImage);
 
                       clinicLocation.updateDoctorListDetails(_doctorDetails);
