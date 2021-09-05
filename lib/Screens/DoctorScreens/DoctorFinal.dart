@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:path/path.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
@@ -18,11 +19,22 @@ class DoctorFinal extends StatefulWidget {
 class _DoctorFinalState extends State<DoctorFinal> {
   UploadTask task;
   File file;
+  List<DoctorDetails> _doctorList = [];
+  List<DoctorDetails> _finaldoctorList = [];
+  bool doctorImagesUploaded = false;
+
   var employeeImage = "";
-  bool isLoading = false;
+  bool isLoading = false,
+      clinicImageuploaded = false,
+      adminImageuploaded = false;
+
+  String clinicImageUrl = '';
+  String adminImageUrl = '';
+
   @override
   Widget build(BuildContext context) {
     final clinic = Provider.of<ClinicDetailsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -60,8 +72,10 @@ class _DoctorFinalState extends State<DoctorFinal> {
               SizedBox(
                 height: 20.0,
               ),
-              ...List.generate(clinic?.doctorDetails?.length ?? 0,
-                  (index) => doctorCards(clinic?.doctorDetails[index])),
+              ...List.generate(
+                  clinic?.doctorDetails?.length ?? 0,
+                  (index) =>
+                      doctorCards(clinic?.doctorDetails[index], context)),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text(
@@ -350,8 +364,11 @@ class _DoctorFinalState extends State<DoctorFinal> {
                       onPressed: () async {
                         setState(() {
                           isLoading = true;
+                          _doctorList = clinic.doctorDetails;
                         });
                         try {
+                          await uploadDoctorImages();
+
                           DatabaseService().uploadClinicServiceData(
                               clinic.clinicLocationAndDoctorDetails,
                               clinic.doctorDetails,
@@ -411,90 +428,156 @@ class _DoctorFinalState extends State<DoctorFinal> {
     );
   }
 
-  Widget doctorCards(DoctorDetails doctorDetails) {
-    return Container(
-        alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.32,
-        width: MediaQuery.of(context).size.width * 1,
-        margin: EdgeInsets.symmetric(horizontal: 20.0),
-        padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: Color(0xff0F2735)),
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  ClipOval(
-                    child: Container(
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        width: MediaQuery.of(context).size.width * 0.13,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[400],
-                            image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/user.png',
-                                ),
-                                fit: BoxFit.contain)),
-                        child: Image.file(
-                          File(doctorDetails?.imagefile),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        )),
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        doctorDetails.name,
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.phone_outlined, color: Color(0xff5D5FEF)),
-                          Text(
-                            doctorDetails.number,
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  decoration: BoxDecoration(
-                      color: Color(0xffC4C4C4).withOpacity(0.2),
-                      border: Border.all(color: Color(0xff5D5FEF)),
-                      borderRadius: BorderRadius.circular(5.0)),
-                  child: Center(
-                    child: Text(
-                      doctorDetails.specialization,
-                      style: TextStyle(color: Color(0xff00E7A4)),
-                    ),
-                  ) // rand comment
-                  ),
-              Text(
-                '- - - - - - - -',
-                style: TextStyle(color: Color(0xffFBFBFB)),
-              ),
-              SizedBox(height: 5),
-              Text(
-                'Experience',
-                style: TextStyle(color: Color(0xffFFC700)),
-              ),
-              Text(
-                '${doctorDetails.yearsOfExperience}+ years',
-                style: TextStyle(color: Color(0xffFFFFFF)),
-              ),
-            ],
-          ),
-        ));
+  Future uploadDoctorImages() async {
+    final uid = FirebaseAuth.instance.currentUser.uid;
+
+    try {
+      for (var img in _doctorList) {
+        File file = File(img.imagefile);
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('serviceImageClinic/$uid/${basename(file.path)}');
+        await ref.putFile(file).whenComplete(() async {
+          await ref.getDownloadURL().then((value) {
+            setState(() {
+              _finaldoctorList.add(DoctorDetails(
+                  name: img.name,
+                  number: img.number,
+                  aboutDoctor: img.aboutDoctor,
+                  specialization: img.specialization,
+                  workingDays: img.workingDays,
+                  yearsOfExperience: img.yearsOfExperience,
+                  imagefile: value.toString()));
+            });
+          });
+        });
+      }
+      setState(() {
+        doctorImagesUploaded = true;
+      });
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        doctorImagesUploaded = false;
+      });
+    }
   }
+
+  Future uploadImage(String imgString, bool isOwner) async {
+    final uid = FirebaseAuth.instance.currentUser.uid;
+
+    try {
+      File file = File(imgString);
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('serviceImage/$uid/${basename(file.path)}');
+      await ref.putFile(file).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          setState(() {
+            if (isOwner) {
+              adminImageUrl = value;
+            } else {
+              clinicImageUrl = value;
+            }
+          });
+        });
+      });
+      setState(() {
+        adminImageuploaded = true;
+        clinicImageuploaded = true;
+      });
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        adminImageuploaded = false;
+        clinicImageuploaded = false;
+      });
+    }
+  }
+}
+
+Widget doctorCards(DoctorDetails doctorDetails, BuildContext context) {
+  return Container(
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height * 0.32,
+      width: MediaQuery.of(context).size.width * 1,
+      margin: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0), color: Color(0xff0F2735)),
+      child: Container(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ClipOval(
+                  child: Container(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      width: MediaQuery.of(context).size.width * 0.13,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[400],
+                          image: DecorationImage(
+                              image: AssetImage(
+                                'assets/user.png',
+                              ),
+                              fit: BoxFit.contain)),
+                      child: Image.file(
+                        File(doctorDetails?.imagefile),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      )),
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      doctorDetails.name,
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.phone_outlined, color: Color(0xff5D5FEF)),
+                        Text(
+                          doctorDetails.number,
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+            SizedBox(height: 20.0),
+            Container(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: MediaQuery.of(context).size.height * 0.05,
+                decoration: BoxDecoration(
+                    color: Color(0xffC4C4C4).withOpacity(0.2),
+                    border: Border.all(color: Color(0xff5D5FEF)),
+                    borderRadius: BorderRadius.circular(5.0)),
+                child: Center(
+                  child: Text(
+                    doctorDetails.specialization,
+                    style: TextStyle(color: Color(0xff00E7A4)),
+                  ),
+                ) // rand comment
+                ),
+            Text(
+              '- - - - - - - -',
+              style: TextStyle(color: Color(0xffFBFBFB)),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Experience',
+              style: TextStyle(color: Color(0xffFFC700)),
+            ),
+            Text(
+              '${doctorDetails.yearsOfExperience}+ years',
+              style: TextStyle(color: Color(0xffFFFFFF)),
+            ),
+          ],
+        ),
+      ));
 }

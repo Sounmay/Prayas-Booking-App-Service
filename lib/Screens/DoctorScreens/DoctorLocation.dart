@@ -306,7 +306,9 @@ class _DoctorLocationState extends State<DoctorLocation> {
                         onPressed: () async {
                           print(_numOfEmployees);
                           if (_formKey.currentState.validate() &&
-                              _numOfEmployees != "") {
+                              _numOfEmployees != "" &&
+                              lati != null &&
+                              longi != null) {
                             ClinicLocationAndDoctor _location =
                                 ClinicLocationAndDoctor(
                                     serviceUid: serviceid,
@@ -315,7 +317,6 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     address: '$address, $area, $landmark',
                                     latitude: lati,
                                     longitude: longi,
-                                    
                                     aboutClinic: about ?? '');
 
                             clinicLocation
@@ -336,7 +337,10 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DoctorSecond(id: int.parse(_numOfEmployees), curr: 1,)));
+                                    builder: (context) => DoctorSecond(
+                                          id: int.parse(_numOfEmployees),
+                                          curr: 1,
+                                        )));
                           }
                         },
                         child: Container(

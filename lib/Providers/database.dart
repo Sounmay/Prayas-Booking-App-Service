@@ -41,7 +41,8 @@ class DatabaseService {
       await _db.collection("MedicalServices").doc(uid).set({
         "location": clinicLocation.toJson(),
         "doctorList": doctorDetailsList.map((e) => e.toJson()).toList(),
-        "adminDetails": admin.toJson()
+        "adminDetails": admin.toJson(),
+        "type": "clinic"
       });
     } catch (e) {
       print(e.toString());
@@ -61,6 +62,7 @@ class DatabaseService {
         "employeeDetails": finalEmployeeList.map((e) => e.toJson()).toList(),
         "servicesList": parlourServiceList.map((e) => e.toJson()).toList(),
         "slotList": parlourSlotList.map((e) => e.toJson()).toList(),
+        "type": "parlour"
       });
       await _db
           .collection('ServiceProviders')
@@ -86,6 +88,7 @@ class DatabaseService {
         "employeeDetails": finalEmployeeList.map((e) => e.toJson()).toList(),
         "servicesList": parlourServiceList.map((e) => e.toJson()).toList(),
         "slotList": parlourSlotList.map((e) => e.toJson()).toList(),
+        "type": "salon"
       });
       await _db
           .collection('ServiceProviders')
