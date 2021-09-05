@@ -556,6 +556,9 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                                     }
                                                   } catch (e) {
                                                     print(e.toString());
+                                                    setState(() {
+                                                      isLoading = false;
+                                                    });
                                                   }
                                                 }
                                               : null,
