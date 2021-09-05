@@ -50,6 +50,16 @@ class ClinicDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateAdminImageUrl(String imgUrl) {
+    _adminDetails.imagefile = imgUrl;
+    notifyListeners();
+  }
+
+  void updateClinicImageUrl(String imgUrl) {
+    _clinicLocationAndDoctor.clinicImage = imgUrl;
+    notifyListeners();
+  }
+
   void updateAdminDetails(AdminDetails _details) {
     _adminDetails = _details;
     notifyListeners();

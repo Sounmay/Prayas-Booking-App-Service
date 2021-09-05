@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294107082451:android:b252432d489c576b432e26",
+        "android_client_info": {
+          "package_name": "com.sounmaymishra.freelance_booking_appService"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294107082451-5a0dfv6pvqnkhlihqg98adm7c905i9lb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlnqnzSpDyzddQeHwJ5cQ56rji_09W2Wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294107082451-5a0dfv6pvqnkhlihqg98adm7c905i9lb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
