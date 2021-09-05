@@ -12,6 +12,7 @@ import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorLocati
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorSecond.dart';
 import 'package:freelance_booking_app_service/Screens/EditProfile.dart';
 import 'package:freelance_booking_app_service/Screens/OTPScreen.dart';
+import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsFourth.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsThird.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourServices.dart';
 import 'package:freelance_booking_app_service/Screens/ParlourScreens/DetailsSecond.dart';
@@ -25,6 +26,7 @@ import 'package:freelance_booking_app_service/Screens/SplashScreen.dart';
 import 'package:freelance_booking_app_service/Screens/StartService.dart';
 import 'package:freelance_booking_app_service/Screens/T&C.dart';
 import 'package:freelance_booking_app_service/Screens/Wrapper.dart';
+import 'package:freelance_booking_app_service/Screens/selectForm.dart';
 // import 'package:freelance_booking_app_service/Screens/uploadImage.dart';
 import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:freelance_booking_app_service/Widgets/Login.dart';
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
             '/finalParlourPage': (context) => FinalEditPage(),
             '/details2': (context) => DetailsSecond(),
             '/details3': (context) => DetailsThird(),
+            '/details4': (context) => DetailsFourth(),
             '/schedule': (context) => Schedule(),
             // '/otpscreen': (context) => OTPScreen(),
             '/ps': (context) => ParlourServices(),
@@ -74,6 +77,7 @@ class MyApp extends StatelessWidget {
             '/profilepage': (context) => ProfilePage(),
             '/editprofile': (context) => EditProfile(),
             '/T&C': (context) => TC(),
+            '/selectform': (context) => selectForm(),
           },
         ),
       ),

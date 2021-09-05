@@ -422,68 +422,85 @@ class _FinalEditPageState extends State<FinalEditPage> {
                   Column(
                     children: [
                       TextButton(
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                              employeeList = _employeeList;
-                            });
-                            try {
-                              // deleteFolder();
-                              await uploadEmployeeImages();
-                              await uploadImage(_location.ownerImage, true);
-                              await uploadImage(parlourImagepath, false);
+                          onPressed: () {
+                            AlertDialog(
+                              title: const Text('Terms and Conditions'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text('Please read the terms and conditions carefully'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        isLoading = true;
+                                        employeeList = _employeeList;
+                                      });
+                                      try {
+                                        // deleteFolder();
+                                        await uploadEmployeeImages();
+                                        await uploadImage(_location.ownerImage, true);
+                                        await uploadImage(parlourImagepath, false);
 
-                              if (parlourImageuploaded &&
-                                  ownerImageuploaded &&
-                                  employeeImagesuploaded) {
-                                Location finalParlourLocation = Location(
-                                    aboutOwner: _location.aboutOwner,
-                                    ownerImage: ownerImageUrl,
-                                    ownerName: _location.ownerName,
-                                    ownerNumber: _location.ownerNumber,
-                                    name: _location.name,
-                                    address: _location.address,
-                                    shopNo: _location.shopNo,
-                                    longitude: _location.longitude,
-                                    latitude: _location.latitude,
-                                    serviceUid: _location.serviceUid,
-                                    servId: sUid,
-                                    status: status,
-                                    regDate: DateTime.now());
+                                        if (parlourImageuploaded &&
+                                            ownerImageuploaded &&
+                                            employeeImagesuploaded) {
+                                          Location finalParlourLocation = Location(
+                                              aboutOwner: _location.aboutOwner,
+                                              ownerImage: ownerImageUrl,
+                                              ownerName: _location.ownerName,
+                                              ownerNumber: _location.ownerNumber,
+                                              name: _location.name,
+                                              address: _location.address,
+                                              shopNo: _location.shopNo,
+                                              longitude: _location.longitude,
+                                              latitude: _location.latitude,
+                                              serviceUid: _location.serviceUid,
+                                              servId: sUid,
+                                              status: status,
+                                              regDate: DateTime.now());
 
-                                Details finalParlourDetails = Details(
-                                    aboutParlour: _details.aboutParlour,
-                                    parlourImage: parlourImageUrl,
-                                    parlourType: _details.parlourType,
-                                    numOfEmployees: _details.numOfEmployees,
-                                    serviceType: 'Parlour');
+                                          Details finalParlourDetails = Details(
+                                              aboutParlour: _details.aboutParlour,
+                                              parlourImage: parlourImageUrl,
+                                              parlourType: _details.parlourType,
+                                              numOfEmployees: _details.numOfEmployees,
+                                              serviceType: 'Parlour');
 
-                                if (title == "PARLOUR") {
-                                  DatabaseService().uploadParlourServiceData(
-                                      finalParlourLocation,
-                                      finalParlourDetails,
-                                      finalEmployeeList,
-                                      parlourProvider.parlourServiceListDetails,
-                                      parlourProvider.parlourSlotListDetails);
-                                } else {
-                                  DatabaseService().uploadSalonServiceData(
-                                      finalParlourLocation,
-                                      finalParlourDetails,
-                                      finalEmployeeList,
-                                      parlourProvider.parlourServiceListDetails,
-                                      parlourProvider.parlourSlotListDetails);
-                                }
+                                          if (title == "PARLOUR") {
+                                            DatabaseService().uploadParlourServiceData(
+                                                finalParlourLocation,
+                                                finalParlourDetails,
+                                                finalEmployeeList,
+                                                parlourProvider.parlourServiceListDetails,
+                                                parlourProvider.parlourSlotListDetails);
+                                          } else {
+                                            DatabaseService().uploadSalonServiceData(
+                                                finalParlourLocation,
+                                                finalParlourDetails,
+                                                finalEmployeeList,
+                                                parlourProvider.parlourServiceListDetails,
+                                                parlourProvider.parlourSlotListDetails);
+                                          }
 
-                                setState(() {
-                                  isLoading = false;
-                                  DatabaseService().setRegistered().then(
-                                      (value) => Navigator.popUntil(context,
-                                          ModalRoute.withName('/wrapper')));
-                                });
-                              }
-                            } catch (e) {
-                              print(e.toString());
-                            }
+                                          setState(() {
+                                            isLoading = false;
+                                            DatabaseService().setRegistered().then(
+                                                    (value) => Navigator.popUntil(context,
+                                                    ModalRoute.withName('/wrapper')));
+                                          });
+                                        }
+                                      } catch (e) {
+                                        print(e.toString());
+                                      }
+                                    },
+                                    child: Text('Accept')
+                                )
+                              ],
+                            );
                           },
                           child: SizedBox(
                             width: width * 0.4,
