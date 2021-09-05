@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
@@ -34,6 +35,19 @@ class DatabaseService {
     // return asfd;
   }
 
+  uploadClinicServiceData(ClinicLocationAndDoctor clinicLocation,
+      List<DoctorDetails> doctorDetailsList, AdminDetails admin) async {
+    try {
+      await _db.collection("MedicalServices").doc(uid).set({
+        "location": clinicLocation.toJson(),
+        "doctorList": doctorDetailsList.map((e) => e.toJson()).toList(),
+        "adminDetails": admin.toJson()
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   uploadParlourServiceData(
       Location location,
       Details details,
@@ -58,6 +72,7 @@ class DatabaseService {
     // await getUserdata(user);
     // notifyListeners();
   }
+
   uploadSalonServiceData(
       Location location,
       Details details,
