@@ -40,21 +40,22 @@ class _DoctorSecondState extends State<DoctorSecond> {
     ]);
   }
 
+  List<String> _locations = ['AM', 'PM']; // Option 2
+  String _fromSelectedFormat, _toSelectedFormat;
+  bool _switchValue = false;
+  String fromHr = '', fromMin = '', toHr = '', toMin = '';
+  bool clicked1 = false,
+      clicked2 = false,
+      clicked3 = false,
+      clicked4 = false,
+      clicked5 = false,
+      clicked6 = false,
+      clicked7 = false;
+  List<String> _weekdays = ['', '', '', '', '', '', ''];
+
   @override
   Widget build(BuildContext context) {
     final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
-    List<String> _locations = ['AM', 'PM']; // Option 2
-    String _fromSelectedFormat, _toSelectedFormat;
-    bool _switchValue = false;
-    String fromHr = '', fromMin = '', toHr = '', toMin = '';
-    bool clicked1 = false,
-        clicked2 = false,
-        clicked3 = false,
-        clicked4 = false,
-        clicked5 = false,
-        clicked6 = false,
-        clicked7 = false;
-    List<String> _weekdays = ['', '', '', '', '', '', ''];
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.transparent,
@@ -372,7 +373,9 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       children: [
                         Text('Working Days ',
                             style: TextStyle(
-                                fontSize: 20, color: Color(0xff5D5FEF))),
+                                fontSize: 20, color: Color(0xff5D5FEF)
+                            )
+                        ),
                         CupertinoSwitch(
                           value: _switchValue,
                           onChanged: (val) {
@@ -438,7 +441,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     "Mon",
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                )),
+                                )
+                            ),
                           ),
                           SizedBox(
                             width: 5.0,
@@ -653,7 +657,9 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           number: number,
                           aboutDoctor: about,
                           yearsOfExperience: yearsOfExperience,
-                          imagefile: employeeImage);
+                          imagefile: employeeImage,
+                          workingDays: _weekdays.first.toString() + ' - ' + _weekdays.last.toString(),
+                      );
 
                       clinicLocation.updateDoctorListDetails(_doctorDetails);
                       // Navigator.pushNamed(context, '/details2',
