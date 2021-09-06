@@ -648,6 +648,194 @@ class _DoctorSecondState extends State<DoctorSecond> {
               SizedBox(
                 height: 20.0,
               ),
+              Container(
+                margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                width: MediaQuery.of(context).size.width * 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('From',
+                            style: TextStyle(
+                                fontSize: 12, color: Color(0xff606572))),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                                height: MediaQuery.of(context).size.width * 0.1,
+                                width: MediaQuery.of(context).size.width * 0.1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(color: Colors.black)),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                      fontSize:
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      isDense: true,
+                                      labelText: '00',
+                                      floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                      contentPadding: EdgeInsets.only(
+                                          left: 5.0, bottom: 10.0)),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      fromHr = val;
+                                    });
+                                  },
+                                )),
+                            Text(
+                              " : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Container(
+                                height: MediaQuery.of(context).size.width * 0.1,
+                                width: MediaQuery.of(context).size.width * 0.1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(color: Colors.black)),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                      fontSize:
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      isDense: true,
+                                      labelText: '00',
+                                      floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                      contentPadding: EdgeInsets.only(
+                                          left: 5.0, bottom: 10.0)),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      fromMin = val;
+                                    });
+                                  },
+                                )),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            DropdownButton(
+                              hint: Text('AM'), // Not necessary for Option 1
+                              value: _fromSelectedFormat,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _fromSelectedFormat = newValue;
+                                });
+                              },
+                              items: _locations.map((location) {
+                                return DropdownMenuItem(
+                                  child: new Text(location),
+                                  value: location,
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Column(
+                      children: [
+                        Text('To',
+                            style: TextStyle(
+                                fontSize: 12, color: Color(0xff606572))),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                                height: MediaQuery.of(context).size.width * 0.1,
+                                width: MediaQuery.of(context).size.width * 0.1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(color: Colors.black)),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                      fontSize:
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      isDense: true,
+                                      labelText: '00',
+                                      floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                      contentPadding: EdgeInsets.only(
+                                          left: 5.0, bottom: 10.0)),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      toHr = val;
+                                    });
+                                  },
+                                )),
+                            Text(
+                              " : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Container(
+                                height: MediaQuery.of(context).size.width * 0.1,
+                                width: MediaQuery.of(context).size.width * 0.1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(color: Colors.black)),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                      fontSize:
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      isDense: true,
+                                      labelText: '00',
+                                      floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                      contentPadding: EdgeInsets.only(
+                                          left: 5.0, bottom: 10.0)),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      toMin = val;
+                                    });
+                                  },
+                                )),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            DropdownButton(
+                              hint: Text('AM'), // Not necessary for Option 1
+                              value: _toSelectedFormat,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _toSelectedFormat = newValue;
+                                });
+                              },
+                              items: _locations.map((location) {
+                                return DropdownMenuItem(
+                                  child: new Text(location),
+                                  value: location,
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.0,),
               FlatButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
