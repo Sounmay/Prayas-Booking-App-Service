@@ -344,23 +344,29 @@ class _DoctorFinalState extends State<DoctorFinal> {
                           //                                 _employeeList[index]
                           //                                     .imagefile))*/
                           //             ))),
-                          ClipOval(
-                            child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.14,
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey[400],
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                          'assets/user.png',
-                                        ),
-                                        fit: BoxFit.contain)),
-                                child: Image.file(
-                                  File(clinic?.adminDetails?.imagefile ?? ""),
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                )),
+                          // ClipOval(
+                          //   child: Container(
+                          //       height:
+                          //           MediaQuery.of(context).size.height * 0.14,
+                          //       width: MediaQuery.of(context).size.width * 0.2,
+                          //       decoration: BoxDecoration(
+                          //           color: Colors.grey[400],
+                          //           image: DecorationImage(
+                          //               image: AssetImage(
+                          //                 'assets/user.png',
+                          //               ),
+                          //               fit: BoxFit.contain)),
+                          //       child: Image.file(
+                          //         File(clinic?.adminDetails?.imagefile ?? ""),
+                          //         fit: BoxFit.cover,
+                          //         width: double.infinity,
+                          //       )),
+                          // ),
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: FileImage(
+                                File(clinic?.adminDetails?.imagefile ?? "")),
                           ),
                           new Text(
                             clinic?.adminDetails?.name ?? "",
