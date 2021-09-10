@@ -553,9 +553,9 @@ class _DetailsThirdState extends State<DetailsThird> {
                     List<ParlourSlotDetails> slotList = [];
 
                     ParlourSlotDetails slots = ParlourSlotDetails(
-                      fromHr: fromHr,
+                      fromHr: (_fromSelectedFormat=='AM')?fromHr:(int.parse(fromHr)+12).toString(),
                       fromMin: fromMin,
-                      toHr: toHr,
+                      toHr: (_toSelectedFormat=='AM')?toHr:(int.parse(toHr)+12).toString(),
                       toMin: toMin,
                       weekRange: _weekdays.first.toString() +
                           ' - ' +
