@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorThird.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +31,11 @@ class _DoctorSecondState extends State<DoctorSecond> {
       about = "",
       workingDays = "";
 
+  var controller1 = TextEditingController();
+  var controller2 = TextEditingController();
+  var controller3 = TextEditingController();
+  var controller4 = TextEditingController();
+
   Widget _title(String text) {
     return Row(children: [
       Text(text,
@@ -44,6 +50,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
   String _fromSelectedFormat, _toSelectedFormat;
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
+  int _servicesNum = 0;
   bool clicked1 = false,
       clicked2 = false,
       clicked3 = false,
@@ -53,8 +60,17 @@ class _DoctorSecondState extends State<DoctorSecond> {
       clicked7 = false;
   List<String> _weekdays = ['', '', '', '', '', '', ''];
 
+  var sname = List.filled(20, '', growable: true);
+  var hr = List.filled(20, '', growable: true);
+  var h = List.filled(20, 0, growable: true);
+  var min = List.filled(20, '', growable: true);
+  var m = List.filled(20, 0, growable: true);
+  var price = List.filled(20, '', growable: true);
+
   @override
   Widget build(BuildContext context) {
+    final sl = MediaQuery.of(context).size.height;
+    final sw = MediaQuery.of(context).size.width;
     final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -373,9 +389,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       children: [
                         Text('Working Days ',
                             style: TextStyle(
-                                fontSize: 20, color: Color(0xff5D5FEF)
-                            )
-                        ),
+                                fontSize: 20, color: Color(0xff5D5FEF))),
                         CupertinoSwitch(
                           value: _switchValue,
                           onChanged: (val) {
@@ -441,8 +455,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     "Mon",
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                )
-                            ),
+                                )),
                           ),
                           SizedBox(
                             width: 5.0,
@@ -674,14 +687,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                      MediaQuery.of(context).size.width *
-                                          0.06),
+                                          MediaQuery.of(context).size.width *
+                                              0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
+                                          FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -704,14 +717,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                      MediaQuery.of(context).size.width *
-                                          0.06),
+                                          MediaQuery.of(context).size.width *
+                                              0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
+                                          FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -764,14 +777,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                      MediaQuery.of(context).size.width *
-                                          0.06),
+                                          MediaQuery.of(context).size.width *
+                                              0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
+                                          FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -794,14 +807,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                      MediaQuery.of(context).size.width *
-                                          0.06),
+                                          MediaQuery.of(context).size.width *
+                                              0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
+                                          FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -835,10 +848,233 @@ class _DoctorSecondState extends State<DoctorSecond> {
                   ],
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text('Service details',
+                            style: TextStyle(
+                                color: Color(0xff5D5FEF),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    ...List.generate(
+                        _servicesNum, (index) => serviceDeets(index)),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: TextFormField(
+                                controller: controller1,
+                                validator: (val) =>
+                                    val.isEmpty ? 'enter' : null,
+                                style: TextStyle(fontSize: 15),
+                                decoration: InputDecoration(
+                                    errorStyle: TextStyle(fontSize: 10),
+                                    isDense: true,
+                                    labelText: 'Name of Service',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.auto,
+                                    contentPadding: EdgeInsets.only(bottom: 4)),
+                                onChanged: (value) {
+                                  setState(() {
+                                    sname[_servicesNum] = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    height: sl * 0.07,
+                                    width: sw * 0.08,
+                                    child: TextFormField(
+                                      controller: controller2,
+                                      validator: (val) =>
+                                          val.isEmpty || val.length > 2
+                                              ? ''
+                                              : null,
+                                      keyboardType: TextInputType.number,
+                                      style: TextStyle(fontSize: 15),
+                                      decoration: InputDecoration(
+                                        errorStyle: TextStyle(
+                                            height: 0,
+                                            color: Colors.transparent),
+                                        contentPadding: EdgeInsets.all(6),
+                                        border: new OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(5.0),
+                                          ),
+                                          borderSide: new BorderSide(
+                                            color: Colors.black,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        isDense: true,
+                                        labelText: '00',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.never,
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          hr[_servicesNum] = value;
+                                          h[_servicesNum] = int.parse(value);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Text(
+                                    ' hr',
+                                    style: TextStyle(color: Color(0xff5D5FEF)),
+                                  ),
+                                  Text(
+                                    ' : ',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: sl * 0.07,
+                                    width: sw * 0.08,
+                                    child: TextFormField(
+                                      controller: controller3,
+                                      validator: (val) =>
+                                          val.isEmpty || val.length > 2
+                                              ? ''
+                                              : null,
+                                      keyboardType: TextInputType.number,
+                                      style: TextStyle(fontSize: 15),
+                                      decoration: InputDecoration(
+                                          errorStyle: TextStyle(height: 0),
+                                          border: new OutlineInputBorder(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              const Radius.circular(5.0),
+                                            ),
+                                            borderSide: new BorderSide(
+                                              color: Colors.black,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          isDense: true,
+                                          labelText: '00',
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.never,
+                                          contentPadding: EdgeInsets.all(6)),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          min[_servicesNum] = value;
+                                          m[_servicesNum] = int.parse(value);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Text(
+                                    ' min',
+                                    style: TextStyle(color: Color(0xff5D5FEF)),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: TextFormField(
+                            controller: controller4,
+                            validator: (val) => val.isEmpty ? '' : null,
+                            keyboardType: TextInputType.number,
+                            style: TextStyle(fontSize: 15),
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(height: 0),
+                                prefixText: '\u20B9  ',
+                                border: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(5.0),
+                                  ),
+                                  borderSide: new BorderSide(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                isDense: true,
+                                labelText: 'Price in \u20B9',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                contentPadding: EdgeInsets.all(6)),
+                            onChanged: (value) {
+                              setState(() {
+                                price[_servicesNum] = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(children: [
+                      TextButton(
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              controller1.clear();
+                              controller2.clear();
+                              controller3.clear();
+                              controller4.clear();
+                              _servicesNum = _servicesNum + 1;
+                            });
+                          }
+                          // print(sname);
+                          // print(price);
+                          // print(hr);
+                          // print(min);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(4),
+                          color: Color(0xff5D5FEF),
+                          child: Row(
+                            children: [
+                              Text(' Add Service   ',
+                                  style: TextStyle(color: Colors.white)),
+                              Icon(Icons.add, color: Colors.white, size: 16)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
+                    SizedBox(height: 70),
+                  ],
+                ),
+              ),
               FlatButton(
                   onPressed: () {
+                    controller1.text = ".";
+                    controller2.text = ".";
+                    controller3.text = ".";
+                    controller4.text = ".";
                     if (_formKey.currentState.validate()) {
+                      List<ParlourServiceDetails> doctorServices = [];
+                      for (int i = 0; i < _servicesNum; i++) {
+                        doctorServices.add(ParlourServiceDetails(
+                          name: sname[i],
+                          price: price[i],
+                          hour: hr[i],
+                          minute: min[i],
+                        ));
+                      }
                       DoctorDetails _doctorDetails = DoctorDetails(
                           name: name,
                           specialization: specialization,
@@ -846,10 +1082,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           aboutDoctor: about,
                           yearsOfExperience: yearsOfExperience,
                           imagefile: employeeImage,
-                          workingDays: _weekdays.first.toString() + ' - ' + _weekdays.last.toString(),
-                      );
+                          workingDays: _weekdays.first.toString() +
+                              ' - ' +
+                              _weekdays.last.toString(),
+                          serviceList: doctorServices);
 
-                      clinicLocation.updateDoctorListDetails(_doctorDetails);
+                      print(_doctorDetails.serviceList);
+
+                      // clinicLocation.updateDoctorListDetails(_doctorDetails);
                       // Navigator.pushNamed(context, '/details2',
                       //     arguments: {
                       //       "title": title,
@@ -889,5 +1129,81 @@ class _DoctorSecondState extends State<DoctorSecond> {
         ),
       ),
     );
+  }
+
+  Widget serviceDeets(int index) {
+    return Column(children: [
+      SizedBox(height: 10),
+      Row(
+        children: [
+          Container(
+            height: 60,
+            width: 4,
+            color: Color(0xFF3AD48A),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Service : '),
+                        Text(' ${sname[index]}',
+                            style: TextStyle(color: Color(0xff5D5FEF)))
+                      ],
+                    ),
+                    Row(
+                      children: [Text('Estimate Time : ')],
+                    )
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Price : '),
+                        Text(' ${price[index]}',
+                            style: TextStyle(color: Color(0xff5D5FEF)))
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        h[index] > 0 && m[index] > 0
+                            ? Text('${hr[index]} hour ${min[index]} mins',
+                                style: TextStyle(color: Color(0xff5D5FEF)))
+                            : m[index] > 0
+                                ? Text('${min[index]} mins',
+                                    style: TextStyle(color: Color(0xff5D5FEF)))
+                                : Text('${hr[index]} hour',
+                                    style: TextStyle(color: Color(0xff5D5FEF)))
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.cancel_presentation_outlined),
+            color: Color(0xff5D5FEF),
+            onPressed: () {
+              setState(() {
+                sname.removeAt(index);
+                hr.removeAt(index);
+                min.removeAt(index);
+                price.removeAt(index);
+                _servicesNum = _servicesNum - 1;
+              });
+            },
+          )
+        ],
+      ),
+      SizedBox(height: 10),
+    ]);
   }
 }

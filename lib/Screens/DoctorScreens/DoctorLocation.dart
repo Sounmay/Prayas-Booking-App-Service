@@ -328,12 +328,10 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             } catch (e) {
                               print(e.toString());
                             }
-                            // Navigator.pushNamed(context, '/details2',
-                            //     arguments: {
-                            //       "title": title,
-                            //     });
-                            // Navigator.pushNamed(context, '/doctorsecond',
-                            //     arguments: {"id": _numOfEmployees});
+                            print(
+                                clinicLocation.clinicLocationAndDoctorDetails);
+
+                            //code to uncomment
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
