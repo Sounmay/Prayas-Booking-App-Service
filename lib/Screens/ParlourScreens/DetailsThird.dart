@@ -567,7 +567,7 @@ class _DetailsThirdState extends State<DetailsThird> {
 
                     parlourProvider.updateSlotListDetails(slotList);
 
-                    Navigator.pushNamed(context, '/details4',
+                    Navigator.pushNamed(context, '/finalParlourPage',
                         arguments: {"title": title});
                   }
                 },
