@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
@@ -44,6 +46,10 @@ class DatabaseService {
         "adminDetails": admin.toJson(),
         "type": "clinic"
       });
+       await _db
+          .collection('ServiceProviders')
+          .doc(uid)
+          .update({"image": admin.imagefile});
     } catch (e) {
       print(e.toString());
     }
@@ -59,7 +65,7 @@ class DatabaseService {
       await _db.collection('ParlourServices').doc(uid).set({
         "location": location.toJson(),
         "details": details.toJson(),
-        "employeeDetails": finalEmployeeList.map((e) => e.toJson()).toList(),
+        "employeeDetails":  FieldValue.arrayUnion(finalEmployeeList.map((e) => e.toJson()).toList()),
         "servicesList": parlourServiceList.map((e) => e.toJson()).toList(),
         "slotList": parlourSlotList.map((e) => e.toJson()).toList(),
         "type": "parlour"

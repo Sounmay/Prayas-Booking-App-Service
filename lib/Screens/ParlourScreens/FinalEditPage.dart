@@ -461,6 +461,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                       TextButton(
                                           onPressed: agree
                                               ? () async {
+                                                // Navigator.pop(context, true);
                                                   setState(() {
                                                     isLoading = true;
                                                     employeeList =
@@ -661,7 +662,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
             .ref()
             .child('serviceImage/$uid/${basename(file.path)}');
         await ref.putFile(file).whenComplete(() async {
-          await ref.getDownloadURL().then((value) {
+          ref.getDownloadURL().then((value) {
             setState(() {
               finalEmployeeList.add(EmployeeDetailList(
                   name: img.name,

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
+import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorThird.dart';
 import 'package:image_picker/image_picker.dart';
@@ -838,7 +839,28 @@ class _DoctorSecondState extends State<DoctorSecond> {
               SizedBox(height: 20.0,),
               FlatButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState.validate() && fromHr != '' &&
+                        fromMin != '' &&
+                        toHr != '' &&
+                        toMin != '') {
+
+                        // List<ParlourSlotDetails> slotList = [];
+
+                        ParlourSlotDetails slots = ParlourSlotDetails(
+                          fromHr: fromHr,
+                          fromMin: fromMin,
+                          toHr: toHr,
+                          toMin: toMin,
+                          weekRange: _weekdays.first.toString() +
+                              ' - ' +
+                              _weekdays.last.toString(),
+                        );
+
+                        // slotList.add(slots);
+                        // print(slotList);
+
+                        // clinicLocation.updateSlotListDetails(slotList);
+
                       DoctorDetails _doctorDetails = DoctorDetails(
                           name: name,
                           specialization: specialization,
@@ -847,6 +869,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           yearsOfExperience: yearsOfExperience,
                           imagefile: employeeImage,
                           workingDays: _weekdays.first.toString() + ' - ' + _weekdays.last.toString(),
+                          slots: slots
                       );
 
                       clinicLocation.updateDoctorListDetails(_doctorDetails);
