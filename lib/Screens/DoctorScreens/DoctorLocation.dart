@@ -175,7 +175,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             },
                             onChanged: (value) {
                               setState(() {
-                                clinicName = value;
+                                shopNo = value;
                               });
                             },
                           ),
