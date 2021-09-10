@@ -270,6 +270,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                         return null;
                       },
                       onChanged: (value) {
+                        print(clinicLocation.doctorDetails.length);
                         setState(() {
                           name = value;
                         });
@@ -1089,7 +1090,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
 
                       print(_doctorDetails.serviceList);
 
-                      // clinicLocation.updateDoctorListDetails(_doctorDetails);
+                      clinicLocation.updateDoctorListDetails(_doctorDetails);
                       // Navigator.pushNamed(context, '/details2',
                       //     arguments: {
                       //       "title": title,

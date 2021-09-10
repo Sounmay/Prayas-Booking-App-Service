@@ -1,4 +1,5 @@
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
+import 'package:freelance_booking_app_service/Screens/ParlourScreens/ParlourServices.dart';
 
 class ClinicLocationAndDoctor {
   String serviceUid;
@@ -6,6 +7,7 @@ class ClinicLocationAndDoctor {
   String shopNo;
   String address;
   String clinicImage;
+  String speciality;
   String aboutClinic;
   String latitude;
   String longitude;
@@ -18,6 +20,7 @@ class ClinicLocationAndDoctor {
       this.longitude,
       this.shopNo,
       this.address,
+      this.speciality,
       this.aboutClinic});
 
   ClinicLocationAndDoctor.fromJson(Map<String, dynamic> json) {
@@ -39,6 +42,7 @@ class ClinicLocationAndDoctor {
     data['clinicImage'] = this.clinicImage;
     data['longitude'] = this.longitude;
     data['latitude'] = this.latitude;
+    data['aboutClinic'] = this.aboutClinic;
     data['serviceUid'] = this.serviceUid;
     return data;
   }
@@ -78,6 +82,7 @@ class DoctorDetails {
   String aboutDoctor;
   String workingDays;
   List<ParlourServiceDetails> serviceList;
+
   DoctorDetails(
       {this.name,
       this.serviceList,
@@ -96,7 +101,6 @@ class DoctorDetails {
     aboutDoctor = json['aboutDoctor'];
     yearsOfExperience = json['yearsOfExperience'];
     workingDays = json['workingDays'];
-    serviceList = json['serviceList'];
   }
 
   Map<String, dynamic> toJson() {
@@ -108,7 +112,6 @@ class DoctorDetails {
     data['aboutDoctor'] = this.aboutDoctor;
     data['yearsOfExperience'] = this.yearsOfExperience;
     data['workingDays'] = this.workingDays;
-    data['serviceList'] = this.serviceList;
     return data;
   }
 }
