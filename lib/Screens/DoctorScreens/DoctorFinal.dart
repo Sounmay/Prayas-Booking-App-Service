@@ -491,6 +491,8 @@ class _DoctorFinalState extends State<DoctorFinal> {
                   aboutDoctor: img.aboutDoctor,
                   specialization: img.specialization,
                   workingDays: img.workingDays,
+                  slot: img.slot,
+                  serviceList: img.serviceList,
                   yearsOfExperience: img.yearsOfExperience,
                   imagefile: value.toString()));
             });

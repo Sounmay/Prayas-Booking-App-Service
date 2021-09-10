@@ -1076,6 +1076,22 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           minute: min[i],
                         ));
                       }
+
+                      List<ParlourSlotDetails> slotList = [];
+
+                      ParlourSlotDetails slots = ParlourSlotDetails(
+                        fromHr: (_fromSelectedFormat == 'AM')
+                            ? fromHr
+                            : (int.parse(fromHr) + 12).toString(),
+                        fromMin: fromMin,
+                        toHr: (_toSelectedFormat == 'AM')
+                            ? toHr
+                            : (int.parse(toHr) + 12).toString(),
+                        toMin: toMin,
+                        weekRange: _weekdays.first.toString() +
+                            ' - ' +
+                            _weekdays.last.toString(),
+                      );
                       DoctorDetails _doctorDetails = DoctorDetails(
                           name: name,
                           specialization: specialization,
@@ -1086,7 +1102,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           workingDays: _weekdays.first.toString() +
                               ' - ' +
                               _weekdays.last.toString(),
-                          serviceList: doctorServices);
+                          serviceList: doctorServices,
+                          slot: slotList);
 
                       print(_doctorDetails.serviceList);
 

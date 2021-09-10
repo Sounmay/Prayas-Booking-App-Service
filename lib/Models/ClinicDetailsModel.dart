@@ -82,6 +82,7 @@ class DoctorDetails {
   String aboutDoctor;
   String workingDays;
   List<ParlourServiceDetails> serviceList;
+  List<ParlourSlotDetails> slot;
 
   DoctorDetails(
       {this.name,
@@ -89,6 +90,7 @@ class DoctorDetails {
       this.specialization,
       this.workingDays = "",
       this.aboutDoctor,
+      this.slot,
       this.yearsOfExperience,
       this.number,
       this.imagefile});
@@ -101,6 +103,7 @@ class DoctorDetails {
     aboutDoctor = json['aboutDoctor'];
     yearsOfExperience = json['yearsOfExperience'];
     workingDays = json['workingDays'];
+    slot = json['slot'];
   }
 
   Map<String, dynamic> toJson() {
@@ -112,6 +115,8 @@ class DoctorDetails {
     data['aboutDoctor'] = this.aboutDoctor;
     data['yearsOfExperience'] = this.yearsOfExperience;
     data['workingDays'] = this.workingDays;
+    data['serviceList'] = this.serviceList.map((e) => e.toJson()).toList();
+    data['slot'] = this.slot.map((e) => e.toJson()).toList();
     return data;
   }
 }
