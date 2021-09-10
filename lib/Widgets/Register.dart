@@ -46,7 +46,7 @@ class _RegisterState extends State<Register> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/splashLogo.png',
+                            'assets/Logo (Service app) bl (200 x 200).png',
                             height: 120,
                             width: 120,
                           ),
@@ -106,6 +106,7 @@ class _RegisterState extends State<Register> {
                                     )
                                   ])),
                               TextFormField(
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Phone Number',

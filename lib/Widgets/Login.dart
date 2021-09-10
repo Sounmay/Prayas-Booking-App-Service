@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/ps logo 300x300.png',
+                          'assets/Logo (Service app) bl (200 x 200).png',
                           height: 120,
                           width: 120,
                         ),
