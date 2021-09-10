@@ -348,7 +348,8 @@ class _DetailsThirdState extends State<DetailsThird> {
                                   "Mon",
                                   style: TextStyle(color: Colors.white),
                                 ),
-                              )),
+                              )
+                          ),
                         ),
                         SizedBox(
                           width: 5.0,
