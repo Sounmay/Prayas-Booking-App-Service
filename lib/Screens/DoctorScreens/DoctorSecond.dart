@@ -372,12 +372,6 @@ class _DoctorSecondState extends State<DoctorSecond> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 1,
-                padding: EdgeInsets.only(left: 20.0),
-                child: Text('Add Timing',
-                    style: TextStyle(fontSize: 14, color: Color(0xff5D5FEF))),
-              ),
               SizedBox(
                 height: 10.0,
               ),
@@ -658,6 +652,16 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     ),
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text('Add Timing',
+                    style: TextStyle(
+                        fontSize: 20, color: Color(0xff5D5FEF))),
               ),
               SizedBox(
                 height: 20.0,
