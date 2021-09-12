@@ -295,6 +295,7 @@ class _ClinicLocationEditFormState extends State<ClinicLocationEditForm> {
                                           shopNo: shopNo,
                                           clinicImage:
                                               clinicLocation.clinicImage,
+                                          isApproved: clinicLocation.isApproved,
                                           address: address,
                                           latitude: clinicLocation.latitude,
                                           longitude: clinicLocation.longitude,
