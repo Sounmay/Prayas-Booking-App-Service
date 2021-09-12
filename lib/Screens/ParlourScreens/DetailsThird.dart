@@ -12,7 +12,7 @@ class DetailsThird extends StatefulWidget {
 
 class _DetailsThirdState extends State<DetailsThird> {
   List<String> _locations = ['AM', 'PM']; // Option 2
-  String _fromSelectedFormat, _toSelectedFormat;
+  String _fromSelectedFormat = 'AM', _toSelectedFormat = 'AM';
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
   bool clicked1 = false,
