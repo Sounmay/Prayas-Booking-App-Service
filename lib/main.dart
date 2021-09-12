@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             '/details3': (context) => DetailsThird(),
             '/details4': (context) => DetailsFourth(),
             '/schedule': (context) => Schedule(),
-            // '/otpscreen': (context) => OTPScreen(),
+            '/selectform': (context) => SelectForm(),
             '/ps': (context) => ParlourServices(),
             '/startservice': (context) => StartService(),
             '/approval': (context) => Approval(),
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
             '/profilepage': (context) => ProfilePage(),
             '/editprofile': (context) => EditProfile(),
             '/T&C': (context) => TC(),
-            '/selectform': (context) => SelectForm(),
+
           },
         ),
       ),

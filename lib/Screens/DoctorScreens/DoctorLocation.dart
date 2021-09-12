@@ -323,7 +323,8 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     longitude: longi,
                                     aboutClinic: about ?? '',
                                     status: status,
-                                    servId: sUid
+                                    regDate: DateTime.now(),
+                                    servId: sUid,
                                 );
 
                             clinicLocation

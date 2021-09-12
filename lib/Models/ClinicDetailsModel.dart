@@ -13,6 +13,7 @@ class ClinicLocationAndDoctor {
   String longitude;
   String servId;
   String status;
+  DateTime regDate;
 
   ClinicLocationAndDoctor(
       {this.clinicName,
@@ -25,7 +26,8 @@ class ClinicLocationAndDoctor {
       this.speciality,
       this.aboutClinic,
       this.servId,
-      this.status});
+      this.status,
+      this.regDate});
 
   ClinicLocationAndDoctor.fromJson(Map<String, dynamic> json) {
     clinicName = json['clinicName'];
@@ -38,6 +40,7 @@ class ClinicLocationAndDoctor {
     aboutClinic = json['aboutClinic'];
     status = json['status'];
     servId = json['servId'];
+    regDate = json['regDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,7 @@ class ClinicLocationAndDoctor {
     data['serviceUid'] = this.serviceUid;
     data['status'] = this.status;
     data['servId'] = this.servId;
+    data['regDate'] = this.regDate;
     return data;
   }
 }
