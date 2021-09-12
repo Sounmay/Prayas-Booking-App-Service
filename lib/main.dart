@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
             '/profilepage': (context) => ProfilePage(),
             '/editprofile': (context) => EditProfile(),
             '/T&C': (context) => TC(),
-            '/selectform': (context) => selectForm(),
+            '/selectform': (context) => SelectForm(),
           },
         ),
       ),

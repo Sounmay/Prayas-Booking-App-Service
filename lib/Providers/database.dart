@@ -19,6 +19,13 @@ class DatabaseService {
         .update({"image": imgUrl});
   }
 
+  Future updateServiceProviderInfo(String name, String number) async {
+    FirebaseFirestore.instance
+        .collection("ServiceProviders")
+        .doc(uid)
+        .update({"name": name, "number": number});
+  }
+
   Future setRegistered() async {
     _db.collection('ServiceProviders').doc(uid).update({"isRegistered": true});
   }
@@ -46,10 +53,10 @@ class DatabaseService {
         "adminDetails": admin.toJson(),
         "type": "clinic"
       });
-       await _db
+      await _db
           .collection('ServiceProviders')
           .doc(uid)
-          .update({"image": admin.imagefile});
+          .update({"image": admin.imagefile, "isClinic": true});
     } catch (e) {
       print(e.toString());
     }
@@ -65,7 +72,8 @@ class DatabaseService {
       await _db.collection('ParlourServices').doc(uid).set({
         "location": location.toJson(),
         "details": details.toJson(),
-        "employeeDetails":  FieldValue.arrayUnion(finalEmployeeList.map((e) => e.toJson()).toList()),
+        "employeeDetails": FieldValue.arrayUnion(
+            finalEmployeeList.map((e) => e.toJson()).toList()),
         "servicesList": parlourServiceList.map((e) => e.toJson()).toList(),
         "slotList": parlourSlotList.map((e) => e.toJson()).toList(),
         "type": "parlour"
@@ -73,7 +81,7 @@ class DatabaseService {
       await _db
           .collection('ServiceProviders')
           .doc(uid)
-          .update({"image": location.ownerImage});
+          .update({"image": location.ownerImage, "isClinic": false});
     } catch (e) {
       print(e.toString());
     }
@@ -99,7 +107,7 @@ class DatabaseService {
       await _db
           .collection('ServiceProviders')
           .doc(uid)
-          .update({"image": location.ownerImage});
+          .update({"image": location.ownerImage, "isClinic": false});
     } catch (e) {
       print(e.toString());
     }
