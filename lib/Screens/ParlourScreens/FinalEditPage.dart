@@ -523,7 +523,6 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                                               .numOfEmployees,
                                                           serviceType:
                                                               'Parlour',
-                                                          isApproved: isApproved,
                                                       );
 
                                                       if (title == "PARLOUR") {

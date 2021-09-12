@@ -9,6 +9,7 @@ import 'package:freelance_booking_app_service/Screens/DoctorScreens/DoctorSecond
 import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 
 class DoctorLocation extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
       landmark = "";
   String lati, longi;
   String _numOfEmployees = "";
-  String isApproved = "Pending";
+  String status = "Pending";
 
   Widget radioButton(String label, String groupValue) {
     return Row(
@@ -310,6 +311,8 @@ class _DoctorLocationState extends State<DoctorLocation> {
                               _numOfEmployees != "" &&
                               lati != null &&
                               longi != null) {
+                                  String sUid = randomAlphaNumeric(6);
+
                             ClinicLocationAndDoctor _location =
                                 ClinicLocationAndDoctor(
                                     serviceUid: serviceid,
@@ -319,7 +322,8 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     latitude: lati,
                                     longitude: longi,
                                     aboutClinic: about ?? '',
-                                    isApproved: isApproved,
+                                    status: status,
+                                    servId: sUid
                                 );
 
                             clinicLocation
