@@ -56,7 +56,7 @@ class DatabaseService {
       await _db
           .collection('ServiceProviders')
           .doc(uid)
-          .update({"image": admin.imagefile, "isClinic": true});
+          .update({"image": admin.imagefile, "type": "clinic"});
     } catch (e) {
       print(e.toString());
     }
@@ -81,7 +81,7 @@ class DatabaseService {
       await _db
           .collection('ServiceProviders')
           .doc(uid)
-          .update({"image": location.ownerImage, "isClinic": false});
+          .update({"image": location.ownerImage, "type": "parlour"});
     } catch (e) {
       print(e.toString());
     }
@@ -107,7 +107,7 @@ class DatabaseService {
       await _db
           .collection('ServiceProviders')
           .doc(uid)
-          .update({"image": location.ownerImage, "isClinic": false});
+          .update({"image": location.ownerImage, "type": "salon"});
     } catch (e) {
       print(e.toString());
     }

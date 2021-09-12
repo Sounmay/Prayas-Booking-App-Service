@@ -14,6 +14,7 @@ class _SelectFormState extends State<SelectForm> {
 
   _fetchData() async {
     String uid = FirebaseAuth.instance.currentUser.uid;
+    _fetchDataService();
     FirebaseFirestore.instance
         .collection("ServiceProviders")
         .doc(uid)
@@ -24,6 +25,24 @@ class _SelectFormState extends State<SelectForm> {
         isLoaded = true;
       });
     });
+  }
+
+  String type = "";
+
+  _fetchDataService() async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser.uid;
+      final res = await FirebaseFirestore.instance
+          .collection("ServiceProviders")
+          .doc(uid)
+          .get();
+      String _type = res.data()["type"];
+      setState(() {
+        type = _type;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -60,11 +79,12 @@ class _SelectFormState extends State<SelectForm> {
                   SizedBox(height: 40.0),
                   InkWell(
                     onTap: () {
-                      // if()
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ClinicLocationEditForm()));
+                      if (type == "clinic")
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ClinicLocationEditForm()));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 1,
