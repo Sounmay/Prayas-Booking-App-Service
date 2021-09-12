@@ -95,7 +95,7 @@ class Details {
   String aboutParlour;
   String numOfEmployees;
   String parlourImage;
-
+  String isApproved;
 
   Details(
       {
@@ -103,7 +103,8 @@ class Details {
         this.parlourType,
       this.aboutParlour,
       this.parlourImage,
-      this.numOfEmployees});
+      this.numOfEmployees,
+      this.isApproved});
 
   Details.fromJson(Map<String, dynamic> json) {
     serviceType = json['serviceType'];
@@ -111,6 +112,7 @@ class Details {
     aboutParlour = json['aboutParlour'];
     parlourImage = json['parlourImage'];
     numOfEmployees = json['numOfEmployees'];
+    isApproved = json['isApproved'];
   }
 
   Map<String, dynamic> toJson() {
@@ -120,6 +122,7 @@ class Details {
     data['aboutParlour'] = this.aboutParlour;
     data['parlourImage'] = this.parlourImage;
     data['numOfEmployees'] = this.numOfEmployees;
+    data['isApproved'] = this.isApproved;
 
     return data;
   }

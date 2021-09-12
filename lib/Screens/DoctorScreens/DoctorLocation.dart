@@ -26,6 +26,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
       landmark = "";
   String lati, longi;
   String _numOfEmployees = "";
+  String isApproved = "Pending";
 
   Widget radioButton(String label, String groupValue) {
     return Row(
@@ -317,7 +318,9 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     address: '$address, $area, $landmark',
                                     latitude: lati,
                                     longitude: longi,
-                                    aboutClinic: about ?? '');
+                                    aboutClinic: about ?? '',
+                                    isApproved: isApproved,
+                                );
 
                             clinicLocation
                                 .updateClinicLocationAndDoctor(_location);

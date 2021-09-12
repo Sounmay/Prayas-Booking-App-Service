@@ -33,6 +33,7 @@ class _FinalEditPageState extends State<FinalEditPage> {
   bool employeeImagesuploaded = false,
       parlourImageuploaded = false,
       ownerImageuploaded = false;
+  String isApproved = 'Pending';
 
   bool agree = false;
   String sUid = randomAlphaNumeric(6);
@@ -521,7 +522,9 @@ class _FinalEditPageState extends State<FinalEditPage> {
                                                           numOfEmployees: _details
                                                               .numOfEmployees,
                                                           serviceType:
-                                                              'Parlour');
+                                                              'Parlour',
+                                                          isApproved: isApproved,
+                                                      );
 
                                                       if (title == "PARLOUR") {
                                                         DatabaseService().uploadParlourServiceData(
