@@ -68,7 +68,10 @@ class _FinalEditPageState extends State<FinalEditPage> {
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [CircularProgressIndicator()],
+                children: [
+                  CircularProgressIndicator(),
+                  Text('Registration in progress. Please do not press the back button or close the application.')
+                ],
               ),
             )
           : SingleChildScrollView(

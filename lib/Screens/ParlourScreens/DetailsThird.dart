@@ -299,13 +299,13 @@ class _DetailsThirdState extends State<DetailsThird> {
                             clicked7 = val;
                             if (val == true) {
                               _weekdays.clear();
-                              _weekdays.add('Mon');
-                              _weekdays.add('Tue');
-                              _weekdays.add('Wed');
-                              _weekdays.add('Thu');
-                              _weekdays.add('Fri');
-                              _weekdays.add('Sat');
-                              _weekdays.add('Sun');
+                              _weekdays.add('M');
+                              _weekdays.add('T');
+                              _weekdays.add('W');
+                              _weekdays.add('T');
+                              _weekdays.add('F');
+                              _weekdays.add('S');
+                              _weekdays.add('S');
                             } else {
                               _weekdays.clear();
                             }
@@ -328,7 +328,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked1 = !clicked1;
                               if (clicked1 == true)
-                                _weekdays[0] = 'Mon';
+                                _weekdays[0] = 'M';
                               else
                                 _weekdays[0] = '';
                             });
@@ -359,7 +359,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked2 = !clicked2;
                               if (clicked2 == true)
-                                _weekdays[1] = 'Tue';
+                                _weekdays[1] = 'T';
                               else
                                 _weekdays[1] = '';
                             });
@@ -389,7 +389,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked3 = !clicked3;
                               if (clicked3 == true)
-                                _weekdays[2] = 'Wed';
+                                _weekdays[2] = 'W';
                               else
                                 _weekdays[2] = '';
                             });
@@ -419,7 +419,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked4 = !clicked4;
                               if (clicked4 == true)
-                                _weekdays[3] = 'Thu';
+                                _weekdays[3] = 'T';
                               else
                                 _weekdays[3] = '';
                             });
@@ -449,7 +449,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked5 = !clicked5;
                               if (clicked5 == true)
-                                _weekdays[4] = 'Fri';
+                                _weekdays[4] = 'F';
                               else
                                 _weekdays[4] = '';
                             });
@@ -479,7 +479,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked6 = !clicked6;
                               if (clicked6 == true)
-                                _weekdays[5] = 'Sat';
+                                _weekdays[5] = 'S';
                               else
                                 _weekdays[5] = '';
                             });
@@ -509,7 +509,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                             setState(() {
                               clicked7 = !clicked7;
                               if (clicked7 == true)
-                                _weekdays[6] = 'Sun';
+                                _weekdays[6] = 'S';
                               else
                                 _weekdays[6] = '';
                             });
@@ -557,9 +557,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                       fromMin: fromMin,
                       toHr: (_toSelectedFormat=='AM')?toHr:(int.parse(toHr)+12).toString(),
                       toMin: toMin,
-                      weekRange: _weekdays.first.toString() +
-                          ' - ' +
-                          _weekdays.last.toString(),
+                      weekRange: _weekdays.toString(),
                     );
 
                     slotList.add(slots);
