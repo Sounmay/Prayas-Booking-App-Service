@@ -557,7 +557,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                       fromMin: fromMin,
                       toHr: (_toSelectedFormat=='AM')?toHr:(int.parse(toHr)+12).toString(),
                       toMin: toMin,
-                      weekRange: _weekdays.toString(),
+                      weekRange: "$_weekdays",
                     );
 
                     slotList.add(slots);

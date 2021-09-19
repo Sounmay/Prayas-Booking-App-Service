@@ -46,7 +46,16 @@ class _DoctorFinalState extends State<DoctorFinal> {
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [CircularProgressIndicator()],
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10.0,),
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text('Registration in progress. Please do not press the back button or close the application.'),
+                    ),
+                  )
+                ],
               ),
             )
           : SingleChildScrollView(

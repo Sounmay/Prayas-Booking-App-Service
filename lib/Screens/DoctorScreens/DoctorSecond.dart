@@ -1068,6 +1068,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
               ),
               FlatButton(
                   onPressed: () {
+                    _weekdays.removeWhere((item) => item == '');
                     controller1.text = ".";
                     controller2.text = ".";
                     controller3.text = ".";
@@ -1105,9 +1106,9 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           aboutDoctor: about,
                           yearsOfExperience: yearsOfExperience,
                           imagefile: employeeImage,
-                          workingDays: _weekdays.toString(),
+                          workingDays: "$_weekdays",
                           serviceList: doctorServices,
-                          slot: slotList);
+                          slot: [slots]);
 
                       print(_doctorDetails.serviceList);
 
