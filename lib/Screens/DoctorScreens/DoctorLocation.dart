@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
@@ -106,7 +107,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     topRight: Radius.circular(10),
                                     bottomRight: Radius.circular(10)))),
                         Container(
-                          padding: EdgeInsets.only(left: 20.0),
+                          padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -150,11 +151,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Clinic name',
+                                hintText: 'Clinic name *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter Clinic Name';
                               }
                               return null;
                             },
@@ -167,11 +168,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Registered Shop no.',
+                                hintText: 'Registered Shop no. *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter Shop Number';
                               }
                               return null;
                             },
@@ -186,11 +187,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Address/Floor',
+                                hintText: 'Address/Floor *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter address';
                               }
                               return null;
                             },
@@ -203,11 +204,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Area/Street Name/Plot no/Sector.',
+                                hintText: 'Area/Street Name/Plot no/Sector *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter area/street name';
                               }
                               return null;
                             },
@@ -222,12 +223,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Landmark',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter some text';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 landmark = value;
@@ -307,6 +308,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     FlatButton(
                         onPressed: () async {
                           print(_numOfEmployees);
+                          if(_numOfEmployees==""){
+                            Fluttertoast.showToast(msg: 'Please select the number of doctors in your clinic');
+                          }
+                          if(lati == null && longi == null){
+                            Fluttertoast.showToast(msg: 'Please select the location');
+                          }
                           if (_formKey.currentState.validate() &&
                               _numOfEmployees != "" &&
                               lati != null &&
@@ -353,7 +360,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                             height: MediaQuery.of(context).size.height * 0.07,
                             width: MediaQuery.of(context).size.width * 0.5,
                             decoration: BoxDecoration(
-                              color: Color(0xFF263238),
+                              color: _numOfEmployees==''?Color(0xffDFDFDF):Color(0xFF263238),
                               borderRadius: BorderRadius.circular(2.0),
                             ),
                             child: Center(

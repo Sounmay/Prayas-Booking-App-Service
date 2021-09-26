@@ -352,7 +352,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                     keyboardType: TextInputType.number,
                                     style: TextStyle(fontSize: 14),
                                     validator: (val) => val.length < 10
-                                        ? 'Enter Valid Phone Number'
+                                        ? 'Enter Valid Phone Number of atleast 10 digits'
                                         : null,
                                     decoration: InputDecoration(
                                         isDense: true,

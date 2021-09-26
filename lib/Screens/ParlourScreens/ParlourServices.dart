@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
@@ -323,6 +324,9 @@ class _ParlourServicesState extends State<ParlourServices> {
                         parlourProvider
                             .updateServiceListDetails(parlourServices);
                         Navigator.pushNamed(context, '/details3',arguments: {"title": title});
+                      }
+                      else{
+                        Fluttertoast.showToast(msg: 'Please fill atleast one service');
                       }
                       print("hello");
                     },
