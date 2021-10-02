@@ -245,7 +245,11 @@ class _FinalEditPageState extends State<FinalEditPage> {
 
                                                       setState(() {
                                                         file = File(image.path);
+                                                        parlourImagepath = file
+                                                            .path
+                                                            .toString();
                                                       });
+                                                      Navigator.pop(context);
                                                     } catch (e) {
                                                       print(e.toString());
                                                     }
