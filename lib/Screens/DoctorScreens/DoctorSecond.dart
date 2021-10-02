@@ -52,13 +52,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
   int _servicesNum = 0;
-  bool clicked1 = true,
-      clicked2 = true,
-      clicked3 = true,
-      clicked4 = true,
-      clicked5 = true,
-      clicked6 = true,
-      clicked7 = true;
+  bool clicked1 = false,
+      clicked2 = false,
+      clicked3 = false,
+      clicked4 = false,
+      clicked5 = false,
+      clicked6 = false,
+      clicked7 = false;
   List<String> _weekdays = ['', '', '', '', '', '', ''];
 
   var sname = List.filled(20, '', growable: true);
