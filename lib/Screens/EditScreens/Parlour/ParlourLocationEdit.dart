@@ -450,7 +450,11 @@ class _ParlourLocationEditState extends State<ParlourLocationEdit> {
                                                         setState(() {
                                                           file =
                                                               File(image.path);
+                                                          ownerImagepath = file
+                                                              .path
+                                                              .toString();
                                                         });
+                                                        Navigator.pop(context);
                                                       } catch (e) {
                                                         print(e.toString());
                                                       }
