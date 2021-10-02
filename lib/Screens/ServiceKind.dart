@@ -208,7 +208,27 @@ class _ServiceKindState extends State<ServiceKind> {
               margin: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [FlatButton(
+                children: [
+                  FlatButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      child: Container(
+                          height: MediaQuery.of(context).size.height * 0.07,
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF5D5FEF),
+                            borderRadius: BorderRadius.circular(2.0),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Sign Out",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                      )
+                  ),
+                  FlatButton(
                     onPressed: () {
                       if(choice == 0){
                         Fluttertoast.showToast(msg: 'Select a service');
@@ -237,25 +257,6 @@ class _ServiceKindState extends State<ServiceKind> {
                         )
                     )
                 ),
-                  FlatButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                      },
-                      child: Container(
-                          height: MediaQuery.of(context).size.height * 0.07,
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF5D5FEF),
-                            borderRadius: BorderRadius.circular(2.0),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Sign Out",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                      )
-                  ),
                 ],
               ),
             )
