@@ -70,11 +70,14 @@ class _FinalEditPageState extends State<FinalEditPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
                     margin: EdgeInsets.all(10.0),
                     child: Center(
-                      child: Text('Registration in progress. Please do not press the back button or close the application.'),
+                      child: Text(
+                          'Registration in progress. Please do not press the back button or close the application.'),
                     ),
                   )
                 ],

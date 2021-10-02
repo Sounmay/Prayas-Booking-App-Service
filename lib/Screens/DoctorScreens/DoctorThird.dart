@@ -182,7 +182,10 @@ class _DoctorThirdState extends State<DoctorThird> {
                                                     source: ImageSource.camera);
                                             setState(() {
                                               file = File(image.path);
+                                              employeeImage =
+                                                  file.path.toString();
                                             });
+                                            Navigator.pop(context);
                                           } catch (e) {
                                             print(e.toString());
                                           }
@@ -375,7 +378,7 @@ class _DoctorThirdState extends State<DoctorThird> {
               FlatButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      _filled=true;
+                      _filled = true;
                       AdminDetails adminDetails = AdminDetails(
                           name: name,
                           number: number,
@@ -389,7 +392,9 @@ class _DoctorThirdState extends State<DoctorThird> {
                       height: MediaQuery.of(context).size.height * 0.07,
                       width: MediaQuery.of(context).size.width * 0.5,
                       decoration: BoxDecoration(
-                        color: _filled == true ? Color(0xFF263238) : Color(0xffDFDFDF),
+                        color: _filled == true
+                            ? Color(0xFF263238)
+                            : Color(0xffDFDFDF),
                         borderRadius: BorderRadius.circular(2.0),
                       ),
                       child: Center(
