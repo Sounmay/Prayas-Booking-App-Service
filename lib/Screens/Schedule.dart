@@ -170,14 +170,14 @@ class _ScheduleState extends State<Schedule> {
               preferredSize: Size.fromHeight(70.0),
               child: AppBar(
                 backgroundColor: Color(0xFF0F2735),
-                title: Text('Hello !!\n$name'),
+                title: Text(
+                    'Hello !!\n${name[0].toUpperCase()}${name.substring(1).toLowerCase()}'),
                 actions: [
                   new GestureDetector(
-                    onTap: (){
-                        Navigator.pushNamed(context, '/profilepage', arguments: {
-                          "userDetails": userDetails
-                        });
-                      },
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profilepage',
+                          arguments: {"userDetails": userDetails});
+                    },
                     child: new Container(
                       width: 60,
                       height: 60,
