@@ -72,7 +72,7 @@ class _LoginState extends State<Login> {
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         contentPadding: const EdgeInsets.all(0),
-                                        prefixIcon: Icon(Icons.call),
+                                        prefixIcon: Icon(Icons.call_outlined),
                                         hintText: 'Phone Number',
                                         fillColor: Colors.white,
                                         filled: true,
