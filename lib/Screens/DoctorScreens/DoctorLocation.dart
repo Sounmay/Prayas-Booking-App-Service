@@ -77,6 +77,14 @@ class _DoctorLocationState extends State<DoctorLocation> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setGPS = true;
+    locatePosition();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
 
@@ -308,8 +316,6 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     FlatButton(
                         onPressed: () async {
                           print(_numOfEmployees);
-                          setGPS = true;
-                          locatePosition();
                           if(_numOfEmployees==""){
                             Fluttertoast.showToast(msg: 'Please select the number of doctors in your clinic');
                           }
@@ -355,7 +361,9 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     builder: (context) => DoctorSecond(
                                           id: int.parse(_numOfEmployees),
                                           curr: 1,
-                                        )));
+                                        )
+                                )
+                            );
                           }
                         },
                         child: Container(
