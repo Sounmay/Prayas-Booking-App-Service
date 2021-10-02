@@ -184,14 +184,14 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 '',
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Registered Shop no. *',
+                                hintText: 'Registered Shop no.',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter the Shop Number';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter the Shop Number';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 shopNo = value;

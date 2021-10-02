@@ -168,14 +168,14 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Registered Shop no. *',
+                                hintText: 'Registered Shop no.',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter Shop Number';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter Shop Number';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 shopNo = value;
