@@ -50,7 +50,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
   List<String> _locations = ['AM', 'PM']; // Option 2
   String _fromSelectedFormat, _toSelectedFormat;
   bool _switchValue = false;
-  String fromHr = '', fromMin = '', toHr = '', toMin = '';
+  String fromHr = '00', fromMin = '00', toHr = '00', toMin = '00';
   int _servicesNum = 0;
   bool clicked1 = false,
       clicked2 = false,
@@ -708,6 +708,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       fromHr = val;
                                     });
                                   },
+                                  validator: (val) => int.parse(val)>12 ? 'invalid' : null,
                                 )),
                             Text(
                               " : ",
@@ -738,6 +739,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       fromMin = val;
                                     });
                                   },
+                                  validator: (val) => int.parse(val)>59 ? 'invalid' : null,
                                 )),
                             SizedBox(
                               width: 20.0,
@@ -798,6 +800,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       toHr = val;
                                     });
                                   },
+                                  validator: (val) => int.parse(val)>12 ? 'invalid' : null,
                                 )),
                             Text(
                               " : ",
@@ -828,6 +831,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       toMin = val;
                                     });
                                   },
+                                  validator: (val) => int.parse(val)>59 ? 'invalid' : null,
                                 )),
                             SizedBox(
                               width: 20.0,
@@ -1034,15 +1038,22 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     Row(children: [
                       TextButton(
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            setState(() {
-                              controller1.clear();
-                              controller2.clear();
-                              controller3.clear();
-                              controller4.clear();
-                              _servicesNum = _servicesNum + 1;
-                            });
-                          }
+                          setState(() {
+                            controller1.clear();
+                            controller2.clear();
+                            controller3.clear();
+                            controller4.clear();
+                            _servicesNum = _servicesNum + 1;
+                          });
+//                          if (_formKey.currentState.validate()) {
+//                            setState(() {
+//                              controller1.clear();
+//                              controller2.clear();
+//                              controller3.clear();
+//                              controller4.clear();
+//                              _servicesNum = _servicesNum + 1;
+//                            });
+//                          }
                           // print(sname);
                           // print(price);
                           // print(hr);
@@ -1089,11 +1100,11 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       List<ParlourSlotDetails> slotList = [];
 
                       ParlourSlotDetails slots = ParlourSlotDetails(
-                        fromHr: (_fromSelectedFormat == 'AM')
+                        fromHr: (_fromSelectedFormat == 'AM' || int.parse(fromHr)==12)
                             ? fromHr
                             : (int.parse(fromHr) + 12).toString(),
                         fromMin: fromMin,
-                        toHr: (_toSelectedFormat == 'AM')
+                        toHr: (_toSelectedFormat == 'AM' || int.parse(toHr)==12)
                             ? toHr
                             : (int.parse(toHr) + 12).toString(),
                         toMin: toMin,
