@@ -52,13 +52,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
   int _servicesNum = 0;
-  bool clicked1 = false,
-      clicked2 = false,
-      clicked3 = false,
-      clicked4 = false,
-      clicked5 = false,
-      clicked6 = false,
-      clicked7 = false;
+  bool clicked1 = true,
+      clicked2 = true,
+      clicked3 = true,
+      clicked4 = true,
+      clicked5 = true,
+      clicked6 = true,
+      clicked7 = true;
   List<String> _weekdays = ['', '', '', '', '', '', ''];
 
   var sname = List.filled(20, '', growable: true);
@@ -262,7 +262,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     TextFormField(
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: -20),
-                          hintText: 'Name of the doctor/health professional',
+                          hintText: 'Name of the doctor/health professional *',
                           hintStyle: TextStyle(fontSize: 12)),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -280,7 +280,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     TextFormField(
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: -20),
-                          hintText: 'Specialised In',
+                          hintText: 'Specialised In *',
                           hintStyle: TextStyle(fontSize: 12)),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -301,7 +301,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Years of Experience',
+                                hintText: 'Years of Experience *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -323,7 +323,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Phone Number',
+                                hintText: 'Phone Number *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -386,34 +386,34 @@ class _DoctorSecondState extends State<DoctorSecond> {
                         Text('Working Days ',
                             style: TextStyle(
                                 fontSize: 20, color: Color(0xff5D5FEF))),
-                        CupertinoSwitch(
-                          value: _switchValue,
-                          onChanged: (val) {
-                            setState(() {
-                              _switchValue = val;
-                              clicked1 = val;
-                              clicked2 = val;
-                              clicked3 = val;
-                              clicked4 = val;
-                              clicked5 = val;
-                              clicked6 = val;
-                              clicked7 = val;
-                              if (val == true) {
-                                _weekdays.clear();
-                                _weekdays.add('M');
-                                _weekdays.add('T');
-                                _weekdays.add('W');
-                                _weekdays.add('T');
-                                _weekdays.add('F');
-                                _weekdays.add('S');
-                                _weekdays.add('S');
-                              } else {
-                                _weekdays.clear();
-                              }
-                              print(_weekdays);
-                            });
-                          },
-                        )
+//                        CupertinoSwitch(
+//                          value: _switchValue,
+//                          onChanged: (val) {
+//                            setState(() {
+//                              _switchValue = val;
+//                              clicked1 = val;
+//                              clicked2 = val;
+//                              clicked3 = val;
+//                              clicked4 = val;
+//                              clicked5 = val;
+//                              clicked6 = val;
+//                              clicked7 = val;
+//                              if (val == true) {
+//                                _weekdays.clear();
+//                                _weekdays.add('M');
+//                                _weekdays.add('T');
+//                                _weekdays.add('W');
+//                                _weekdays.add('T');
+//                                _weekdays.add('F');
+//                                _weekdays.add('S');
+//                                _weekdays.add('S');
+//                              } else {
+//                                _weekdays.clear();
+//                              }
+//                              print(_weekdays);
+//                            });
+//                          },
+//                        )
                       ],
                     ),
                     SizedBox(

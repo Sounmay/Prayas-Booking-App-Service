@@ -239,28 +239,28 @@ class _DoctorLocationState extends State<DoctorLocation> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FlatButton(
-                            onPressed: () {
-                              setGPS = true;
-                              locatePosition();
-                            },
-                            child: Row(
-                              children: [
-                                Text('Set location using the GPS tracker ',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12)),
-                                Icon(
-                                  Icons.gps_fixed_rounded,
-                                  color: Colors.white,
-                                )
-                              ],
-                            ),
-                            color: Color(0xff5D5FEF)),
-                      ],
-                    ),
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.center,
+//                      children: [
+//                        FlatButton(
+//                            onPressed: () {
+//                              setGPS = true;
+//                              locatePosition();
+//                            },
+//                            child: Row(
+//                              children: [
+//                                Text('Set location using the GPS tracker ',
+//                                    style: TextStyle(
+//                                        color: Colors.white, fontSize: 12)),
+//                                Icon(
+//                                  Icons.gps_fixed_rounded,
+//                                  color: Colors.white,
+//                                )
+//                              ],
+//                            ),
+//                            color: Color(0xff5D5FEF)),
+//                      ],
+//                    ),
                     SizedBox(height: 10),
                     Padding(
                         padding: EdgeInsets.only(left: 20),
@@ -308,12 +308,14 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     FlatButton(
                         onPressed: () async {
                           print(_numOfEmployees);
+                          setGPS = true;
+                          locatePosition();
                           if(_numOfEmployees==""){
                             Fluttertoast.showToast(msg: 'Please select the number of doctors in your clinic');
                           }
-                          if(lati == null && longi == null){
-                            Fluttertoast.showToast(msg: 'Please select the location');
-                          }
+//                          if(lati == null && longi == null){
+//                            Fluttertoast.showToast(msg: 'Please select the location');
+//                          }
                           if (_formKey.currentState.validate() &&
                               _numOfEmployees != "" &&
                               lati != null &&
