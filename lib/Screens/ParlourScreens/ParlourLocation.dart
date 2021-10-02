@@ -184,14 +184,14 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 '',
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Registered Shop no. *',
+                                hintText: 'Registered Shop no.',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter the Shop Number';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter the Shop Number';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 shopNo = value;
@@ -264,28 +264,28 @@ class _ParlourLocationState extends State<ParlourLocation> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FlatButton(
-                            onPressed: () {
-                              setGPS = true;
-                              locatePosition();
-                            },
-                            child: Row(
-                              children: [
-                                Text('Set location using the GPS tracker ',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12)),
-                                Icon(
-                                  Icons.gps_fixed_rounded,
-                                  color: Colors.white,
-                                )
-                              ],
-                            ),
-                            color: Color(0xff5D5FEF)),
-                      ],
-                    ),
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.center,
+//                      children: [
+//                        FlatButton(
+//                            onPressed: () {
+//                              setGPS = true;
+//                              locatePosition();
+//                            },
+//                            child: Row(
+//                              children: [
+//                                Text('Set location using the GPS tracker ',
+//                                    style: TextStyle(
+//                                        color: Colors.white, fontSize: 12)),
+//                                Icon(
+//                                  Icons.gps_fixed_rounded,
+//                                  color: Colors.white,
+//                                )
+//                              ],
+//                            ),
+//                            color: Color(0xff5D5FEF)),
+//                      ],
+//                    ),
                     SizedBox(
                       height: 15,
                     ),
@@ -352,7 +352,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                     keyboardType: TextInputType.number,
                                     style: TextStyle(fontSize: 14),
                                     validator: (val) => val.length < 10
-                                        ? 'Enter Valid Phone Number'
+                                        ? 'Enter Valid Phone Number of atleast 10 digits'
                                         : null,
                                     decoration: InputDecoration(
                                         isDense: true,
@@ -513,6 +513,8 @@ class _ParlourLocationState extends State<ParlourLocation> {
                     FlatButton(
                         onPressed: () async {
                           // deleteFolder();
+                          setGPS = true;
+                          locatePosition();
                           final uid = FirebaseAuth.instance.currentUser.uid;
                           if (_formKey.currentState.validate()) {
                             Location location = Location(

@@ -87,12 +87,12 @@ class _SalonLocationState extends State<SalonLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Registered Shop no.',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter some text';
+//                              }
+//                              return null;
+//                            },
                           ),
                           SizedBox(height: 40),
                           Text('Parlour location details',

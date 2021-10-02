@@ -22,6 +22,7 @@ class _DoctorThirdState extends State<DoctorThird> {
   final _formKey = GlobalKey<FormState>();
 
   String name = "", post = "", number = "";
+  bool _filled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -374,6 +375,7 @@ class _DoctorThirdState extends State<DoctorThird> {
               FlatButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
+                      _filled=true;
                       AdminDetails adminDetails = AdminDetails(
                           name: name,
                           number: number,
@@ -387,7 +389,7 @@ class _DoctorThirdState extends State<DoctorThird> {
                       height: MediaQuery.of(context).size.height * 0.07,
                       width: MediaQuery.of(context).size.width * 0.5,
                       decoration: BoxDecoration(
-                        color: Color(0xFF263238),
+                        color: _filled == true ? Color(0xFF263238) : Color(0xffDFDFDF),
                         borderRadius: BorderRadius.circular(2.0),
                       ),
                       child: Center(

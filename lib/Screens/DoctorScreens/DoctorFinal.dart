@@ -46,7 +46,16 @@ class _DoctorFinalState extends State<DoctorFinal> {
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [CircularProgressIndicator()],
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10.0,),
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text('Registration in progress. Please do not press the back button or close the application.'),
+                    ),
+                  )
+                ],
               ),
             )
           : SingleChildScrollView(
@@ -557,23 +566,28 @@ Widget doctorCards(DoctorDetails doctorDetails, BuildContext context) {
           children: [
             Row(
               children: [
-                ClipOval(
-                  child: Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      width: MediaQuery.of(context).size.width * 0.13,
-                      decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          image: DecorationImage(
-                              image: AssetImage(
-                                'assets/user.png',
-                              ),
-                              fit: BoxFit.contain)),
-                      child: Image.file(
-                        File(doctorDetails?.imagefile),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      )),
+                CircleAvatar(
+                  backgroundImage: new FileImage(File(doctorDetails?.imagefile)),
+                  backgroundColor: Color(0xff0F2735),
                 ),
+//                ClipOval(
+//                  child: Container(
+//                      height: MediaQuery.of(context).size.height * 0.08,
+//                      width: MediaQuery.of(context).size.width * 0.13,
+//                      decoration: BoxDecoration(
+//                          color: Colors.grey[400],
+//                          image: DecorationImage(
+//                              image: AssetImage(
+//                                'assets/user.png',
+//                              ),
+//                              fit: BoxFit.contain)),
+//                      child: Image.file(
+//                        File(doctorDetails?.imagefile),
+//                        fit: BoxFit.cover,
+//                        width: double.infinity,
+//                      )
+//                  ),
+//                ),
                 SizedBox(
                   width: 10.0,
                 ),

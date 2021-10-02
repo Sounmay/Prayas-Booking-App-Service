@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:provider/provider.dart';
 
@@ -24,23 +25,6 @@ class _ServiceKindState extends State<ServiceKind> {
             SizedBox(
               height: 10.0,
             ),
-            FlatButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                child: Container(
-                    height: MediaQuery.of(context).size.height * 0.07,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF263238),
-                      borderRadius: BorderRadius.circular(2.0),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Sign Out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ))),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
             ),
@@ -220,30 +204,61 @@ class _ServiceKindState extends State<ServiceKind> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
             ),
-            FlatButton(
-                onPressed: () {
-                  if (choice == 1)
-                    Navigator.pushNamed(context, '/doctorlocation');
-                  else if (choice == 2)
-                    Navigator.pushNamed(context, '/parlourlocation',
-                        arguments: {"title": "PARLOUR"});
-                  else if (choice == 3)
-                    Navigator.pushNamed(context, '/parlourlocation',
-                        arguments: {"title": "SALON"});
-                },
-                child: Container(
-                    height: MediaQuery.of(context).size.height * 0.07,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF263238),
-                      borderRadius: BorderRadius.circular(2.0),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Save & Proceed",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )))
+            Container(
+              margin: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [FlatButton(
+                    onPressed: () {
+                      if(choice == 0){
+                        Fluttertoast.showToast(msg: 'Select a service');
+                      }
+                      else if (choice == 1)
+                        Navigator.pushNamed(context, '/doctorlocation');
+                      else if (choice == 2)
+                        Navigator.pushNamed(context, '/parlourlocation',
+                            arguments: {"title": "PARLOUR"});
+                      else if (choice == 3)
+                        Navigator.pushNamed(context, '/parlourlocation',
+                            arguments: {"title": "SALON"});
+                    },
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF5D5FEF),
+                          borderRadius: BorderRadius.circular(2.0),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Save & Proceed",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                    )
+                ),
+                  FlatButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      child: Container(
+                          height: MediaQuery.of(context).size.height * 0.07,
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF5D5FEF),
+                            borderRadius: BorderRadius.circular(2.0),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Sign Out",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                      )
+                  ),
+                ],
+              ),
+            )
           ]),
         )),
       ),

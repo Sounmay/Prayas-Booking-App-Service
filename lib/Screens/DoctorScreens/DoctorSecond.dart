@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
@@ -51,13 +52,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
   int _servicesNum = 0;
-  bool clicked1 = false,
-      clicked2 = false,
-      clicked3 = false,
-      clicked4 = false,
-      clicked5 = false,
-      clicked6 = false,
-      clicked7 = false;
+  bool clicked1 = true,
+      clicked2 = true,
+      clicked3 = true,
+      clicked4 = true,
+      clicked5 = true,
+      clicked6 = true,
+      clicked7 = true;
   List<String> _weekdays = ['', '', '', '', '', '', ''];
 
   var sname = List.filled(20, '', growable: true);
@@ -101,13 +102,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       children: [
                         Text('Enter details for ',
                             style:
-                                TextStyle(fontSize: 22, color: Colors.black)),
+                            TextStyle(fontSize: 22, color: Colors.black)),
                         Container(
                           color: Color(0xff5D5FEF),
                           padding: EdgeInsets.all(3),
                           child: Text('DOCTOR ${widget.curr}',
                               style:
-                                  TextStyle(fontSize: 22, color: Colors.white)),
+                              TextStyle(fontSize: 22, color: Colors.white)),
                         )
                       ],
                     ),
@@ -136,10 +137,10 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           image: AssetImage('assets/user.png'))),
                   child: file != null
                       ? Image.file(
-                          File(file.path),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        )
+                    File(file.path),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  )
                       : null,
                 ),
               ),
@@ -175,7 +176,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                               Spacer(),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   Column(
                                     children: [
@@ -184,8 +185,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                           try {
                                             XFile image = await ImagePicker()
                                                 .pickImage(
-                                                    source:
-                                                        ImageSource.gallery);
+                                                source:
+                                                ImageSource.gallery);
 
                                             setState(() {
                                               file = File(image.path);
@@ -216,7 +217,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                           try {
                                             XFile image = await ImagePicker()
                                                 .pickImage(
-                                                    source: ImageSource.camera);
+                                                source: ImageSource.camera);
                                             setState(() {
                                               file = File(image.path);
                                             });
@@ -245,7 +246,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     Icon(Icons.photo_outlined, color: Colors.white)
                   ]),
                   style:
-                      TextButton.styleFrom(backgroundColor: Color(0xff5D5FEF)),
+                  TextButton.styleFrom(backgroundColor: Color(0xff5D5FEF)),
                 ),
               ),
               SizedBox(height: 20),
@@ -261,7 +262,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     TextFormField(
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: -20),
-                          hintText: 'Name of the doctor/health professional',
+                          hintText: 'Name of the doctor/health professional *',
                           hintStyle: TextStyle(fontSize: 12)),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -279,7 +280,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     TextFormField(
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(bottom: -20),
-                          hintText: 'Specialised In',
+                          hintText: 'Specialised In *',
                           hintStyle: TextStyle(fontSize: 12)),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -300,7 +301,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Years of Experience',
+                                hintText: 'Years of Experience *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -322,7 +323,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Phone Number',
+                                hintText: 'Phone Number *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -359,7 +360,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                   maxLines: 5,
                   decoration: InputDecoration(
                     contentPadding:
-                        const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                    const EdgeInsets.only(left: 10, top: 10, bottom: 10),
                     fillColor: Colors.white,
                     filled: true,
                     focusedBorder: OutlineInputBorder(
@@ -385,34 +386,34 @@ class _DoctorSecondState extends State<DoctorSecond> {
                         Text('Working Days ',
                             style: TextStyle(
                                 fontSize: 20, color: Color(0xff5D5FEF))),
-                        CupertinoSwitch(
-                          value: _switchValue,
-                          onChanged: (val) {
-                            setState(() {
-                              _switchValue = val;
-                              clicked1 = val;
-                              clicked2 = val;
-                              clicked3 = val;
-                              clicked4 = val;
-                              clicked5 = val;
-                              clicked6 = val;
-                              clicked7 = val;
-                              if (val == true) {
-                                _weekdays.clear();
-                                _weekdays.add('M');
-                                _weekdays.add('T');
-                                _weekdays.add('W');
-                                _weekdays.add('T');
-                                _weekdays.add('F');
-                                _weekdays.add('S');
-                                _weekdays.add('S');
-                              } else {
-                                _weekdays.clear();
-                              }
-                              print(_weekdays);
-                            });
-                          },
-                        )
+//                        CupertinoSwitch(
+//                          value: _switchValue,
+//                          onChanged: (val) {
+//                            setState(() {
+//                              _switchValue = val;
+//                              clicked1 = val;
+//                              clicked2 = val;
+//                              clicked3 = val;
+//                              clicked4 = val;
+//                              clicked5 = val;
+//                              clicked6 = val;
+//                              clicked7 = val;
+//                              if (val == true) {
+//                                _weekdays.clear();
+//                                _weekdays.add('M');
+//                                _weekdays.add('T');
+//                                _weekdays.add('W');
+//                                _weekdays.add('T');
+//                                _weekdays.add('F');
+//                                _weekdays.add('S');
+//                                _weekdays.add('S');
+//                              } else {
+//                                _weekdays.clear();
+//                              }
+//                              print(_weekdays);
+//                            });
+//                          },
+//                        )
                       ],
                     ),
                     SizedBox(
@@ -438,13 +439,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked1 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Mon",
@@ -470,13 +471,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked2 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Tue",
@@ -502,13 +503,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked3 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Wed",
@@ -534,13 +535,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked4 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Thu",
@@ -566,13 +567,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked5 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Fri",
@@ -598,13 +599,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked6 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Sat",
@@ -630,13 +631,13 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 width: 50,
                                 decoration: (clicked7 == false)
                                     ? BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.grey)
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.grey)
                                     : BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: Colors.blue),
+                                    borderRadius:
+                                    BorderRadius.circular(5.0),
+                                    color: Colors.blue),
                                 child: Center(
                                   child: Text(
                                     "Sun",
@@ -694,14 +695,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.06),
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
+                                      FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -724,14 +725,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.06),
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
+                                      FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -784,14 +785,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.06),
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
+                                      FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -814,14 +815,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.06),
+                                      MediaQuery.of(context).size.width *
+                                          0.06),
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
                                       floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
+                                      FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
                                           left: 5.0, bottom: 10.0)),
                                   onChanged: (val) {
@@ -884,14 +885,14 @@ class _DoctorSecondState extends State<DoctorSecond> {
                               child: TextFormField(
                                 controller: controller1,
                                 validator: (val) =>
-                                    val.isEmpty ? 'enter' : null,
+                                val.isEmpty ? 'enter' : null,
                                 style: TextStyle(fontSize: 15),
                                 decoration: InputDecoration(
                                     errorStyle: TextStyle(fontSize: 10),
                                     isDense: true,
                                     labelText: 'Name of Service',
                                     floatingLabelBehavior:
-                                        FloatingLabelBehavior.auto,
+                                    FloatingLabelBehavior.auto,
                                     contentPadding: EdgeInsets.only(bottom: 4)),
                                 onChanged: (value) {
                                   setState(() {
@@ -910,9 +911,9 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     child: TextFormField(
                                       controller: controller2,
                                       validator: (val) =>
-                                          val.isEmpty || val.length > 2
-                                              ? ''
-                                              : null,
+                                      val.isEmpty || val.length > 2
+                                          ? ''
+                                          : null,
                                       keyboardType: TextInputType.number,
                                       style: TextStyle(fontSize: 15),
                                       decoration: InputDecoration(
@@ -932,7 +933,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                         isDense: true,
                                         labelText: '00',
                                         floatingLabelBehavior:
-                                            FloatingLabelBehavior.never,
+                                        FloatingLabelBehavior.never,
                                       ),
                                       onChanged: (value) {
                                         setState(() {
@@ -958,16 +959,16 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     child: TextFormField(
                                       controller: controller3,
                                       validator: (val) =>
-                                          val.isEmpty || val.length > 2
-                                              ? ''
-                                              : null,
+                                      val.isEmpty || val.length > 2
+                                          ? ''
+                                          : null,
                                       keyboardType: TextInputType.number,
                                       style: TextStyle(fontSize: 15),
                                       decoration: InputDecoration(
                                           errorStyle: TextStyle(height: 0),
                                           border: new OutlineInputBorder(
                                             borderRadius:
-                                                const BorderRadius.all(
+                                            const BorderRadius.all(
                                               const Radius.circular(5.0),
                                             ),
                                             borderSide: new BorderSide(
@@ -978,7 +979,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                           isDense: true,
                                           labelText: '00',
                                           floatingLabelBehavior:
-                                              FloatingLabelBehavior.never,
+                                          FloatingLabelBehavior.never,
                                           contentPadding: EdgeInsets.all(6)),
                                       onChanged: (value) {
                                         setState(() {
@@ -1020,7 +1021,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 isDense: true,
                                 labelText: 'Price in \u20B9',
                                 floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
+                                FloatingLabelBehavior.auto,
                                 contentPadding: EdgeInsets.all(6)),
                             onChanged: (value) {
                               setState(() {
@@ -1068,11 +1069,15 @@ class _DoctorSecondState extends State<DoctorSecond> {
               ),
               FlatButton(
                   onPressed: () {
-                    controller1.text = ".";
-                    controller2.text = ".";
-                    controller3.text = ".";
-                    controller4.text = ".";
-                    if (_formKey.currentState.validate()) {
+                    _weekdays.removeWhere((item) => item == '');
+                    controller1.text = " ";
+                    controller2.text = " ";
+                    controller3.text = " ";
+                    controller4.text = " ";
+                    if(_servicesNum == 0){
+                      Fluttertoast.showToast(msg: 'Please add atleast one service');
+                    }
+                    else if (_formKey.currentState.validate()) {
                       List<ParlourServiceDetails> doctorServices = [];
                       for (int i = 0; i < _servicesNum; i++) {
                         doctorServices.add(ParlourServiceDetails(
@@ -1105,9 +1110,9 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           aboutDoctor: about,
                           yearsOfExperience: yearsOfExperience,
                           imagefile: employeeImage,
-                          workingDays: _weekdays.toString(),
+                          workingDays: "$_weekdays",
                           serviceList: doctorServices,
-                          slot: slotList);
+                          slot: [slots]);
 
                       print(_doctorDetails.serviceList);
 
@@ -1136,7 +1141,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       height: MediaQuery.of(context).size.height * 0.07,
                       width: MediaQuery.of(context).size.width * 0.5,
                       decoration: BoxDecoration(
-                        color: Color(0xFF263238),
+                        color: _servicesNum==0?Color(0xffDFDFDF):Color(0xFF263238),
                         borderRadius: BorderRadius.circular(2.0),
                       ),
                       child: Center(
@@ -1197,12 +1202,12 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       children: [
                         h[index] > 0 && m[index] > 0
                             ? Text('${hr[index]} hour ${min[index]} mins',
-                                style: TextStyle(color: Color(0xff5D5FEF)))
+                            style: TextStyle(color: Color(0xff5D5FEF)))
                             : m[index] > 0
-                                ? Text('${min[index]} mins',
-                                    style: TextStyle(color: Color(0xff5D5FEF)))
-                                : Text('${hr[index]} hour',
-                                    style: TextStyle(color: Color(0xff5D5FEF)))
+                            ? Text('${min[index]} mins',
+                            style: TextStyle(color: Color(0xff5D5FEF)))
+                            : Text('${hr[index]} hour',
+                            style: TextStyle(color: Color(0xff5D5FEF)))
                       ],
                     )
                   ],

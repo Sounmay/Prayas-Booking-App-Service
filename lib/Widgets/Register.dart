@@ -81,8 +81,7 @@ class _RegisterState extends State<Register> {
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Name',
                                     fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.person_outline,
-                                        color: Colors.blue),
+                                    prefixIcon: Icon(Icons.person_outline,),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -110,8 +109,7 @@ class _RegisterState extends State<Register> {
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Phone Number',
-                                    prefixIcon: Icon(Icons.call_outlined,
-                                        color: Colors.blue),
+                                    prefixIcon: Icon(Icons.call_outlined,),
                                     fillColor: Colors.white,
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
@@ -122,7 +120,7 @@ class _RegisterState extends State<Register> {
                                             color: Color(0xFF0F2735))),
                                   ),
                                   validator: (val) => val.isEmpty
-                                      ? 'Enter your RSP Personal No.'
+                                      ? 'Enter Your Mobile Number'
                                       : null,
                                   onChanged: (val) {
                                     setState(() => number = val);

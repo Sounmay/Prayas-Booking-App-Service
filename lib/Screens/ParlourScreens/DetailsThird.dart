@@ -15,13 +15,13 @@ class _DetailsThirdState extends State<DetailsThird> {
   String _fromSelectedFormat = 'AM', _toSelectedFormat = 'AM';
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
-  bool clicked1 = false,
-      clicked2 = false,
-      clicked3 = false,
-      clicked4 = false,
-      clicked5 = false,
-      clicked6 = false,
-      clicked7 = false;
+  bool clicked1 = true,
+      clicked2 = true,
+      clicked3 = true,
+      clicked4 = true,
+      clicked5 = true,
+      clicked6 = true,
+      clicked7 = true;
   List<String> _weekdays = ['', '', '', '', '', '', ''];
 
   @override
@@ -285,34 +285,34 @@ class _DetailsThirdState extends State<DetailsThird> {
                       Text('Working Days ',
                           style: TextStyle(
                               fontSize: 20, color: Color(0xff5D5FEF))),
-                      CupertinoSwitch(
-                        value: _switchValue,
-                        onChanged: (val) {
-                          setState(() {
-                            _switchValue = val;
-                            clicked1 = val;
-                            clicked2 = val;
-                            clicked3 = val;
-                            clicked4 = val;
-                            clicked5 = val;
-                            clicked6 = val;
-                            clicked7 = val;
-                            if (val == true) {
-                              _weekdays.clear();
-                              _weekdays.add('M');
-                              _weekdays.add('T');
-                              _weekdays.add('W');
-                              _weekdays.add('T');
-                              _weekdays.add('F');
-                              _weekdays.add('S');
-                              _weekdays.add('S');
-                            } else {
-                              _weekdays.clear();
-                            }
-                            print(_weekdays);
-                          });
-                        },
-                      )
+//                      CupertinoSwitch(
+//                        value: _switchValue,
+//                        onChanged: (val) {
+//                          setState(() {
+//                            _switchValue = val;
+//                            clicked1 = val;
+//                            clicked2 = val;
+//                            clicked3 = val;
+//                            clicked4 = val;
+//                            clicked5 = val;
+//                            clicked6 = val;
+//                            clicked7 = val;
+//                            if (val == true) {
+//                              _weekdays.clear();
+//                              _weekdays.add('M');
+//                              _weekdays.add('T');
+//                              _weekdays.add('W');
+//                              _weekdays.add('T');
+//                              _weekdays.add('F');
+//                              _weekdays.add('S');
+//                              _weekdays.add('S');
+//                            } else {
+//                              _weekdays.clear();
+//                            }
+//                            print(_weekdays);
+//                          });
+//                        },
+//                      )
                     ],
                   ),
                   SizedBox(
@@ -557,7 +557,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                       fromMin: fromMin,
                       toHr: (_toSelectedFormat=='AM')?toHr:(int.parse(toHr)+12).toString(),
                       toMin: toMin,
-                      weekRange: _weekdays.toString(),
+                      weekRange: "$_weekdays",
                     );
 
                     slotList.add(slots);
