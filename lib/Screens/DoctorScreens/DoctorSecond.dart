@@ -691,6 +691,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.black)),
                                 child: TextFormField(
+                                  maxLength: 2,
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -723,6 +724,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.black)),
                                 child: TextFormField(
+                                  maxLength: 2,
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -785,6 +787,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.black)),
                                 child: TextFormField(
+                                  maxLength: 2,
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -817,6 +820,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                     borderRadius: BorderRadius.circular(5.0),
                                     border: Border.all(color: Colors.black)),
                                 child: TextFormField(
+                                  maxLength: 2,
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -1090,7 +1094,10 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     if (_servicesNum == 0) {
                       Fluttertoast.showToast(
                           msg: 'Please add atleast one service');
-                    } else if (_formKey.currentState.validate()) {
+                    } else if (employeeImage == "") {
+                      Fluttertoast.showToast(msg: 'Please add doctor image');
+                    } else if (_formKey.currentState.validate() &&
+                        employeeImage != "") {
                       List<ParlourServiceDetails> doctorServices = [];
                       for (int i = 0; i < _servicesNum; i++) {
                         doctorServices.add(ParlourServiceDetails(
