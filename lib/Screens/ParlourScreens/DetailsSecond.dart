@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -227,7 +228,17 @@ class _DetailsSecondState extends State<DetailsSecond> {
               width: MediaQuery.of(context).size.width * 0.5,
               child: TextButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  bool done = true;
+                  for (int i = 0; i < _employeeDetailsNum; i++) {
+                    if (employeeImage[i] == '') {
+                      done = false;
+                      break;
+                    }
+                  }
+                  if (done == false) {
+                    Fluttertoast.showToast(msg: 'Add all images');
+                  }
+                  if (_formKey.currentState.validate() && done == true) {
                     List<EmployeeDetailList> employeeList = [];
                     for (int i = 0; i < _employeeDetailsNum; i++) {
                       employeeList.add(EmployeeDetailList(
@@ -396,7 +407,7 @@ class _DetailsSecondState extends State<DetailsSecond> {
                                     XFile image = await ImagePicker()
                                         .pickImage(source: ImageSource.camera);
 
-                                      setState(() {
+                                    setState(() {
                                       file[index] = File(image.path);
                                       employeeImage[index] =
                                           file[index].path.toString();

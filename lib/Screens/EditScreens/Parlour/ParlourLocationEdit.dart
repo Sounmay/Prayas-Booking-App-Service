@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
@@ -518,7 +519,12 @@ class _ParlourLocationEditState extends State<ParlourLocationEdit> {
                         onPressed: () async {
                           // deleteFolder();
                           final uid = FirebaseAuth.instance.currentUser.uid;
-                          if (_formKey.currentState.validate()) {
+                          if (ownerImagepath == "") {
+                            Fluttertoast.showToast(
+                                msg: 'Please add owner image');
+                          }
+                          if (_formKey.currentState.validate() &&
+                              ownerImagepath != "") {
                             Location location = Location(
                                 serviceUid: serviceid,
                                 name: parlourName,
