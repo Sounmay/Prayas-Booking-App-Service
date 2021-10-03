@@ -76,6 +76,14 @@ class _DoctorLocationState extends State<DoctorLocation> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setGPS = true;
+    locatePosition();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
 
@@ -150,7 +158,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Clinic name',
+                                hintText: 'Clinic name *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -169,12 +177,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Registered Shop no.',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter some text';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 shopNo = value;
@@ -186,7 +194,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Address/Floor',
+                                hintText: 'Address/Floor *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -203,7 +211,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Area/Street Name/Plot no/Sector.',
+                                hintText: 'Area/Street Name/Plot no/Sector. *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -222,12 +230,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Landmark',
                                 hintStyle: TextStyle(fontSize: 12)),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+//                            validator: (value) {
+//                              if (value.isEmpty) {
+//                                return 'Please enter some text';
+//                              }
+//                              return null;
+//                            },
                             onChanged: (value) {
                               setState(() {
                                 landmark = value;
@@ -238,32 +246,32 @@ class _DoctorLocationState extends State<DoctorLocation> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FlatButton(
-                            onPressed: () {
-                              setGPS = true;
-                              locatePosition();
-                            },
-                            child: Row(
-                              children: [
-                                Text('Set location using the GPS tracker ',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12)),
-                                Icon(
-                                  Icons.gps_fixed_rounded,
-                                  color: Colors.white,
-                                )
-                              ],
-                            ),
-                            color: Color(0xff5D5FEF)),
-                      ],
-                    ),
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.center,
+//                      children: [
+//                        FlatButton(
+//                            onPressed: () {
+//                              setGPS = true;
+//                              locatePosition();
+//                            },
+//                            child: Row(
+//                              children: [
+//                                Text('Set location using the GPS tracker ',
+//                                    style: TextStyle(
+//                                        color: Colors.white, fontSize: 12)),
+//                                Icon(
+//                                  Icons.gps_fixed_rounded,
+//                                  color: Colors.white,
+//                                )
+//                              ],
+//                            ),
+//                            color: Color(0xff5D5FEF)),
+//                      ],
+//                    ),
                     SizedBox(height: 10),
                     Padding(
                         padding: EdgeInsets.only(left: 20),
-                        child: _title("Number of Doctors")),
+                        child: _title("Number of Doctors *")),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
