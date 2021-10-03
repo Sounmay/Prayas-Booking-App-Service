@@ -41,7 +41,7 @@ class _RegisterState extends State<Register> {
                     color: Color(0xff5D5FEF),
                     height: deviceHeight,
                     padding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
                           ),
                           Flexible(
                             child: Text(
-                              "Create an service account",
+                              "Create a service account",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400,
@@ -81,7 +81,9 @@ class _RegisterState extends State<Register> {
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Name',
                                     fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.person_outline,),
+                                    prefixIcon: Icon(
+                                      Icons.person_outline,
+                                    ),
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -109,7 +111,9 @@ class _RegisterState extends State<Register> {
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: 'Phone Number',
-                                    prefixIcon: Icon(Icons.call_outlined,),
+                                    prefixIcon: Icon(
+                                      Icons.call_outlined,
+                                    ),
                                     fillColor: Colors.white,
                                     filled: true,
                                     focusedBorder: OutlineInputBorder(
@@ -223,9 +227,7 @@ class _RegisterState extends State<Register> {
                                   ])
                             ]),
                           ),
-                        ]
-                    )
-                ),
+                        ])),
               ),
             ),
           );
