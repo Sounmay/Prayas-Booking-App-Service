@@ -358,7 +358,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     });
                   },
                   keyboardType: TextInputType.multiline,
-                  maxLines: 5,
+                  maxLines: 3,
                   decoration: InputDecoration(
                     contentPadding:
                         const EdgeInsets.only(left: 10, top: 10, bottom: 10),
@@ -708,7 +708,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       fromHr = val;
                                     });
                                   },
-                                  validator: (val) => int.parse(val)>12 ? 'invalid' : null,
+                                  validator: (val) =>
+                                      int.parse(val) > 12 ? 'invalid' : null,
                                 )),
                             Text(
                               " : ",
@@ -739,7 +740,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       fromMin = val;
                                     });
                                   },
-                                  validator: (val) => int.parse(val)>59 ? 'invalid' : null,
+                                  validator: (val) =>
+                                      int.parse(val) > 59 ? 'invalid' : null,
                                 )),
                             SizedBox(
                               width: 20.0,
@@ -800,7 +802,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       toHr = val;
                                     });
                                   },
-                                  validator: (val) => int.parse(val)>12 ? 'invalid' : null,
+                                  validator: (val) =>
+                                      int.parse(val) > 12 ? 'invalid' : null,
                                 )),
                             Text(
                               " : ",
@@ -831,7 +834,8 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                       toMin = val;
                                     });
                                   },
-                                  validator: (val) => int.parse(val)>59 ? 'invalid' : null,
+                                  validator: (val) =>
+                                      int.parse(val) > 59 ? 'invalid' : null,
                                 )),
                             SizedBox(
                               width: 20.0,
@@ -1100,13 +1104,15 @@ class _DoctorSecondState extends State<DoctorSecond> {
                       List<ParlourSlotDetails> slotList = [];
 
                       ParlourSlotDetails slots = ParlourSlotDetails(
-                        fromHr: (_fromSelectedFormat == 'AM' || int.parse(fromHr)==12)
+                        fromHr: (_fromSelectedFormat == 'AM' ||
+                                int.parse(fromHr) == 12)
                             ? fromHr
                             : (int.parse(fromHr) + 12).toString(),
                         fromMin: fromMin,
-                        toHr: (_toSelectedFormat == 'AM' || int.parse(toHr)==12)
-                            ? toHr
-                            : (int.parse(toHr) + 12).toString(),
+                        toHr:
+                            (_toSelectedFormat == 'AM' || int.parse(toHr) == 12)
+                                ? toHr
+                                : (int.parse(toHr) + 12).toString(),
                         toMin: toMin,
                         weekRange: _weekdays.first.toString() +
                             ' - ' +
