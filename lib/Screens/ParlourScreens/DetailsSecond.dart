@@ -396,9 +396,12 @@ class _DetailsSecondState extends State<DetailsSecond> {
                                     XFile image = await ImagePicker()
                                         .pickImage(source: ImageSource.camera);
 
-                                    setState(() {
+                                      setState(() {
                                       file[index] = File(image.path);
+                                      employeeImage[index] =
+                                          file[index].path.toString();
                                     });
+                                    Navigator.pop(context);
                                   } catch (e) {
                                     print(e.toString());
                                   }

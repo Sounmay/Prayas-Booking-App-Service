@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
@@ -77,14 +76,6 @@ class _DoctorLocationState extends State<DoctorLocation> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setGPS = true;
-    locatePosition();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final clinicLocation = Provider.of<ClinicDetailsProvider>(context);
 
@@ -115,7 +106,7 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     topRight: Radius.circular(10),
                                     bottomRight: Radius.circular(10)))),
                         Container(
-                          padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+                          padding: EdgeInsets.only(left: 20.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -159,11 +150,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Clinic name *',
+                                hintText: 'Clinic name',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter Clinic Name';
+                                return 'Please enter some text';
                               }
                               return null;
                             },
@@ -178,12 +169,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Registered Shop no.',
                                 hintStyle: TextStyle(fontSize: 12)),
-//                            validator: (value) {
-//                              if (value.isEmpty) {
-//                                return 'Please enter Shop Number';
-//                              }
-//                              return null;
-//                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
                             onChanged: (value) {
                               setState(() {
                                 shopNo = value;
@@ -195,11 +186,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Address/Floor *',
+                                hintText: 'Address/Floor',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter address';
+                                return 'Please enter some text';
                               }
                               return null;
                             },
@@ -212,11 +203,11 @@ class _DoctorLocationState extends State<DoctorLocation> {
                           TextFormField(
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Area/Street Name/Plot no/Sector *',
+                                hintText: 'Area/Street Name/Plot no/Sector.',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter area/street name';
+                                return 'Please enter some text';
                               }
                               return null;
                             },
@@ -231,12 +222,12 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                 contentPadding: EdgeInsets.only(bottom: -20),
                                 hintText: 'Landmark',
                                 hintStyle: TextStyle(fontSize: 12)),
-//                            validator: (value) {
-//                              if (value.isEmpty) {
-//                                return 'Please enter some text';
-//                              }
-//                              return null;
-//                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
                             onChanged: (value) {
                               setState(() {
                                 landmark = value;
@@ -247,28 +238,28 @@ class _DoctorLocationState extends State<DoctorLocation> {
                       ),
                     ),
                     SizedBox(height: 20),
-//                    Row(
-//                      mainAxisAlignment: MainAxisAlignment.center,
-//                      children: [
-//                        FlatButton(
-//                            onPressed: () {
-//                              setGPS = true;
-//                              locatePosition();
-//                            },
-//                            child: Row(
-//                              children: [
-//                                Text('Set location using the GPS tracker ',
-//                                    style: TextStyle(
-//                                        color: Colors.white, fontSize: 12)),
-//                                Icon(
-//                                  Icons.gps_fixed_rounded,
-//                                  color: Colors.white,
-//                                )
-//                              ],
-//                            ),
-//                            color: Color(0xff5D5FEF)),
-//                      ],
-//                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FlatButton(
+                            onPressed: () {
+                              setGPS = true;
+                              locatePosition();
+                            },
+                            child: Row(
+                              children: [
+                                Text('Set location using the GPS tracker ',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12)),
+                                Icon(
+                                  Icons.gps_fixed_rounded,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                            color: Color(0xff5D5FEF)),
+                      ],
+                    ),
                     SizedBox(height: 10),
                     Padding(
                         padding: EdgeInsets.only(left: 20),
@@ -316,31 +307,25 @@ class _DoctorLocationState extends State<DoctorLocation> {
                     FlatButton(
                         onPressed: () async {
                           print(_numOfEmployees);
-                          if(_numOfEmployees==""){
-                            Fluttertoast.showToast(msg: 'Please select the number of doctors in your clinic');
-                          }
-//                          if(lati == null && longi == null){
-//                            Fluttertoast.showToast(msg: 'Please select the location');
-//                          }
                           if (_formKey.currentState.validate() &&
                               _numOfEmployees != "" &&
                               lati != null &&
                               longi != null) {
-                                  String sUid = randomAlphaNumeric(6);
+                            String sUid = randomAlphaNumeric(6);
 
                             ClinicLocationAndDoctor _location =
                                 ClinicLocationAndDoctor(
-                                    serviceUid: serviceid,
-                                    clinicName: clinicName,
-                                    shopNo: shopNo,
-                                    address: '$address, $area, $landmark',
-                                    latitude: lati,
-                                    longitude: longi,
-                                    aboutClinic: about ?? '',
-                                    status: status,
-                                    regDate: DateTime.now(),
-                                    servId: sUid,
-                                );
+                              serviceUid: serviceid,
+                              clinicName: clinicName,
+                              shopNo: shopNo,
+                              address: '$address, $area, $landmark',
+                              latitude: lati,
+                              longitude: longi,
+                              aboutClinic: about ?? '',
+                              status: status,
+                              regDate: DateTime.now(),
+                              servId: sUid,
+                            );
 
                             clinicLocation
                                 .updateClinicLocationAndDoctor(_location);
@@ -361,16 +346,14 @@ class _DoctorLocationState extends State<DoctorLocation> {
                                     builder: (context) => DoctorSecond(
                                           id: int.parse(_numOfEmployees),
                                           curr: 1,
-                                        )
-                                )
-                            );
+                                        )));
                           }
                         },
                         child: Container(
                             height: MediaQuery.of(context).size.height * 0.07,
                             width: MediaQuery.of(context).size.width * 0.5,
                             decoration: BoxDecoration(
-                              color: _numOfEmployees==''?Color(0xffDFDFDF):Color(0xFF263238),
+                              color: Color(0xFF263238),
                               borderRadius: BorderRadius.circular(2.0),
                             ),
                             child: Center(
