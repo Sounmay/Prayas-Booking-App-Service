@@ -700,6 +700,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
+                                      counterText: "",
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
@@ -733,6 +734,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
+                                      counterText: "",
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
@@ -796,6 +798,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
+                                      counterText: "",
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
@@ -829,6 +832,7 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                   decoration: InputDecoration(
                                       isDense: true,
                                       labelText: '00',
+                                      counterText: "",
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
                                       contentPadding: EdgeInsets.only(
