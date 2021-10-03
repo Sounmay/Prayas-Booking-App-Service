@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ClinicDetailsProvider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -377,7 +378,11 @@ class _DoctorThirdState extends State<DoctorThird> {
               ),
               FlatButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (employeeImage == "") {
+                      Fluttertoast.showToast(msg: 'Please add admin image');
+                    }
+                    if (_formKey.currentState.validate() &&
+                        employeeImage != "") {
                       _filled = true;
                       AdminDetails adminDetails = AdminDetails(
                           name: name,

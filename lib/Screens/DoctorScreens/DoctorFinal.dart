@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -48,11 +49,14 @@ class _DoctorFinalState extends State<DoctorFinal> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
                     margin: EdgeInsets.all(10.0),
                     child: Center(
-                      child: Text('Registration in progress. Please do not press the back button or close the application.'),
+                      child: Text(
+                          'Registration in progress. Please do not press the back button or close the application.'),
                     ),
                   )
                 ],
@@ -400,39 +404,45 @@ class _DoctorFinalState extends State<DoctorFinal> {
                       children: [
                         TextButton(
                             onPressed: () async {
-                              print(FirebaseAuth.instance.currentUser.uid);
-                              setState(() {
-                                isLoading = true;
-                                _doctorList = clinic.doctorDetails;
-                              });
-                              try {
-                                await uploadDoctorImages();
-                                await uploadImage(
-                                    clinic.adminDetails.imagefile, true);
-                                await uploadImage(file.path, false);
+                              if (employeeImage != "") {
+                                print(FirebaseAuth.instance.currentUser.uid);
+                                setState(() {
+                                  isLoading = true;
+                                  _doctorList = clinic.doctorDetails;
+                                });
+                                try {
+                                  await uploadDoctorImages();
+                                  await uploadImage(
+                                      clinic.adminDetails.imagefile, true);
+                                  await uploadImage(file.path, false);
 
-                                if (adminImageuploaded &&
-                                    doctorImagesUploaded &&
-                                    clinicImageuploaded) {
-                                  clinic.updateAdminImageUrl(adminImageUrl);
-                                  clinic.updateClinicImageUrl(clinicImageUrl);
-                                  DatabaseService().uploadClinicServiceData(
-                                      clinic.clinicLocationAndDoctorDetails,
-                                      _finaldoctorList,
-                                      clinic.adminDetails);
+                                  if (adminImageuploaded &&
+                                      doctorImagesUploaded &&
+                                      clinicImageuploaded) {
+                                    clinic.updateAdminImageUrl(adminImageUrl);
+                                    clinic.updateClinicImageUrl(clinicImageUrl);
+                                    DatabaseService().uploadClinicServiceData(
+                                        clinic.clinicLocationAndDoctorDetails,
+                                        _finaldoctorList,
+                                        clinic.adminDetails);
 
+                                    setState(() {
+                                      isLoading = false;
+                                      DatabaseService().setRegistered().then(
+                                          (value) => Navigator.popUntil(context,
+                                              ModalRoute.withName('/wrapper')));
+                                    });
+                                  }
+                                } catch (e) {
+                                  print(e.toString());
                                   setState(() {
                                     isLoading = false;
-                                    DatabaseService().setRegistered().then(
-                                        (value) => Navigator.popUntil(context,
-                                            ModalRoute.withName('/wrapper')));
                                   });
                                 }
-                              } catch (e) {
-                                print(e.toString());
-                                setState(() {
-                                  isLoading = false;
-                                });
+                              }
+                              if (employeeImage == "") {
+                                Fluttertoast.showToast(
+                                    msg: 'Please add clinic image');
                               }
                             },
                             child: SizedBox(
@@ -567,7 +577,8 @@ Widget doctorCards(DoctorDetails doctorDetails, BuildContext context) {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: new FileImage(File(doctorDetails?.imagefile)),
+                  backgroundImage:
+                      new FileImage(File(doctorDetails?.imagefile)),
                   backgroundColor: Color(0xff0F2735),
                 ),
 //                ClipOval(
