@@ -15,13 +15,13 @@ class _DetailsThirdState extends State<DetailsThird> {
   String _fromSelectedFormat = 'AM', _toSelectedFormat = 'AM';
   bool _switchValue = false;
   String fromHr = '', fromMin = '', toHr = '', toMin = '';
-  bool clicked1 = true,
-      clicked2 = true,
-      clicked3 = true,
-      clicked4 = true,
-      clicked5 = true,
-      clicked6 = true,
-      clicked7 = true;
+  bool clicked1 = false,
+      clicked2 = false,
+      clicked3 = false,
+      clicked4 = false,
+      clicked5 = false,
+      clicked6 = false,
+      clicked7 = false;
   List<String> _weekdays = ['', '', '', '', '', '', ''];
 
   @override
