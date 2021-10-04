@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:random_string/random_string.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
-import 'package:freelance_booking_app_service/Utils/sharedPreferencesForm.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -56,31 +56,39 @@ class _ParlourLocationState extends State<ParlourLocation> {
   String locationpreference = '';
   List<String> _addresspreference = [];
 
-  _loadData(List<String> _address) async {
-    if (_addresspreference.isNotEmpty) {
-      address = _address[0];
-      area = _address[1];
-      landmark = _address[2];
-    }
-  }
+  // _loadData(List<String> _address) async {
+  //   if (_addresspreference.isNotEmpty) {
+  //     address = _address[0];
+  //     area = _address[1];
+  //     landmark = _address[2];
+  //   }
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _addresspreference = SharedPreferencesForm.getAddressforFrom() ?? [];
-    _loadData(_addresspreference);
+    // _addresspreference = SharedPreferencesForm.getAddressforFrom() ?? [];
+    // _loadData(_addresspreference);
   }
 
   @override
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
-    final title = args['title']??"";
+    final title = args['title'] ?? "";
     final parlourLocation = Provider.of<ParlourDetailsProvider>(context);
     if (longi == '') {
       longi = parlourLocation?.parlourLocationDetails?.longitude ?? '';
       lati = parlourLocation?.parlourLocationDetails?.latitude ?? '';
+      parlourName = parlourLocation?.parlourLocationDetails?.name ?? '';
+      shopNo = parlourLocation?.parlourLocationDetails?.shopNo ?? '';
+      address = parlourLocation?.parlourLocationDetails?.address ?? '';
+      ownerName = parlourLocation?.parlourLocationDetails?.ownerName ?? '';
+      ownerNumber = parlourLocation?.parlourLocationDetails?.ownerNumber ?? '';
+      about = parlourLocation?.parlourLocationDetails?.aboutOwner ?? '';
+    }
+    if (parlourLocation?.parlourLocationDetails?.name != null) {
       parlourName = parlourLocation?.parlourLocationDetails?.name ?? '';
       shopNo = parlourLocation?.parlourLocationDetails?.shopNo ?? '';
       address = parlourLocation?.parlourLocationDetails?.address ?? '';
@@ -131,7 +139,7 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                 Container(
                                   color: Color(0xff5D5FEF),
                                   padding: EdgeInsets.all(3),
-                                  child: Text(title??"",
+                                  child: Text(title ?? "",
                                       style: TextStyle(
                                           fontSize: 22, color: Colors.white)),
                                 )
@@ -162,9 +170,11 @@ class _ParlourLocationState extends State<ParlourLocation> {
                             initialValue:
                                 parlourLocation.parlourLocationDetails?.name ??
                                     '',
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(bottom: -20),
-                                hintText: 'Parlour name *',
+                                hintText: title == "SALON"
+                                    ? "Salon name *"
+                                    : "Parlour name *",
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
                               if (value.isEmpty) {
@@ -450,7 +460,11 @@ class _ParlourLocationState extends State<ParlourLocation> {
                                                         setState(() {
                                                           file =
                                                               File(image.path);
+                                                          ownerImagepath = file
+                                                              .path
+                                                              .toString();
                                                         });
+                                                        Navigator.pop(context);
                                                       } catch (e) {
                                                         print(e.toString());
                                                       }
@@ -516,7 +530,12 @@ class _ParlourLocationState extends State<ParlourLocation> {
                           setGPS = true;
                           locatePosition();
                           final uid = FirebaseAuth.instance.currentUser.uid;
-                          if (_formKey.currentState.validate()) {
+                          if (ownerImagepath == "") {
+                            Fluttertoast.showToast(
+                                msg: 'Please add owner image');
+                          }
+                          if (_formKey.currentState.validate() &&
+                              ownerImagepath != "") {
                             Location location = Location(
                                 serviceUid: serviceid,
                                 name: parlourName,
@@ -531,12 +550,12 @@ class _ParlourLocationState extends State<ParlourLocation> {
 
                             parlourLocation.updateParlourLocation(location);
 
-                            try {
-                              await SharedPreferencesForm.setAddressFormDetails(
-                                  [address, area, landmark]);
-                            } catch (e) {
-                              print(e.toString());
-                            }
+                            // try {
+                            //   await SharedPreferencesForm.setAddressFormDetails(
+                            //       [address, area, landmark]);
+                            // } catch (e) {
+                            //   print(e.toString());
+                            // }
                             Navigator.pushNamed(context, '/details2',
                                 arguments: {
                                   "title": title,
