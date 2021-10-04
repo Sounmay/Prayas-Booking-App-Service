@@ -124,7 +124,7 @@ class _RegisterState extends State<Register> {
                                             color: Color(0xFF0F2735))),
                                   ),
                                   validator: (val) => val.isEmpty
-                                      ? 'Enter Your Mobile Number'
+                                      ? 'Enter Your Phone Number'
                                       : null,
                                   onChanged: (val) {
                                     setState(() => number = val);
@@ -151,9 +151,8 @@ class _RegisterState extends State<Register> {
                                         borderSide: BorderSide(
                                             color: Color(0xFF0F2735))),
                                   ),
-                                  validator: (val) => val.length < 6
-                                      ? 'Enter password of 6+ characters'
-                                      : null,
+                                  validator: (val) =>
+                                      val.length < 1 ? 'Enter password' : null,
                                   obscureText: true,
                                   onChanged: (val) {
                                     setState(() => password = val);

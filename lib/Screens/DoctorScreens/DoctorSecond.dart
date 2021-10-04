@@ -327,9 +327,10 @@ class _DoctorSecondState extends State<DoctorSecond> {
                                 hintText: 'Phone Number *',
                                 hintStyle: TextStyle(fontSize: 12)),
                             validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter some text';
-                              }
+                              Pattern pattern = r'^[6-9]{1}[0-9]{9}$';
+                              RegExp regex = new RegExp(pattern);
+                              if (!regex.hasMatch(value))
+                                return 'Please enter valid phone number';
                               return null;
                             },
                             onChanged: (value) {

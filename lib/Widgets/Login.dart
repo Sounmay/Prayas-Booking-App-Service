@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
                                             borderSide: BorderSide(
                                                 color: Color(0xFF0F2735)))),
                                     validator: (val) => val.isEmpty
-                                        ? 'Enter Your Mobile Number'
+                                        ? 'Enter Your Phone Number'
                                         : null,
                                     onChanged: (val) {
                                       setState(() => number = val);
@@ -112,8 +112,8 @@ class _LoginState extends State<Login> {
                                           borderSide: BorderSide(
                                               color: Color(0xFF0F2735))),
                                     ),
-                                    validator: (val) => val.length < 6
-                                        ? 'Enter password of 6+ characters'
+                                    validator: (val) => val.length < 1
+                                        ? 'Enter password'
                                         : null,
                                     obscureText: true,
                                     onChanged: (val) {

@@ -47,6 +47,7 @@ dependencies:
   date_format: ^2.0.2
   geolocator: ^7.4.0
   weekday_selector: ^1.0.0
+  marquee_text: ^2.0.0
 
 
 dev_dependencies:
