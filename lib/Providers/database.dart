@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:freelance_booking_app_service/Models/ClinicDetailsModel.dart';
 import 'package:freelance_booking_app_service/Models/ParlourBookings.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
@@ -19,11 +20,12 @@ class DatabaseService {
         .update({"image": imgUrl});
   }
 
-  Future updateServiceProviderInfo(String name, String number) async {
+  Future updateServiceProviderInfo(
+      String name, String number, String newImage) async {
     FirebaseFirestore.instance
         .collection("ServiceProviders")
         .doc(uid)
-        .update({"name": name, "number": number});
+        .update({"name": name, "number": number, "image": newImage});
   }
 
   Future setRegistered() async {
@@ -36,13 +38,13 @@ class DatabaseService {
     return ref.map((event) => AppUserDetails.fromFirestore(event));
   }
 
-  Stream<ParlourBookingList> streamBookings() {
-    var ref = _db.collection('events').doc('thisevent').snapshots();
+  // Stream<ParlourBookingList> streamBookings() {
+  //   var ref = _db.collection('events').doc('thisevent').snapshots();
 
-    return ref.map((event) => ParlourBookingList.fromFirestore(event));
+  //   return ref.map((event) => ParlourBookingList.fromFirestore(event));
 
-    // return asfd;
-  }
+  //   // return asfd;
+  // }
 
   uploadClinicServiceData(ClinicLocationAndDoctor clinicLocation,
       List<DoctorDetails> doctorDetailsList, AdminDetails admin) async {

@@ -1,10 +1,16 @@
+import 'dart:io';
+import 'package:path/path.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freelance_booking_app_service/Models/User.dart';
 import 'package:freelance_booking_app_service/Providers/database.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
@@ -13,7 +19,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  String name = "", phoneNumber = "", imageUrl = "";
+  String name = "", phoneNumber = "", imageUrl = "", type = "";
   bool isLoaded = false;
 
   _fetchData() async {
@@ -27,6 +33,7 @@ class _EditProfileState extends State<EditProfile> {
         name = value.data()["name"];
         phoneNumber = value.data()["number"];
         imageUrl = value.data()["image"];
+        type = value.data()["type"];
         isLoaded = true;
       });
     });
@@ -38,6 +45,10 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     _fetchData();
   }
+
+  UploadTask task;
+  File file;
+  var newImage = "", newUrl = "";
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +66,41 @@ class _EditProfileState extends State<EditProfile> {
               leading: BackButton(color: Colors.black),
               actions: [
                 FlatButton(
-                    onPressed: () {
-                      DatabaseService()
-                          .updateServiceProviderInfo(name, phoneNumber);
+                    onPressed: () async {
+                      if (newImage == "")
+                        DatabaseService().updateServiceProviderInfo(
+                            name, phoneNumber, imageUrl);
+                      else {
+                        try {
+                          var oldUrl = imageUrl;
+                          File file = File(newImage);
+                          var id = FirebaseAuth.instance.currentUser.uid;
+                          Reference ref;
+                          if (type == "clinic")
+                            ref = FirebaseStorage.instance.ref().child(
+                                'serviceImageClinic/$id/${basename(file.path)}');
+                          else
+                            ref = FirebaseStorage.instance.ref().child(
+                                'serviceImage/$id/${basename(file.path)}');
+                          await ref.putFile(file).whenComplete(() async {
+                            await ref.getDownloadURL().then((value) {
+                              setState(() {
+                                newUrl = value;
+                              });
+                              Reference oldRef =
+                                  FirebaseStorage.instance.refFromURL(oldUrl);
+                              oldRef.delete();
+                            });
+                          });
+                        } catch (e) {
+                          print(e.toString());
+                          setState(() {
+                            newUrl = "";
+                          });
+                        }
+                        DatabaseService().updateServiceProviderInfo(
+                            name, phoneNumber, newUrl);
+                      }
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -86,26 +129,36 @@ class _EditProfileState extends State<EditProfile> {
                           shape: BoxShape.circle,
                         ),
                         child: ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: imageUrl,
-                            fit: BoxFit.fitHeight,
-                            height: 150,
-                            width: 150,
-                            placeholder: (context, url) =>
-                                new Image.asset('assets/doctor.png'),
-                            errorWidget: (context, url, error) => new Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Icon(Icons.hide_image, size: 40),
-                                ClipRRect(
-                                  // Clip it cleanly.
-                                  child: Container(
-                                    color: Colors.grey[100].withOpacity(0.1),
+                          child: newImage != ""
+                              ? file != null
+                                  ? Image.file(
+                                      File(file.path),
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    )
+                                  : null
+                              : CachedNetworkImage(
+                                  imageUrl: imageUrl,
+                                  fit: BoxFit.fitHeight,
+                                  height: 150,
+                                  width: 150,
+                                  placeholder: (context, url) =>
+                                      new Image.asset('assets/doctor.png'),
+                                  errorWidget: (context, url, error) =>
+                                      new Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      Icon(Icons.hide_image, size: 40),
+                                      ClipRRect(
+                                        // Clip it cleanly.
+                                        child: Container(
+                                          color:
+                                              Colors.grey[100].withOpacity(0.1),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
                         ),
                       ),
                       Container(
@@ -117,7 +170,104 @@ class _EditProfileState extends State<EditProfile> {
                           child: Center(
                             child: IconButton(
                               onPressed: () {
-                                print('functionality to be added');
+                                // print('functionality to be added');
+                                showModalBottomSheet(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30)),
+                                    ),
+                                    context: context,
+                                    builder: (builder) {
+                                      return new Container(
+                                        padding: EdgeInsets.only(
+                                            top: 10, bottom: 40),
+                                        height: 170.0,
+                                        color: Colors.transparent,
+                                        child: Column(children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.4,
+                                            child: Divider(
+                                              thickness: 2.0,
+                                              color: Color(0xff5D5FEF),
+                                            ),
+                                          ),
+                                          Text("ADD PHOTO"),
+                                          Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      try {
+                                                        XFile image =
+                                                            await ImagePicker()
+                                                                .pickImage(
+                                                                    source: ImageSource
+                                                                        .gallery);
+
+                                                        setState(() {
+                                                          file =
+                                                              File(image.path);
+                                                          newImage = file.path
+                                                              .toString();
+                                                        });
+                                                        Navigator.pop(context);
+                                                        // print(file.path
+                                                        //     .toString());
+                                                      } catch (e) {
+                                                        print(e.toString());
+                                                      }
+                                                    },
+                                                    child: Icon(
+                                                      Icons.photo_outlined,
+                                                      size: 40,
+                                                      color: Color(0xff5D5FEF),
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Text("Photo Gallery")
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      try {
+                                                        XFile image =
+                                                            await ImagePicker()
+                                                                .pickImage(
+                                                                    source: ImageSource
+                                                                        .camera);
+                                                        setState(() {
+                                                          file =
+                                                              File(image.path);
+                                                        });
+                                                      } catch (e) {
+                                                        print(e.toString());
+                                                      }
+                                                    },
+                                                    child: Icon(
+                                                      CupertinoIcons.camera,
+                                                      color: Color(0xff5D5FEF),
+                                                      size: 40,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Text("Camera")
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        ]),
+                                      );
+                                    });
                               },
                               icon: Icon(
                                 Icons.camera_alt,
