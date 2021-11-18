@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "650640910388-3u374sem6422r8dgph4m3v1n78frnurt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.service.prayas",
+            "certificate_hash": "6fcd320fb7d88e98b228c04fcfac1226b292db49"
+          }
+        },
+        {
+          "client_id": "650640910388-l1582135a7nf29d04r8anaoo1p5pl1v1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.service.prayas",
+            "certificate_hash": "e512a1030c62528a5485d00f6623c052c7dc6a15"
+          }
+        },
+        {
           "client_id": "650640910388-si470ciacghiognc2qg3nd1tienolptn.apps.googleusercontent.com",
           "client_type": 3
         }
