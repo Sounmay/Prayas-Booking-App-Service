@@ -2,4 +2,4 @@ Service side of Flutter application for booking services as part of a freelance 
 
 Frontend - Flutter, Backend - Firebase.
 
-Developers - Sounmay Mishra, Naiyar Imam and Snigdha Barik Designers - Aswin Kumar Raju and Prithviraj Naik.
+Developers -  Mishra, Naiyar Imam and Snigdha Barik Designers - Aswin Kumar Raju and Prithviraj Naik.
