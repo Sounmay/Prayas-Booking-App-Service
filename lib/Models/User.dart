@@ -14,12 +14,14 @@ class AppUserDetails {
   final String name;
   final String image;
   final String number;
+  final String type;
   final bool isRegistered;
 
   AppUserDetails(
       {this.uid = "",
       this.name = "",
       this.image = "",
+      this.type = "",
       this.isRegistered = false,
       this.number = ""});
 
@@ -27,10 +29,11 @@ class AppUserDetails {
     Map data = doc.data();
 
     return AppUserDetails(
-        name: data['name'],
-        isRegistered: data['isRegistered'],
-        image: data['image'],
-        number: data['number'],
+      name: data['name'],
+      isRegistered: data['isRegistered'],
+      image: data['image'],
+      number: data['number'],
+      type: data['type'],
     );
   }
 }

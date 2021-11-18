@@ -123,9 +123,14 @@ class _RegisterState extends State<Register> {
                                         borderSide: BorderSide(
                                             color: Color(0xFF0F2735))),
                                   ),
-                                  validator: (val) => val.isEmpty
-                                      ? 'Enter Your Phone Number'
-                                      : null,
+                                  validator: (val) {
+                                    Pattern pattern = r'^[6-9]{1}[0-9]{9}$';
+                                    RegExp regex = new RegExp(pattern);
+                                    if (!regex.hasMatch(val))
+                                      return 'Enter Valid Phone Number';
+                                    else
+                                      return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => number = val);
                                   }),

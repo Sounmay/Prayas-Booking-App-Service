@@ -44,7 +44,7 @@ class _ParlourLocationEditState extends State<ParlourLocationEdit> {
   File file;
 
   String about = '';
-  String ownerImagepath = '';
+  String ownerImagepath = "";
   String parlourName = '',
       shopNo = '',
       address = '',

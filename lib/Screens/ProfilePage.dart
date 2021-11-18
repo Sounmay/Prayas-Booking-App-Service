@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 FlatButton(
                   child: Container(
                       padding: EdgeInsets.only(left: 5.0),
-                      width: width * 0.25,
+                      width: width * 0.28,
                       height: height * 0.05,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
