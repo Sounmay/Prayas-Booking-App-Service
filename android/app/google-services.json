@@ -120,6 +120,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "650640910388-a0ijiaat8m9noi2e5si5jsn3kco58jbt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sounmaymishra.freelance_booking_appService",
+            "certificate_hash": "e512a1030c62528a5485d00f6623c052c7dc6a15"
+          }
+        },
+        {
           "client_id": "650640910388-si470ciacghiognc2qg3nd1tienolptn.apps.googleusercontent.com",
           "client_type": 3
         }

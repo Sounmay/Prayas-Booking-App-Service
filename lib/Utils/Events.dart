@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
   String id;
+  String address;
   String customerName;
   List<dynamic> serviceNames;
   List<dynamic> price;
@@ -19,6 +20,7 @@ class Event {
       this.uid,
       this.otp,
       this.isApproved,
+      this.address,
       this.customerName,
       this.serviceNames,
       this.price,
@@ -33,6 +35,7 @@ class Event {
     uid = json['serviceId'];
     isApproved = json['isApproved'];
     id = json['id'];
+    address = json['address'];
     shopName = json['shopName'];
     otp = json['otp'];
     customerName = json['name'];
@@ -51,6 +54,7 @@ class Event {
         "isApproved": approval,
         "id": id,
         "otp": otp,
+        "address": address,
         "name": customerName,
         "serviceName": serviceNames,
         "price": price,
