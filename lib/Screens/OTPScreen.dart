@@ -175,7 +175,7 @@ class _OTPScreenState extends State<OTPScreen> {
                           "${customerOrder.customerName}",
                           textAlign: TextAlign.right,
                         ),
-                        Text("+918249375008")
+                        Text("${customerOrder.customerNo}")
                       ],
                     ),
                     Column(
