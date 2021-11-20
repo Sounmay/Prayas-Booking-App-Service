@@ -4,6 +4,7 @@ class Event {
   String id;
   String address;
   String customerName;
+  String customerNo;
   List<dynamic> serviceNames;
   List<dynamic> price;
   List<dynamic> timeList;
@@ -22,6 +23,7 @@ class Event {
       this.isApproved,
       this.address,
       this.customerName,
+        this.customerNo,
       this.serviceNames,
       this.price,
       this.timeList,
@@ -39,6 +41,7 @@ class Event {
     shopName = json['shopName'];
     otp = json['otp'];
     customerName = json['name'];
+    customerNo = json['number'];
     serviceNames = json['serviceName'].cast<String>();
     price = json['price'].cast<int>();
     day = json['date'];
@@ -56,6 +59,7 @@ class Event {
         "otp": otp,
         "address": address,
         "name": customerName,
+        "number": customerNo,
         "serviceName": serviceNames,
         "price": price,
         "serviceTimeList": timeList,
