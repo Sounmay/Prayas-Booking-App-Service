@@ -1051,13 +1051,16 @@ class _DoctorSecondState extends State<DoctorSecond> {
                     Row(children: [
                       TextButton(
                         onPressed: () {
-                          setState(() {
-                            controller1.clear();
-                            controller2.clear();
-                            controller3.clear();
-                            controller4.clear();
-                            _servicesNum = _servicesNum + 1;
-                          });
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              controller1.clear();
+                              controller2.clear();
+                              controller3.clear();
+                              controller4.clear();
+                              _servicesNum = _servicesNum + 1;
+                            });
+                          }
+
 //                          if (_formKey.currentState.validate()) {
 //                            setState(() {
 //                              controller1.clear();
@@ -1101,6 +1104,19 @@ class _DoctorSecondState extends State<DoctorSecond> {
                           msg: 'Please add atleast one service');
                     } else if (employeeImage == "") {
                       Fluttertoast.showToast(msg: 'Please add doctor image');
+                    } else if (_fromSelectedFormat == "PM" &&
+                        _toSelectedFormat == "AM")
+                      Fluttertoast.showToast(msg: 'Invalid Timing');
+                    else if ((_fromSelectedFormat == "AM" &&
+                            _toSelectedFormat == "AM") &&
+                        ((int.parse(toMin) + (int.parse(toHr) * 60)) <
+                            ((int.parse(fromHr) * 60) + int.parse(fromMin)))) {
+                      Fluttertoast.showToast(msg: 'Invalid Timing');
+                    } else if ((_fromSelectedFormat == "PM" &&
+                            _toSelectedFormat == "PM") &&
+                        ((int.parse(toMin) + (int.parse(toHr) * 60)) <
+                            ((int.parse(fromHr) * 60) + int.parse(fromMin)))) {
+                      Fluttertoast.showToast(msg: 'Invalid Timing');
                     } else if (_formKey.currentState.validate() &&
                         employeeImage != "") {
                       List<ParlourServiceDetails> doctorServices = [];

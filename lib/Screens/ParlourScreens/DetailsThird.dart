@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:freelance_booking_app_service/Models/ParlourDetailsModel.dart';
 import 'package:freelance_booking_app_service/Providers/ParlourDetailsProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailsThird extends StatefulWidget {
   @override
@@ -348,8 +349,7 @@ class _DetailsThirdState extends State<DetailsThird> {
                                   "Mon",
                                   style: TextStyle(color: Colors.white),
                                 ),
-                              )
-                          ),
+                              )),
                         ),
                         SizedBox(
                           width: 5.0,
@@ -546,17 +546,33 @@ class _DetailsThirdState extends State<DetailsThird> {
             FlatButton(
                 onPressed: () async {
                   _weekdays.removeWhere((item) => item == '');
-                  if (fromHr != '' &&
+                  if (_fromSelectedFormat == "PM" && _toSelectedFormat == "AM")
+                    Fluttertoast.showToast(msg: 'Invalid Timing');
+                  else if ((_fromSelectedFormat == "AM" &&
+                          _toSelectedFormat == "AM") &&
+                      ((int.parse(toMin) + (int.parse(toHr) * 60)) <
+                          ((int.parse(fromHr) * 60) + int.parse(fromMin)))) {
+                    Fluttertoast.showToast(msg: 'Invalid Timing');
+                  } else if ((_fromSelectedFormat == "PM" &&
+                          _toSelectedFormat == "PM") &&
+                      ((int.parse(toMin) + (int.parse(toHr) * 60)) <
+                          ((int.parse(fromHr) * 60) + int.parse(fromMin)))) {
+                    Fluttertoast.showToast(msg: 'Invalid Timing');
+                  } else if (fromHr != '' &&
                       fromMin != '' &&
                       toHr != '' &&
                       toMin != '') {
                     List<ParlourSlotDetails> slotList = [];
 
                     ParlourSlotDetails slots = ParlourSlotDetails(
-                      fromHr: (_fromSelectedFormat=='AM'||
-                          int.parse(fromHr) == 12)?fromHr:(int.parse(fromHr)+12).toString(),
+                      fromHr: (_fromSelectedFormat == 'AM' ||
+                              int.parse(fromHr) == 12)
+                          ? fromHr
+                          : (int.parse(fromHr) + 12).toString(),
                       fromMin: fromMin,
-                      toHr: (_toSelectedFormat=='AM')?toHr:(int.parse(toHr)+12).toString(),
+                      toHr: (_toSelectedFormat == 'AM')
+                          ? toHr
+                          : (int.parse(toHr) + 12).toString(),
                       toMin: toMin,
                       weekRange: "$_weekdays",
                     );
