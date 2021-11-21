@@ -273,6 +273,16 @@ class _ApprovalState extends State<Approval> {
                           minWidth: 0,
                           height: 0,
                           child: FlatButton(
+                            onPressed: () {
+                              if (approveToggle == false)
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OTPScreen(
+                                            customerOrder: bookedEvent,
+                                          )),
+                                );
+                            },
                             child: Text('view details',
                                 style: TextStyle(color: Color(0xff0F2735))),
                           ),
