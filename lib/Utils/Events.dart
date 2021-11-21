@@ -23,7 +23,7 @@ class Event {
       this.isApproved,
       this.address,
       this.customerName,
-        this.customerNo,
+      this.customerNo,
       this.serviceNames,
       this.price,
       this.timeList,
